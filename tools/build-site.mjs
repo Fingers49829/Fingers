@@ -134,6 +134,8 @@ for (const m of pageHtml.slice(start).matchAll(/<(\/?)div\b/g)) {
 let body = pageHtml.slice(start, end)
   .replace(/href="\//g, `href="${FOLKCRAFT}/`)
   .replace(/src="[^"]*FingersOfSteel_K_WhiteBorder[^"]*"/g, 'src="/images/fingers-of-steel-logo.png"')
+  // The catalog's own styles use Folkcraft green; this site's theme color is blue.
+  .replace(/--fos-green:\s*#[0-9a-f]{3,6}/i, '--fos-green:#1f4e79')
   // This site's own intro line in place of Folkcraft's "publishing imprint" sentence.
   .replace(/<p><strong>Fingers Of Steel®<\/strong>[^<]*publishing imprint[^<]*<\/p>/,
     "<p><strong>Fingers Of Steel®</strong> is the world's leading publisher of music books for the Appalachian mountain dulcimer.</p>");
@@ -240,6 +242,12 @@ const slugByUrl = new Map(books.flatMap(b => [b.folkcraftUrl, b.ddUrl].filter(Bo
 
 const template = await readFile(join(ROOT, 'tools', 'page-template.html'), 'utf8');
 
+const MASTHEAD = `
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>`;
+
 async function bookPage(b) {
   const title = `${b.title}${b.author ? ` by ${b.author}` : ''}`;
   const summary = plain(b.description).slice(0, 155).replace(/\s+\S*$/, '') + '…';
@@ -257,7 +265,6 @@ async function bookPage(b) {
   ].filter(Boolean).join('\n          ');
 
   const content = `
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       ${gallery}
       <div class="book-info">
@@ -278,7 +285,8 @@ async function bookPage(b) {
     .replace('<title>Fingers Of Steel® Publications</title>', `<title>${esc(title)} – Fingers Of Steel®</title>`)
     .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(summary)}">`)
     .replace('<link rel="canonical" href="https://fingersofsteel.com/">', `<link rel="canonical" href="${SITE}/books/${b.slug}/">`)
-    .replace('<h1>Fingers Of Steel® Publications</h1>', '<p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>')
+    .replace(/\s*<h1>Fingers Of Steel® Publications<\/h1>/, '')
+    .replace('<body>', `<body>${MASTHEAD}`)
     .replace('<!--FOS-BODY-->', content);
 }
 
