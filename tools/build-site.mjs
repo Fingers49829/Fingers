@@ -158,6 +158,8 @@ for (const b of books) {
   usedSlugs.add(slug);
   b.slug = slug;
   b.isbn = isbnByKey.get(norm(b.author + b.title)) || null;
+  // A file in descriptions/<slug>.html replaces the store's description with copy written for this site.
+  b.description = await readFile(join(ROOT, 'descriptions', `${slug}.html`), 'utf8').catch(() => b.description);
 }
 const slugByUrl = new Map(books.flatMap(b => [b.folkcraftUrl, b.ddUrl].filter(Boolean).map(u => [u, b.slug])));
 
