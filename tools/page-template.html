@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Fingers Of Steel® Publications</title>
   <meta name="description" content="Fingers Of Steel® is Folkcraft Instruments' publishing imprint: mountain dulcimer instruction books and songbooks by today's leading players and teachers.">
-  <link rel="icon" type="image/png" href="images/fingers-of-steel-logo.png">
+  <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/">
   <style>
     :root {
@@ -35,6 +35,77 @@
       letter-spacing: 0.01em;
     }
     a { color: #3b6b2a; }
+
+    /* Book pages */
+    .site-name { margin: 0 0 20px; }
+    .site-name a {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 1.25rem;
+    }
+    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
+    .book {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: 40px;
+      align-items: start;
+    }
+    .book-cover {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+    }
+    .book-thumbs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .book-thumbs img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border: 1px solid var(--line);
+    }
+    .book-title {
+      margin: 0;
+      font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+      font-weight: normal;
+      line-height: 1.2;
+    }
+    .book-author { margin: 6px 0 24px; color: var(--muted); font-size: 1.1rem; }
+    .buy-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .buy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 14px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #fff;
+      background: #3b6b2a;
+    }
+    .buy:hover { background: #2f5622; }
+    .buy-pdf { background: #2b2b2b; }
+    .buy-pdf:hover { background: #000; }
+    .buy strong { font-size: 1.05rem; }
+    .buy span { font-size: 0.9rem; opacity: 0.9; }
+    .book-isbn { margin: 0 0 24px; color: var(--muted); font-size: 0.9rem; }
+    .book-desc { border-top: 1px solid var(--line); padding-top: 20px; }
+    .book-desc img, .book-desc iframe { max-width: 100%; height: auto; }
+    @media (max-width: 720px) {
+      .book { grid-template-columns: 1fr; gap: 24px; }
+      .book-gallery { max-width: 420px; }
+    }
     footer {
       margin-top: 48px;
       padding-top: 16px;
