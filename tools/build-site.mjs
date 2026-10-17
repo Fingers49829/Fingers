@@ -4,6 +4,7 @@
 // Run from the repo root:  node tools/build-site.mjs
 
 import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -159,7 +160,10 @@ for (const b of books) {
   b.slug = slug;
   b.isbn = isbnByKey.get(norm(b.author + b.title)) || null;
   // A file in descriptions/<slug>.html replaces the store's description with copy written for this site.
-  b.description = await readFile(join(ROOT, 'descriptions', `${slug}.html`), 'utf8').catch(() => b.description);
+  b.description = await readFile(join(ROOT, 'descriptions', `${slug}.html`), 'utf8')
+    .then(s => s.replace(/\r\n/g, '\n')).catch(() => b.description);
+  // One-sheets are made separately by tools/build-one-sheet.mjs.
+  b.oneSheet = existsSync(join(ROOT, 'one-sheets', `${slug}.pdf`));
 }
 const slugByUrl = new Map(books.flatMap(b => [b.folkcraftUrl, b.ddUrl].filter(Boolean).map(u => [u, b.slug])));
 
@@ -192,7 +196,10 @@ function bookPage(b) {
         <div class="buy-links">
           ${buy}
         </div>
-        ${b.isbn ? `<p class="book-isbn">ISBN ${esc(b.isbn)}</p>` : ''}
+        ${b.isbn || b.oneSheet ? `<p class="book-isbn">${[
+          b.isbn && `ISBN ${esc(b.isbn)}`,
+          b.oneSheet && `<a href="/one-sheets/${b.slug}.pdf">Download one-sheet (PDF)</a>`,
+        ].filter(Boolean).join(' &middot; ')}</p>` : ''}
         <div class="book-desc">${cleanDescription(b.description)}</div>
       </div>
     </article>`;
