@@ -155,8 +155,9 @@ let body = pageHtml.slice(start, end)
   .replace(/<p><strong>Fingers Of Steel®<\/strong>[^<]*publishing imprint[^<]*<\/p>/,
     "<p><strong>Fingers Of Steel®</strong> is the world's leading publisher of music books for the Appalachian mountain dulcimer.</p>");
 if (!body.includes("world's leading publisher")) console.warn('! Homepage intro sentence not found on Folkcraft; left unchanged');
-// Drop Folkcraft's "Every title is printed and shipped by Folkcraft..." line.
+// Drop Folkcraft's "Every title is printed and shipped by Folkcraft..." and "Prefer a PDF?..." lines.
 body = body.replace(/\s*<p>Every title is printed[^<]*<\/p>/, '');
+body = body.replace(/\s*<p class="fos-pdf">[\s\S]*?<\/p>/, '');
 
 // ISBNs from the page's ISBN table, keyed by normalized "author title".
 const isbnByKey = new Map();
