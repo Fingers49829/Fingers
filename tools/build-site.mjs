@@ -5,6 +5,8 @@
 
 import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -44,12 +46,16 @@ function sized(src, width) {
 }
 
 // Product images are served from this site, not the stores' CDN. Each store image is downloaded once per
-// width into images/books/ (named after the store's file, so a replaced image gets a new file) and reused
-// on later builds.
+// width into images/books/ (named after the store's file) and reused on later builds. The store's version
+// stamp (?v=) for each file is kept in images/image-versions.json, so an image replaced in the store under
+// the same filename is downloaded again.
 const IMAGES = join(ROOT, 'images', 'books');
 await mkdir(IMAGES, { recursive: true });
+const VERSIONS = join(ROOT, 'images', 'image-versions.json');
+const versions = JSON.parse(await readFile(VERSIONS, 'utf8').catch(() => '{}'));
 const usedImages = new Set();
 const downloads = new Map();
+const downloaded = [];
 let active = 0;
 const waiting = [];
 async function localImage(src, width) {
@@ -57,7 +63,10 @@ async function localImage(src, width) {
   const file = decodeURIComponent(u.pathname.split('/').pop()).replace(/(\.\w+)$/, `-${width}$1`);
   usedImages.add(file);
   const dest = join(IMAGES, file);
-  if (!existsSync(dest) && !downloads.has(file)) {
+  const version = u.searchParams.get('v') || '';
+  const stale = existsSync(dest) && versions[file] && version && versions[file] !== version;
+  if (!existsSync(dest) || !versions[file]) versions[file] = version;
+  if ((!existsSync(dest) || stale) && !downloads.has(file)) {
     downloads.set(file, (async () => {
       if (active >= 8) await new Promise(r => waiting.push(r));
       active++;
@@ -65,6 +74,8 @@ async function localImage(src, width) {
         const res = await fetch(sized(u.toString(), width));
         if (!res.ok) throw new Error(`${res.status} downloading ${u}`);
         await writeFile(dest, Buffer.from(await res.arrayBuffer()));
+        versions[file] = version;
+        downloaded.push(dest);
       } catch (e) {
         console.warn(`! Image not downloaded, left on the store's CDN: ${e.message}`);
       } finally {
@@ -345,10 +356,19 @@ await writeFile(join(ROOT, 'index.html'), template
   .replace('<body>', `<body>${masthead('h1')}`)
   .replace('<!--FOS-BODY-->', body));
 
-// Remove downloaded images no page uses any more.
+// Newly downloaded images get the site's blue frame in place of the store's green (or red) one.
+if (downloaded.length) {
+  const list = join(tmpdir(), `fos-reframe-${process.pid}.txt`);
+  await writeFile(list, downloaded.join('\n'));
+  execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', join(ROOT, 'tools', 'reframe-images.ps1'), '-ListFile', list], { stdio: 'inherit' });
+  await rm(list, { force: true });
+}
+
+// Remove downloaded images no page uses any more, and record the versions of the ones in use.
 for (const name of await readdir(IMAGES)) {
   if (!usedImages.has(name)) await rm(join(IMAGES, name), { force: true, maxRetries: 5 });
 }
+await writeFile(VERSIONS, JSON.stringify(Object.fromEntries([...usedImages].sort().map(f => [f, versions[f] || ''])), null, 1) + '\n');
 
 // ---- Report ----------------------------------------------------------------------------------
 
