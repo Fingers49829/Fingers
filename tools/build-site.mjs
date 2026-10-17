@@ -112,7 +112,7 @@ function cleanDescription(html) {
     .replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*published by Folkcraft(?:(?!<\/p>)[\s\S])*<\/p>/gi, '')
     .replace(/href="\//g, `href="${FOLKCRAFT}/`)
     // Links to Fingers Of Steel pages on Folkcraft stay on this site instead.
-    .replace(/href="https?:\/\/(?:www\.)?folkcraft\.com\/pages\/fingers-of-steel\/?"/g, 'href="/"')
+    .replace(/href="https?:\/\/(?:www\.)?folkcraft\.com\/pages\/fingers-of-steel(?:-catalog)?\/?"/g, 'href="/"')
     .replace(/href="https?:\/\/(?:www\.)?folkcraft\.com\/(?:collections\/[^/"]+\/)?products\/([^"#?/]+)[^"]*"/g,
       (m, handle) => slugByUrl.has(`${FOLKCRAFT}/products/${handle}`) ? `href="/books/${slugByUrl.get(`${FOLKCRAFT}/products/${handle}`)}/"` : m)
     .replace(/(<br\s*\/?>\s*){3,}/gi, '<br><br>')
@@ -151,7 +151,8 @@ function removeElement(html, openTag) {
 
 // ---- 1. The Folkcraft page body --------------------------------------------------------------
 
-const pageHtml = await getText(`${FOLKCRAFT}/pages/fingers-of-steel`);
+// The catalog lives on an unlisted Folkcraft page (folkcraft.com/pages/fingers-of-steel now redirects here).
+const pageHtml = await getText(`${FOLKCRAFT}/pages/fingers-of-steel-catalog`);
 const sectionAt = pageHtml.indexOf('__main" class="shopify-section');
 const start = pageHtml.indexOf('<div class="rte">', sectionAt);
 if (sectionAt < 0 || start < 0) throw new Error("Couldn't find the page content on Folkcraft");
