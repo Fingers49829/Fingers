@@ -283,6 +283,12 @@ const masthead = nameTag => `
   </div></header>`;
 const MASTHEAD = masthead('span');
 
+// Page titles name what people search for: "Mountain Dulcimer Tab Book", or just "Tab Book" when the
+// book title already says dulcimer. Books that aren't dulcimer tab keep the imprint name instead.
+const NOT_TAB = /cajon|ukulele|dulcilele|dulciflute|dulciwhistle|staff paper|fret position|traditional musician/i;
+const pageTitle = (title, byline) =>
+  `${byline} – ${NOT_TAB.test(title) ? 'Fingers Of Steel®' : /dulci/i.test(title) ? 'Tab Book' : 'Mountain Dulcimer Tab Book'}`;
+
 async function bookPage(b) {
   const title = `${b.title}${b.author ? ` by ${b.author}` : ''}`;
   const summary = plain(b.description).slice(0, 155).replace(/\s+\S*$/, '') + '…';
@@ -303,7 +309,7 @@ async function bookPage(b) {
     <article class="book">
       ${gallery}
       <div class="book-info">
-        <h2 class="book-title">${esc(b.title)}</h2>
+        <h1 class="book-title">${esc(b.title)}</h1>
         ${b.author ? `<p class="book-author">by ${esc(b.author)}</p>` : ''}
         <div class="buy-links">
           ${buy}
@@ -317,7 +323,7 @@ async function bookPage(b) {
     </article>`;
 
   return template
-    .replace('<title>Fingers Of Steel® Publications</title>', `<title>${esc(title)} – Fingers Of Steel®</title>`)
+    .replace('<title>Fingers Of Steel® Publications</title>', `<title>${esc(pageTitle(b.title, title))}</title>`)
     .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(summary)}">`)
     .replace('<link rel="canonical" href="https://fingersofsteel.com/">', `<link rel="canonical" href="${SITE}/books/${b.slug}/">`)
     .replace(/\s*<h1>Fingers Of Steel® Publications<\/h1>/, '')
