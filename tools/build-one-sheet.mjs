@@ -154,7 +154,7 @@ const designs = {
   classic: () => ({
     css: `
       body { padding: 0.5in; }
-      .head { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 3px solid #3b6b2a; }
+      .head { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 3px solid #1f4e79; }
       .head img { height: 0.85in; }
       .head .imprint { font-size: 17pt; letter-spacing: 0.02em; }
       .head .sub { font-size: 9.5pt; color: #666; }
@@ -169,8 +169,8 @@ const designs = {
       .tunes h2 { font-size: 12pt; margin-bottom: 6px; }
       .tunes h2 span { font-weight: normal; color: #666; font-size: 10pt; }
       .tunes ol { columns: ${many ? 4 : 3}; column-gap: 0.25in; padding-left: 1.6em; font-size: ${many ? 8.5 : 10.5}pt; line-height: ${many ? 1.35 : 1.55}; }
-      .foot { position: absolute; bottom: 0.5in; left: 0.5in; right: 0.5in; border-top: 3px solid #3b6b2a; padding-top: 8px; font-size: 9pt; display: flex; justify-content: space-between; gap: 16px; }
-      .foot strong { display: block; color: #3b6b2a; }`,
+      .foot { position: absolute; bottom: 0.5in; left: 0.5in; right: 0.5in; border-top: 3px solid #1f4e79; padding-top: 8px; font-size: 9pt; display: flex; justify-content: space-between; gap: 16px; }
+      .foot strong { display: block; color: #1f4e79; }`,
     body: `
       <header class="head">
         <img src="${logo}" alt="Fingers Of Steel logo">
@@ -191,7 +191,7 @@ const designs = {
   // B. Full-width green banner, big cover, tinted tune panel and a bottom strip for ISBN and ordering.
   banner: () => ({
     css: `
-      .band { background: #2f5622; color: #fff; padding: 0.4in 0.5in 0.35in; display: flex; align-items: center; gap: 0.3in; }
+      .band { background: #1f4e79; color: #fff; padding: 0.4in 0.5in 0.35in; display: flex; align-items: center; gap: 0.3in; }
       .band img { height: 1.15in; border: 4px solid #fff; background: #fff; }
       .band .imprint { font-family: "Segoe UI", Arial, sans-serif; font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.85; }
       .band h1 { font-size: 30pt; font-weight: normal; line-height: 1.1; margin-top: 4px; }
@@ -201,20 +201,20 @@ const designs = {
       .desc { font-size: ${shortDesc ? 14 : 12.5}pt; line-height: 1.5; }
       .desc p { margin-bottom: 10px; }
       .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-      .chips span { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #2f5622; border: 1.5px solid #2f5622; border-radius: 999px; padding: 4px 12px; }
+      .chips span { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #1f4e79; border: 1.5px solid #1f4e79; border-radius: 999px; padding: 4px 12px; }
       .tunes, .inside { margin: 0.25in 0.5in 0; background: #f3f1ea; border-radius: 8px; padding: 14px 18px; }
-      .tunes h2, .inside h2 { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; letter-spacing: 0.15em; text-transform: uppercase; color: #2f5622; margin-bottom: 8px; }
+      .tunes h2, .inside h2 { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; letter-spacing: 0.15em; text-transform: uppercase; color: #1f4e79; margin-bottom: 8px; }
       .tunes h2 span { color: #777; letter-spacing: 0; }
       .inside .pages { display: flex; justify-content: center; gap: 0.25in; }
       .inside img { height: ${title.length > 32 ? 2.6 : 3}in; max-width: ${samples.length > 2 ? 2.3 : 3.4}in; object-fit: contain; background: #fff; border: 1px solid #ccc; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
       .tunes ol { columns: ${many ? 4 : 3}; column-gap: 0.25in; padding-left: 1.7em; font-size: ${many ? 8.5 : 10}pt; line-height: ${many ? 1.3 : 1.45}; }
-      .strip { position: absolute; bottom: 0; left: 0; right: 0; background: #f3f1ea; border-top: 4px solid #2f5622; padding: 0.2in 0.5in 0.3in; display: flex; align-items: center; justify-content: space-between; gap: 0.3in; }
+      .strip { position: absolute; bottom: 0; left: 0; right: 0; background: #f3f1ea; border-top: 4px solid #1f4e79; padding: 0.2in 0.5in 0.3in; display: flex; align-items: center; justify-content: space-between; gap: 0.3in; }
       .strip .isbn { display: flex; align-items: center; gap: 14px; font-size: 9.5pt; flex: 0 0 auto; }
       .strip .isbn strong { white-space: nowrap; }
       .strip .barcode { width: 1.6in; background: #fff; padding: 4px; }
       .strip .buy { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; font-size: 9pt; }
       .strip .buy strong { white-space: nowrap; }
-      .strip .buy strong { color: #2f5622; }`,
+      .strip .buy strong { color: #1f4e79; }`,
     body: `
       <header class="band">
         <img src="${logo}" alt="Fingers Of Steel logo">
@@ -240,24 +240,24 @@ const designs = {
   trade: () => ({
     css: `
       body { display: grid; grid-template-columns: 2.85in 1fr; }
-      .side { background: #f3f1ea; padding: 0.45in 0.3in 0.4in; display: flex; flex-direction: column; gap: 14px; border-right: 4px solid #3b6b2a; }
+      .side { background: #f3f1ea; padding: 0.45in 0.3in 0.4in; display: flex; flex-direction: column; gap: 14px; border-right: 4px solid #1f4e79; }
       .brand { display: flex; align-items: center; gap: 10px; font-size: 10pt; line-height: 1.25; }
       .brand img { height: 0.7in; }
       .cover { width: 100%; border: 1px solid #ccc; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
-      .side h3 { font-family: "Segoe UI", Arial, sans-serif; font-size: 8.5pt; letter-spacing: 0.15em; text-transform: uppercase; color: #3b6b2a; margin: 0 0 4px; }
+      .side h3 { font-family: "Segoe UI", Arial, sans-serif; font-size: 8.5pt; letter-spacing: 0.15em; text-transform: uppercase; color: #1f4e79; margin: 0 0 4px; }
       .facts { font-size: 9.5pt; gap: 2px 10px; }
       .barcode { width: 1.7in; background: #fff; padding: 5px; }
       .order { font-size: 9.5pt; line-height: 1.45; margin-top: auto; }
       .order div { margin-bottom: 4px; }
       .order strong { display: block; }
       .content { padding: 0.5in 0.5in 0.4in 0.4in; display: flex; flex-direction: column; }
-      .kicker { font-family: "Segoe UI", Arial, sans-serif; font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; color: #3b6b2a; }
+      .kicker { font-family: "Segoe UI", Arial, sans-serif; font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; color: #1f4e79; }
       h1 { font-size: 24pt; font-weight: normal; line-height: 1.12; margin-top: 6px; }
-      .author { font-size: 14pt; color: #555; margin-top: 6px; padding-bottom: 14px; border-bottom: 2px solid #3b6b2a; }
+      .author { font-size: 14pt; color: #555; margin-top: 6px; padding-bottom: 14px; border-bottom: 2px solid #1f4e79; }
       .order span { font-size: 8.5pt; }
       .desc { font-size: 11.5pt; line-height: 1.5; margin-top: 14px; }
       .desc p { margin-bottom: 8px; }
-      .chips { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 6px 0 0; font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #3b6b2a; }
+      .chips { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 6px 0 0; font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #1f4e79; }
       .chips span::before { content: "\\25B8\\00a0"; }
       .tunes { margin-top: 18px; }
       .tunes h2 { font-size: 13pt; margin-bottom: 6px; }

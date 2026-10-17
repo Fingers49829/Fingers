@@ -244,11 +244,13 @@ const slugByUrl = new Map(books.flatMap(b => [b.folkcraftUrl, b.ddUrl].filter(Bo
 
 const template = await readFile(join(ROOT, 'tools', 'page-template.html'), 'utf8');
 
-const MASTHEAD = `
+// Header bar shared by every page. On the homepage the site name is the page's <h1>.
+const masthead = nameTag => `
   <header class="masthead"><div class="masthead-inner">
-    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><${nameTag} class="name">Fingers Of Steel® Publications</${nameTag}><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
     <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
   </div></header>`;
+const MASTHEAD = masthead('span');
 
 async function bookPage(b) {
   const title = `${b.title}${b.author ? ` by ${b.author}` : ''}`;
@@ -315,7 +317,12 @@ for (const [whole, slug, src] of cards) {
   if (cover) body = body.replace(whole, whole.replace(`src="${src}"`, `src="${await localImage(cover, 300)}"`));
 }
 body = await localizeImgs(body, 300);
-await writeFile(join(ROOT, 'index.html'), template.replace('<!--FOS-BODY-->', body));
+// The header carries the logo, so the intro's own copy of it goes.
+body = body.replace(/<img src="\/images\/fingers-of-steel-logo\.png"[^>]*>/, '');
+await writeFile(join(ROOT, 'index.html'), template
+  .replace(/\s*<h1>Fingers Of Steel® Publications<\/h1>/, '')
+  .replace('<body>', `<body>${masthead('h1')}`)
+  .replace('<!--FOS-BODY-->', body));
 
 // Remove downloaded images no page uses any more.
 for (const name of await readdir(IMAGES)) {
