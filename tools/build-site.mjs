@@ -94,6 +94,8 @@ function cleanDescription(html) {
     .replace(/<(meta|link|input)[^>]*>/gi, '')
     .replace(/\s(style|class|id|data-[\w-]+)="[^"]*"/gi, '')
     .replace(/<span>([\s\S]*?)<\/span>/gi, '$1')
+    // Drop the store's "This book is published by Folkcraft® Instruments, under the Fingers Of Steel® imprint." line.
+    .replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*published by Folkcraft(?:(?!<\/p>)[\s\S])*<\/p>/gi, '')
     .replace(/href="\//g, `href="${FOLKCRAFT}/`)
     // Links to Fingers Of Steel pages on Folkcraft stay on this site instead.
     .replace(/href="https?:\/\/(?:www\.)?folkcraft\.com\/pages\/fingers-of-steel\/?"/g, 'href="/"')
