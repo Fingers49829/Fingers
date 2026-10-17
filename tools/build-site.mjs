@@ -122,6 +122,19 @@ function storeSongList(html) {
     .trim();
 }
 
+// Removes the element that starts with openTag (e.g. '<div class="x">'), including everything nested in it.
+function removeElement(html, openTag) {
+  const start = html.indexOf(openTag);
+  if (start < 0) return html;
+  const tag = openTag.match(/^<(\w+)/)[1];
+  let depth = 0;
+  for (const m of html.slice(start).matchAll(new RegExp(`<(/?)${tag}\\b`, 'g'))) {
+    depth += m[1] ? -1 : 1;
+    if (depth === 0) return html.slice(0, start) + html.slice(html.indexOf('>', start + m.index) + 1);
+  }
+  return html;
+}
+
 // ---- 1. The Folkcraft page body --------------------------------------------------------------
 
 const pageHtml = await getText(`${FOLKCRAFT}/pages/fingers-of-steel`);
@@ -319,6 +332,11 @@ for (const [whole, slug, src] of cards) {
   if (cover) body = body.replace(whole, whole.replace(`src="${src}"`, `src="${await localImage(cover, 300)}"`));
 }
 body = await localizeImgs(body, 300);
+// Drop the "New to the dulcimer? Start here" section, and call the category tab "Browse by genre".
+body = removeElement(body, '<div class="fos-start">');
+body = body.replace('>Browse by what you need</label>', '>Browse by genre</label>');
+if (body.includes('<div class="fos-start">') || !body.includes('Browse by genre')) console.warn('! Homepage section edits did not apply; check the Folkcraft page markup');
+
 // The header carries the logo, so the intro's own copy of it goes.
 body = body.replace(/<img src="\/images\/fingers-of-steel-logo\.png"[^>]*>/, '');
 await writeFile(join(ROOT, 'index.html'), template
