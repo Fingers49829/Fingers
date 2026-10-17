@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Method For Chromatic Mountain Dulcimer by Bing Futch – Fingers Of Steel®</title>
-  <meta name="description" content="This exciting book will introduce you to playing the chromatic mountain dulcimer. The only book of its kind, Bing Futch's &quot;Method For Chromatic Mountain…">
+  <meta name="description" content="For the chromatic mountain dulcimer, there's no other instruction book like this one. Bing Futch's Method For Chromatic Mountain Dulcimer is the…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/bing-futch-method-for-chromatic-mountain-dulcimer/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,17 +156,27 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/bing-futch-method-for-chromatic-mountain-dulcimer-1310144"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/bing-futch-method-for-chromatic-mountain-dulcimer"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-01-7</p>
-        <div class="book-desc"><p>This exciting book will introduce you to playing the chromatic mountain dulcimer. The only book of its kind, Bing Futch's "Method For Chromatic Mountain Dulcimer" is the definitive source of instructional materials for this unique part of American culture.</p>
-<p>With over 100 audio tracks available as free downloads at Folkcraft.com, tons of full-color diagrams, charts, and other reference aids, and of course the wisdom and experience of Bing Futch, you'll go from novice to expert in no time.</p>
-<p>Join in the fun as you learn to play and improve your methods on the chromatic mountain dulcimer!<br><br>Audio tracks are included (as a free download at Folkcraft.com). Here's a <a href="https://www.folkcraft.com/pages/free-downloads" title="folkraft free downloads">link to the page with the audio files</a>.</p>
-<p>This book is published by Folkcraft® Instruments, under the <a href="/" title="fingers of steel">Fingers Of Steel</a>® imprint.</p>
-<p>Method for Chromatic Dulcimer book is 104 pages.<br></p></div>
+        <p class="book-isbn">ISBN 978-1-964725-01-7 &middot; <a href="/one-sheets/bing-futch-method-for-chromatic-mountain-dulcimer.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p>For the chromatic mountain dulcimer, there's no other instruction book like this one. Bing Futch's <em>Method For Chromatic Mountain Dulcimer</em> is the definitive guide to playing it.</p>
+<ul>
+  <li>Over 100 audio tracks, free to download</li>
+  <li>Plenty of full-color charts, diagrams and reference material</li>
+  <li>Bing's experience as a player and teacher, from your first steps to advanced playing</li>
+</ul>
+<p><a href="https://www.folkcraft.com/pages/free-downloads">Get the audio files from Folkcraft</a>.</p>
+<p>104 pages.</p></div>
       </div>
     </article>
     <footer>
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

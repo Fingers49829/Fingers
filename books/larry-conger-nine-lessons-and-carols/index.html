@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nine Lessons And Carols by Larry Conger – Fingers Of Steel®</title>
-  <meta name="description" content="Fingerstyle arrangements straight from Larry Conger's fingers to your brain. You'll sound just like Larry. Well, maybe not. But we can all try! This…">
+  <meta name="description" content="Nine Lessons And Carols is a collection of fingerstyle Christmas arrangements for mountain dulcimer by Larry Conger, sold as an instant PDF download. The…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/larry-conger-nine-lessons-and-carols/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -133,25 +155,15 @@
         <div class="buy-links">
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/larry-conger-nine-lessons-and-carols"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        
-        <div class="book-desc"><p>Fingerstyle arrangements straight from Larry Conger's fingers to your brain. You'll sound just like Larry.</p>
-<p>Well, maybe not. But we can all try! This collection has some great arrangements that you're sure to enjoy. Have a merry Christmas with these classic tunes for mountain dulcimer.</p>
-<p>27 pages.</p>
-<p><img alt="" src="/images/books/horizontal_bar_2_480x480-900.jpg"></p>
-<p><em><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3">With your purchase, we'll email you a link so that you may download the PDF version of your new book. The PDF file is in ZIP format - you'll need to unzip the file after your download is complete.</span></span></span></em></p>
-<p><em><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3">After you've extracted the files from your ZIP folder, you can print the sheet music, or enjoy it on your tablet or PC.</span></span></span></em></p>
-<p><strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b>Your ZIP file will include:<br></b></span></span></span></strong></p>
+        <p class="book-isbn"><a href="/one-sheets/larry-conger-nine-lessons-and-carols.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Nine Lessons And Carols</em> is a collection of fingerstyle Christmas arrangements for mountain dulcimer by Larry Conger, sold as an instant PDF download.</p>
+<p>The download is a ZIP file containing:</p>
 <ul>
-<li>
-<strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b> The complete book, in PDF format (27</b></span></span></span></strong><strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b> </b></span></span></span></strong><strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b>pages)<br></b></span></span></span></strong>
-</li>
-<li>
-<strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b> A folder with each song in a separate PDF, so </b></span></span></span></strong><strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b>that </b></span></span></span></strong><strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b>you can sort the titles alphabetically (12</b></span></span></span></strong><strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b> </b></span></span></span></strong><strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b>files)</b></span></span></span></strong>
-</li>
-<li><strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b>A folder with an MP3 recording of each song (12 files)</b></span></span></span></strong></li>
+  <li>The complete book as a PDF (27 pages)</li>
+  <li>Each song as its own PDF, so you can sort the titles (12 files)</li>
+  <li>An MP3 recording of each song (12 files)</li>
 </ul>
-<p><strong><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b><strong><span><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b><strong><span><span color="#651e1a"><span face="Avenir Next Rounded, sans-serif"><span size="3"><b><img alt="" src="/images/books/horizontal_bar_2_480x480-900.jpg"></b></span></span></span></strong></b></span></span></span></span></strong></b></span></span></span></span></strong></p>
-<p>This book is published by Fingers Of Steel, and is made available here as an authorized, licensed download.</p>
+<p>Print the sheet music, or read it on your tablet or computer.</p>
 <p><strong>Songs included:</strong></p>
 <p><strong><em>Angels We Have Heard On High</em> </strong>- DAD Tuning <strong><em><br>Come Thou Long Expected Jesus</em></strong><em> </em>- DAD Tuning <br><em></em><strong><em>In Dulci Jublio</em> </strong>- DAD Tuning<strong><em> <br>Joy To The World</em> </strong>- DAD Tuning<strong><em> <br>O Come All Ye Faithful</em> </strong>- DAD Tuning <strong><em><br>Of The Father's Love Begotten</em></strong> - DAD Tuning <strong><em><br>On Christmas Night All Christians Sing</em> </strong>- DAD Tuning<strong><em> <br>On This Day Earth Shall Ring</em></strong><em> </em>- DAD Tuning <strong><em><br>Prepare The Way O Zion</em> </strong>- DAD Tuning <strong><em><br>Silent Night</em></strong><em> </em>- DAD Tuning <strong><em><br>We Three Kings</em></strong> - DAD Tuning <strong><em><br>What Child Is This</em></strong> - DAD Tuning </p></div>
       </div>
@@ -160,5 +172,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

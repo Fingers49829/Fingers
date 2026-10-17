@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Galax Dulcimer: A Job Of Journey Work by Phyllis Gaskins – Fingers Of Steel®</title>
-  <meta name="description" content="Phyllis Gaskins is one of the foremost experts on Galax style mountain dulcimer playing. She studied with Raymond Melton, one of the premier builders and…">
+  <meta name="description" content="Galax Dulcimer: A Job Of Journey Work is Phyllis Gaskins' guide to the tunes, history and traditions of Galax-style mountain dulcimer playing. Few people…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/phyllis-gaskins-galax-dulcimer-a-job-of-journey-work/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,15 +156,28 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/phyllis-gaskins-galax-dulcimer-a-job-of-journey-work-1310089"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/phyllis-gaskins-galax-dulcimer-a-job-of-journey-work"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-56-7</p>
-        <div class="book-desc"><p>Phyllis Gaskins is one of the foremost experts on Galax style mountain dulcimer playing. She studied with Raymond Melton, one of the premier builders and players of the Galax-style dulcimer, and she has developed a reputation as both an amazing performer and an inspiring teacher.<br><br>You won't find a better person (or a better book) to teach you the tunes, history, and historic traditions of Galax dulcimer playing.<br><br>This stellar volume has songs, of course, but also has tons of photos, anecdotes, and historical background of the dulcimer in general, and of the Galax, Virginia variants that were so important to the evolution of our instrument.<br><br>All songs in this book assume that all strings are tuned to D. Songs noted below as D tunes have the "Do" starting at fret zero. Songs noted below as G tunes have the "Do" starting at fret three. Songs noted below as A tunes have the "Do" starting at fret four, and recommend that you use a partial capo (drone strings only) at fret one. (Phyllis talks about how to make a partial capo on page nineteen...)<br><br>Instructions are also included for playing these songs in DAD tuning.<br><br>Downloadable MP3 files for this book are available <a href="https://folkcraft.com/pages/free-downloads" title="free downloads for phyllis gaskins galax dulcimer book">on this page.</a><br><br>This book is published by Folkcraft® Instruments, under the <a title="fingers of steel" href="/">Fingers Of Steel</a>® imprint.<b><i><br><br></i>Songs included:</b></p>
-<p><b>D Tunes<br><i><br>Big Liza Jane</i></b><br><b><i>Black - Eyed Susie</i></b><br><b><i>Chapel Hill March</i></b><br><b><i>Ducks On The Millpond</i></b><br><b><i>Fortune</i></b><br><b><i>Green Willis</i></b><br><b><i>Job Of Journey Work</i></b><br><b><i>Julie Ann Johnson</i></b><br><b><i>Katy Cline</i></b><br><b><i>Luther’s Walkin In The Parlor</i></b><br><b><i>Old Molly Hare</i></b><br><b><i>Old Time Sally Ann<br></i></b><b><i>Peek A Boo Waltz</i></b><br><b><i>Sugar Hill</i></b><br><b><i>Walkin' In The Parlor #1<br><br></i></b><strong>G Tunes</strong><br><br><b><i>Dance All Night With A Bottle In Your Hand</i></b><br><b><i>Did You Ever See The Devil Uncle Joe?</i></b><br><b><i>Ebenezer</i></b><br><b><i>Evening Star Waltz</i></b><br><b><i>The Girl I Left Behind</i></b><br><b><i>John Brown’s March</i></b><br><b><i>Long Journey Home</i></b><br><b><i>Merriweather</i></b><br><b><i>Sandy River Belle</i></b><br><b><i>Seneca Square Dance</i></b><br><b><i>Silly Bill</i></b><br><b><i>Unclouded Day</i></b></p>
-<p><strong>A Tunes</strong><br><br><b><i>Breakin' Up Christmas</i></b><br><b><i>Cluck Ol' Hen</i></b><br><b><i>Cold Frosty Morning</i></b><br><b><i>Dinah</i></b><br><b><i>Falls Of Richmond</i></b><br><b><i>Highlander's Farewell</i></b><br><b><i>Kitchen Girl</i></b><br><b><i>New Castle (Texas)</i></b><br><b><i>Sail Away, Ladies</i></b><br><b><i>Sally Goodin</i></b><br><b><i>Sheep Shell Corn</i></b><br><b><i>Sugar In The Gourd</i></b><br><b><i>Train On The Island<br><br></i></b><strong>Two-Key Tunes</strong><br><br><b><i>Flop-Eared Mule</i></b><br><b><i>Jenny Lind Polka</i></b></p></div>
+        <p class="book-isbn">ISBN 978-1-964725-56-7 &middot; <a href="/one-sheets/phyllis-gaskins-galax-dulcimer-a-job-of-journey-work.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Galax Dulcimer: A Job Of Journey Work</em> is Phyllis Gaskins' guide to the tunes, history and traditions of Galax-style mountain dulcimer playing. Few people know the style better: Phyllis learned from Raymond Melton, a leading Galax dulcimer builder and player, and she's well known as a performer and a teacher.</p>
+<p>Along with the tunes, the book is full of photos, stories and background on the dulcimer's history, especially the dulcimers of Galax, Virginia, and the important part they played in how the instrument developed.</p>
+<p><strong>Tuning:</strong> all songs assume every string is tuned to D. D tunes start "Do" at fret 0; G tunes start "Do" at fret 3; A tunes start "Do" at fret 4 and use a partial capo on the drone strings at fret 1 (Phyllis explains how to make one on page 19). Instructions for playing the songs in DAD tuning are also included.</p>
+<p>MP3 recordings are a free download. <a href="https://www.folkcraft.com/pages/free-downloads">Get them from Folkcraft</a>.</p>
+<p><strong>Songs included:</strong></p>
+<p><strong>D tunes:</strong> Big Liza Jane, Black-Eyed Susie, Chapel Hill March, Ducks On The Millpond, Fortune, Green Willis, Job Of Journey Work, Julie Ann Johnson, Katy Cline, Luther's Walkin In The Parlor, Old Molly Hare, Old Time Sally Ann, Peek A Boo Waltz, Sugar Hill, Walkin' In The Parlor #1</p>
+<p><strong>G tunes:</strong> Dance All Night With A Bottle In Your Hand, Did You Ever See The Devil Uncle Joe?, Ebenezer, Evening Star Waltz, The Girl I Left Behind, John Brown's March, Long Journey Home, Merriweather, Sandy River Belle, Seneca Square Dance, Silly Bill, Unclouded Day</p>
+<p><strong>A tunes:</strong> Breakin' Up Christmas, Cluck Ol' Hen, Cold Frosty Morning, Dinah, Falls Of Richmond, Highlander's Farewell, Kitchen Girl, New Castle (Texas), Sail Away Ladies, Sally Goodin, Sheep Shell Corn, Sugar In The Gourd, Train On The Island</p>
+<p><strong>Two-key tunes:</strong> Flop-Eared Mule, Jenny Lind Polka</p></div>
       </div>
     </article>
     <footer>
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

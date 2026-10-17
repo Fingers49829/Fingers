@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>I Celebrate Life! by Steve Eulberg – Fingers Of Steel®</title>
-  <meta name="description" content="A boot-kicking hoe-down with relaxing, breath-catching interludes, followed by jig steps and waltzes, &quot;I Celebrate Life!&quot; is a collection of original…">
+  <meta name="description" content="I Celebrate Life! is a book/CD set of original songs and tunes for mountain dulcimer and hammered dulcimer, spanning the first 25 years of Steve Eulberg's…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/steve-eulberg-i-celebrate-life/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,9 +156,11 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/steve-eulberg-i-celebrate-life-1310118"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/steve-eulberg-i-celebrate-life"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-78-9</p>
-        <div class="book-desc"><p>A boot-kicking hoe-down with relaxing, breath-catching interludes, followed by jig steps and waltzes, "I Celebrate Life!" is a collection of original songs and tunes for both the mountain dulcimer and hammered dulcimer. This book/CD set spans the first 25 years of Steve Eulberg's music.</p>
-<p>84 pages.<br><br><strong>Songs included:</strong></p>
+        <p class="book-isbn">ISBN 978-1-964725-78-9 &middot; <a href="/one-sheets/steve-eulberg-i-celebrate-life.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>I Celebrate Life!</em> is a book/CD set of original songs and tunes for mountain dulcimer and hammered dulcimer, spanning the first 25 years of Steve Eulberg's music.</p>
+<p>It moves from a boot-kicking hoedown through relaxing interludes to jigs and waltzes.</p>
+<p>84 pages.</p>
+<p><strong>Songs included:</strong></p>
 <p><em><strong>I Celebrate Life!</strong></em> - DAA Tuning<br> <em><strong>Soaring</strong> </em>- DAA Tuning<br> <em><strong>Mt. Jackson</strong></em> - DAC Tuning<br> <em><strong>On My Heart Imprint Your Image</strong></em> - DAC Tuning - Composed by: T. H. Kingo and P. O. Stromme<br> <em><strong>Elk In The Meadow</strong></em> - DGD Tuning<br> <em><strong>Connie's Jig</strong></em> - DAA Tuning<br> <em><strong>O Virgin-ee-i-a</strong></em> - DAD Tuning<br> <em><strong>We Are An Answer To Prayer</strong></em> - DAA Tuning<br> <em><strong>Bedtime In The Meadow</strong></em> - DAD Tuning<br> <em><strong>Byward Tower</strong></em> - DAA Tuning<br> <em><strong>Cracking Open A New Century</strong></em> - DAD Tuning<br> <em><strong>Dancing With Wu-Li Masters</strong></em> - EAA Tuning<br> <em><strong>Jumpin' Java</strong></em> (A) - DAA Tuning<br> <em><strong>Jumpin' Java</strong></em> (B) - DAD Tuning<br> <em><strong>Hugs</strong> </em>- DAA Tuning<br> <em><strong>Humpty Dumpty</strong></em> - DAA Tuning<br> <em><strong>Trip To Lucky Joe's</strong></em> - DAA Tuning<br> <em><strong>First Snow</strong></em> - DAD Tuning<br> <em><strong>Just A Sliver Short Of Full</strong></em> - AEG Tuning<br> <em><strong>Katie And Maggie's Lullaby</strong></em> - DAA Tuning<br> <em><strong>Noel New-velet</strong></em> - AEA Tuning<br> <em><strong>Old Shoe Waltz</strong></em> - DAD Tuning<br> <em><strong>Pining Hearts</strong></em> - DAA Tuning<br> <em><strong>Primero</strong> </em>- DAD Tuning<br> <em><strong>Restore Us, O God</strong></em> - DAD Tuning<br> <strong>Ponder</strong> - AEA Tuning<br> <em><strong>June</strong> </em>- DAA Tuning<br> <em><strong>Portage River</strong></em> - DAC Tuning<br> <em><strong>Orphan Train</strong></em> - AEA Tuning<br> <em><strong>Seton Sands</strong></em> - DAD Tuning<br> <em><strong>Lake Ozark Blues</strong></em> - DAC Tuning<br> <em><strong>Ferret Frolic</strong></em> - DAD Tuning<br> <em><strong>One Sweet Sabbath Breath</strong></em><br><em><strong> The Reluctant Busboy</strong></em><br><em><strong> Snowbow At Sky</strong></em><br><em><strong> Portage River</strong></em><br><em><strong> Old Show Waltz</strong></em><br><em><strong> Woodland Acres Waltz</strong></em><br><em><strong> First Snow</strong></em><br><em><strong> Summer Storm</strong></em><br><em><strong> Contentment</strong></em></p></div>
       </div>
     </article>
@@ -144,5 +168,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

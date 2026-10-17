@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>September On The Mississippi by Larry Conger – Fingers Of Steel®</title>
-  <meta name="description" content="&quot;September On The Mississippi&quot; is Larry Conger's signature song - you hear it all the time, and enjoy it every time you hear it. This superb collection of…">
+  <meta name="description" content="September On The Mississippi is named for Larry Conger's signature tune, a favorite every time it's played. This mountain dulcimer collection includes…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/larry-conger-september-on-the-mississippi/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,11 +156,11 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/larry-conger-september-on-the-mississippi"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/larry-conger-september-on-the-mississippi-tab-book"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        
-        <div class="book-desc"><p>"September On The Mississippi" is Larry Conger's signature song - you hear it all the time, and enjoy it every time you hear it.</p>
-<p>This superb collection of arrangements for mountain dulcimer includes "September", plus 19 other great tunes for your enjoyment.</p>
-<p>Some capo is required for this book, and songs are mostly in DAD tuning, with one song in DAA and one song in DGD.</p>
-<p>32 pages.<br><br><strong>Songs included:</strong></p>
+        <p class="book-isbn"><a href="/one-sheets/larry-conger-september-on-the-mississippi.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>September On The Mississippi</em> is named for Larry Conger's signature tune, a favorite every time it's played. This mountain dulcimer collection includes "September" plus 19 more of Larry's arrangements.</p>
+<p>Most songs are in DAD tuning, with one in DAA and one in DGD. Some songs use a capo.</p>
+<p>32 pages.</p>
+<p><strong>Songs included:</strong></p>
 <p><em><strong>The Blarney Pilgrim</strong></em> - Traditional Irish Jig - DGD Tuning<br><em><strong>My Shepherd Will Supply My Need</strong></em> - William Bradbury - DAD Tuning<br><em><strong>Sweet Hour Of Prayer</strong></em> - William Bradbury - DAD Tuning<br><em><strong>Sidh Beag Sigh Moir</strong></em> - Turlough O'Carolan - DAD Tuning<br><strong><em>September On The Mississippi</em></strong> - Larry Conger - DAD Tuning<br><em><strong>Bridget Cruise</strong></em> - Turlough O'Carolan - DAD Tuning<br><em><strong>Deep River</strong></em> - Traditional Spiritual - DAD Tuning<br><em><strong>My Old Kentucky Home</strong></em> - Stephen Foster - DAD Tuning<br><em><strong>Greensleeves</strong></em> - Traditional British Isles Melody - DAD Tuning - Capo 1<br><em><strong>Londonderry Air (Danny Boy)</strong></em> - Traditional Irish Melody - DAD Tuning<br><em><strong>Bonnie Doon</strong></em> - Traditional Scottish Tune - DAD Tuning<br><em><strong>Scarborough Fair</strong></em> - Traditional English Ballad - DAD Tuning - Capo 1<br><em><strong>Blind Mary</strong></em> - Turlough O'Carolan - DAD Tuning<br><em><strong>Wayfaring Stranger</strong></em> - Traditional Appalachian Folk Tune - DAD Tuning - Capo 1<br><em><strong>Morning Has Broken</strong></em> - Traditional Gaelic Melody - DAD Tuning<br><em><strong>The Water Is Wide </strong></em>- DAA Tuning<br><em><strong>Sandy River Belle</strong></em> - Traditional American Fiddle Tune - DAD Tuning<br><em><strong>Off She Goes</strong></em> - Traditional Irish Jig Tune - DAD Tuning<br><em><strong>Smash The Windows</strong></em> - Traditional Irish Jig Tune - DAD Tuning<br><em><strong>Denis Murphy's Slide</strong></em> - Traditional Fiddle Tune - DAD Tuning</p>
 <p> </p></div>
       </div>
@@ -147,5 +169,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

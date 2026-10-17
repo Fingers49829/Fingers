@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mountain Dulcimer Arrangements From Both Sides Of The Atlantic by Neal Hellman – Fingers Of Steel®</title>
-  <meta name="description" content="With 35 arrangements from &quot;Both Sides Of The Atlantic&quot;, Neal Hellman's latest book is the RIGHT combination of everything you want in a dulcimer book.…">
+  <meta name="description" content="Mountain Dulcimer Arrangements From Both Sides Of The Atlantic brings together 35 arrangements by Neal Hellman, one of the masters of the mountain…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/neal-hellman-mountain-dulcimer-arrangements-from-both-sides-of-the-atlantic/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,11 +156,12 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/neal-hellman-mountain-dulcimer-arrangements-from-both-sides-of-the-atlantic"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/neal-hellman-mountain-dulcimer-arrangements-from-both-sides-of-the-atlantic"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-13-0</p>
-        <div class="book-desc"><p>With 35 arrangements from "Both Sides Of The Atlantic", Neal Hellman's latest book is the RIGHT combination of everything you want in a dulcimer book. Challenging arrangements (not JUST melody lines!), but not TOO challenging. Songs you've heard of, plus some that are new to you. Songs with lyrics PLUS instrumental tunes. This is a great book from one of the masters of the mountain dulcimer.</p>
-<p>Free downloads of demo tracks can be <a href="https://www.folkcraft.com/pages/free-downloads" title="Hellman Atlantic Book downloads">found here</a>.</p>
-<p>This book is published by Folkcraft® Instruments, under the <a href="/" title="fingers of steel">Fingers Of Steel</a>® imprint.</p>
-<p>84 pages.<br><br><strong>Songs included:</strong></p>
+        <p class="book-isbn">ISBN 978-1-964725-13-0 &middot; <a href="/one-sheets/neal-hellman-mountain-dulcimer-arrangements-from-both-sides-of-the-atlantic.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Mountain Dulcimer Arrangements From Both Sides Of The Atlantic</em> brings together 35 arrangements by Neal Hellman, one of the masters of the mountain dulcimer.</p>
+<p>The balance is just right: arrangements that go beyond bare melody lines without being too difficult, familiar songs alongside ones that may be new to you, and songs with lyrics as well as instrumental tunes.</p>
+<p>Demo tracks are a free download. <a href="https://www.folkcraft.com/pages/free-downloads">Get them from Folkcraft</a>.</p>
+<p>84 pages.</p>
+<p><strong>Songs included:</strong></p>
 <p><em><strong>A Maid That's Deep In Love</strong></em> - DAD Tuning<br><em><strong>Allemande</strong></em> - DAD Tuning<br><em><strong>Arkansas Traveler</strong></em> - DAD Tuning<br><em><strong>Bravery, Courage And Fearless Men</strong></em> - DAD Tuning<br><em><strong>Bridget Cruise</strong></em> - DAD Tuning<br><em><strong>Colored Aristocracy</strong></em> - DAD Tuning<br><em><strong>Concertina Reel</strong></em> - DAD Tuning<br><em><strong>Dark, Plaintive Youth (The)</strong></em> - DAD Tuning<br><em><strong>Death Of Queen Jane (The)</strong></em> - DAD Tuning<br><em><strong>Farewell To The Creeks</strong></em> - DAD Tuning<br><em><strong>Fiddlin' Bagpipes</strong></em> - DAD Tuning<br><em><strong>Gary Owen</strong></em> - DAD Tuning<br><em><strong>Girl I Left Behind Me (The)</strong></em> - DAD Tuning<br><em><strong>Johnny Has Gone For A Soldier</strong></em> - DAD Tuning<br><em><strong>Kingdom Come</strong></em> - DAD Tuning<br><em><strong>Leaving Lismore</strong></em> - DAD Tuning<br><em><strong>Loch Lavan Castle</strong></em> - DAD Tuning<br><em><strong>Merrily Kiss The Quaker's Wife</strong></em> - DAD Tuning<br><em><strong>Minuet</strong></em> - DAD Tuning<br><em><strong>My Lagan Love</strong></em> - DAD Tuning<br><em><strong>Paddy's Green Shamrock Shore</strong></em> - DAD Tuning<br><em><strong>Port Dalaigh</strong></em> - DAD Tuning<br><em><strong>Pretty Saro</strong></em> - DAD Tuning<br><em><strong>Rain And Snow</strong></em> - DAD Tuning<br><em><strong>Sailor's Alphabet (The)</strong></em> - DAD Tuning<br><em><strong>Sandy River Belle</strong></em> - DAD Tuning<br><em><strong>Satan, Your Kingdom Must Come Down</strong></em> - DAD Tuning<br><em><strong>Silly Bill</strong></em> - DAD Tuning<br><em><strong>Skye Boat Song (The)</strong></em> - DAD Tuning<br><em><strong>Tater Patch</strong></em> - DAD Tuning<br><em><strong>Tripping Up The Stairs</strong></em> - DAD Tuning<br><em><strong>Voi Ch'amate Lo Criatore</strong></em> - DAD Tuning<br><em><strong>Wayfaring Stranger</strong></em> - DAD Tuning<br><em><strong>When Adam Was Created</strong></em> - DAD Tuning<br><em><strong>The Pythagorean Monochord</strong></em>﻿﻿ - DAD Tuning</p></div>
       </div>
     </article>
@@ -146,5 +169,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

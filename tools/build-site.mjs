@@ -94,6 +94,8 @@ function cleanDescription(html) {
     .replace(/<(meta|link|input)[^>]*>/gi, '')
     .replace(/\s(style|class|id|data-[\w-]+)="[^"]*"/gi, '')
     .replace(/<span>([\s\S]*?)<\/span>/gi, '$1')
+    // Drop the store's "This book is published by Folkcraft® Instruments, under the Fingers Of Steel® imprint." line.
+    .replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*published by Folkcraft(?:(?!<\/p>)[\s\S])*<\/p>/gi, '')
     .replace(/href="\//g, `href="${FOLKCRAFT}/`)
     // Links to Fingers Of Steel pages on Folkcraft stay on this site instead.
     .replace(/href="https?:\/\/(?:www\.)?folkcraft\.com\/pages\/fingers-of-steel\/?"/g, 'href="/"')
@@ -103,6 +105,20 @@ function cleanDescription(html) {
     // "46 pages. Songs included:" often runs together, or has only a single line break between them;
     // leave a blank line before the song list.
     .replace(/(?<=[^>\s]|<br\s*\/?>)(?:\s|&nbsp;|<br\s*\/?>)*(?=<(?:strong|b)>\s*(?:Songs|Tunes) included)/gi, '<br><br>')
+    .trim();
+}
+
+// The song list from a store description: from the bold "Songs included" heading to the end, without the
+// store's closing boilerplate (publisher line, page count).
+function storeSongList(html) {
+  const at = (html || '').search(/<(strong|b)\b[^>]*>\s*(?:<[^>]+>\s*)*(Songs|Tunes) included/i);
+  if (at < 0) return '';
+  // When the heading sits mid-paragraph ("46 pages. <strong>Songs included"), reopen the paragraph at the heading.
+  const before = html.slice(0, at);
+  const inParagraph = before.lastIndexOf('<p') > before.lastIndexOf('</p>');
+  return ((inParagraph ? '<p>' : '') + html.slice(at))
+    .replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*published by(?:(?!<\/p>)[\s\S])*<\/p>/gi, '')
+    .replace(/<p[^>]*>\s*\d+ pages\.?\s*<\/p>/gi, '')
     .trim();
 }
 
@@ -119,7 +135,15 @@ for (const m of pageHtml.slice(start).matchAll(/<(\/?)div\b/g)) {
 }
 let body = pageHtml.slice(start, end)
   .replace(/href="\//g, `href="${FOLKCRAFT}/`)
-  .replace(/src="[^"]*FingersOfSteel_K_WhiteBorder[^"]*"/g, 'src="/images/fingers-of-steel-logo.png"');
+  .replace(/src="[^"]*FingersOfSteel_K_WhiteBorder[^"]*"/g, 'src="/images/fingers-of-steel-logo.png"')
+  // The catalog's own styles use Folkcraft green; this site's theme color is blue.
+  .replace(/--fos-green:\s*#[0-9a-f]{3,6}/i, '--fos-green:#1f4e79')
+  // This site's own intro line in place of Folkcraft's "publishing imprint" sentence.
+  .replace(/<p><strong>Fingers Of Steel®<\/strong>[^<]*publishing imprint[^<]*<\/p>/,
+    "<p><strong>Fingers Of Steel®</strong> is the world's leading publisher of music books for the Appalachian mountain dulcimer.</p>");
+if (!body.includes("world's leading publisher")) console.warn('! Homepage intro sentence not found on Folkcraft; left unchanged');
+// Drop Folkcraft's "Every title is printed and shipped by Folkcraft..." line.
+body = body.replace(/\s*<p>Every title is printed[^<]*<\/p>/, '');
 
 // ISBNs from the page's ISBN table, keyed by normalized "author title".
 const isbnByKey = new Map();
@@ -206,8 +230,13 @@ for (const b of books) {
   b.slug = slug;
   b.isbn = isbnByKey.get(norm(b.author + b.title)) || null;
   // A file in descriptions/<slug>.html replaces the store's description with copy written for this site.
-  b.description = await readFile(join(ROOT, 'descriptions', `${slug}.html`), 'utf8')
-    .then(s => s.replace(/\r\n/g, '\n')).catch(() => b.description);
+  // Where it has <!--STORE-SONGS-->, the store's current song list goes in.
+  const custom = await readFile(join(ROOT, 'descriptions', `${slug}.html`), 'utf8').catch(() => null);
+  if (custom) {
+    const songs = storeSongList(b.description);
+    if (custom.includes('<!--STORE-SONGS-->') && !songs) console.warn(`! ${slug}: no song list found in the store description`);
+    b.description = custom.replace(/\r\n/g, '\n').replace('<!--STORE-SONGS-->', songs);
+  }
   // One-sheets are made separately by tools/build-one-sheet.mjs.
   b.oneSheet = existsSync(join(ROOT, 'one-sheets', `${slug}.pdf`));
 }
@@ -216,6 +245,14 @@ const slugByUrl = new Map(books.flatMap(b => [b.folkcraftUrl, b.ddUrl].filter(Bo
 // ---- 3. Book pages ---------------------------------------------------------------------------
 
 const template = await readFile(join(ROOT, 'tools', 'page-template.html'), 'utf8');
+
+// Header bar shared by every page. On the homepage the site name is the page's <h1>.
+const masthead = nameTag => `
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><${nameTag} class="name">Fingers Of Steel® Publications</${nameTag}><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>`;
+const MASTHEAD = masthead('span');
 
 async function bookPage(b) {
   const title = `${b.title}${b.author ? ` by ${b.author}` : ''}`;
@@ -234,7 +271,6 @@ async function bookPage(b) {
   ].filter(Boolean).join('\n          ');
 
   const content = `
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       ${gallery}
       <div class="book-info">
@@ -255,7 +291,8 @@ async function bookPage(b) {
     .replace('<title>Fingers Of Steel® Publications</title>', `<title>${esc(title)} – Fingers Of Steel®</title>`)
     .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(summary)}">`)
     .replace('<link rel="canonical" href="https://fingersofsteel.com/">', `<link rel="canonical" href="${SITE}/books/${b.slug}/">`)
-    .replace('<h1>Fingers Of Steel® Publications</h1>', '<p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>')
+    .replace(/\s*<h1>Fingers Of Steel® Publications<\/h1>/, '')
+    .replace('<body>', `<body>${MASTHEAD}`)
     .replace('<!--FOS-BODY-->', content);
 }
 
@@ -282,7 +319,12 @@ for (const [whole, slug, src] of cards) {
   if (cover) body = body.replace(whole, whole.replace(`src="${src}"`, `src="${await localImage(cover, 300)}"`));
 }
 body = await localizeImgs(body, 300);
-await writeFile(join(ROOT, 'index.html'), template.replace('<!--FOS-BODY-->', body));
+// The header carries the logo, so the intro's own copy of it goes.
+body = body.replace(/<img src="\/images\/fingers-of-steel-logo\.png"[^>]*>/, '');
+await writeFile(join(ROOT, 'index.html'), template
+  .replace(/\s*<h1>Fingers Of Steel® Publications<\/h1>/, '')
+  .replace('<body>', `<body>${masthead('h1')}`)
+  .replace('<!--FOS-BODY-->', body));
 
 // Remove downloaded images no page uses any more.
 for (const name of await readdir(IMAGES)) {

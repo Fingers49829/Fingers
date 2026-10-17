@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Classical Music For Mountain Dulcimer by Shelley Stevens – Fingers Of Steel®</title>
-  <meta name="description" content="This book has twenty-six classical tunes arranged for solo mountain dulcimer. These intermediate arrangements include both standard notation and…">
+  <meta name="description" content="Classical Music For Mountain Dulcimer by Shelley Stevens contains 26 classical pieces arranged for solo mountain dulcimer in DAD tuning, at intermediate…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/shelley-stevens-classical-music-for-mountain-dulcimer/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,11 +156,11 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/shelley-stevens-classical-music-for-mountain-dulcimer"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/shelley-stevens-classical-music-for-mountain-dulcimer"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-05-5</p>
-        <div class="book-desc"><p align="center"><span size="4">This book has twenty-six classical tunes arranged for solo mountain dulcimer. These intermediate arrangements include both standard notation and tablature, and are written for a DAD-tuned dulcimer.<br><br>All of the arrangements require the 6.5 fret, many require the 1.5 fret, and a few require a 0.5 fret. </span>All songs are in DAD tuning.<br><br>This collection was originally published under the name "The Three String Orchestra, Vol. II", and was later renamed "Classical Music For Mountain Dulcimer".</p>
-<p align="center">37 pages.</p>
-
-<p align="center"><strong>Songs included:</strong></p>
+        <p class="book-isbn">ISBN 978-1-964725-05-5 &middot; <a href="/one-sheets/shelley-stevens-classical-music-for-mountain-dulcimer.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Classical Music For Mountain Dulcimer</em> by Shelley Stevens contains 26 classical pieces arranged for solo mountain dulcimer in DAD tuning, at intermediate level, with standard notation and tablature.</p>
+<p>Every arrangement uses the 6.5 fret, many use the 1.5 fret, and a few need a 0.5 fret.</p>
+<p>37 pages. Originally published as <em>The Three String Orchestra, Vol. II</em>.</p>
+<p><strong>Songs included:</strong></p>
 <p align="center"><span size="3"><em><strong>Amaryllis - </strong></em>J. Ghys, DAD Tuning<br><em><strong>Ancienne Chanson Francaise - </strong></em>Pyotr Ilyich Tchaikovsky, DAD Tuning, Capo 1<br><em><strong>Bourree - </strong></em>G.F. Handel, DAD Tuning<br><em><strong>Castanet Song</strong></em> (From "Carmen") - Georges Bizet, DAD Tuning<br><em><strong>Die Lorelei</strong></em> - Friedrich Silcher, DAD Tuning<br><em><strong>Dauernde Liebe</strong></em> - Wolfgang Amadeus Mozart, DAD Tuning<br><em><strong>Ecossaise</strong></em> - Ludwig Van Beethoven, DAD Tuning<br><em><strong>Gavotte</strong></em> - J.S. Bach, DAD Tuning, Capo 1<br><em><strong>Heidenroslein</strong></em> - Heinrich Werner, DAD Tuning<br><em><strong>Hornpipe</strong></em> - G.F. Handel, DAD Tuning<br><em><strong>Madame Butterfly</strong></em> (Theme) - Giacomo Puccini, DAD Tuning<br><em><strong>March</strong></em> (From "The Nutcracker") - Pyotr Ilyich Tchaikovsky, DAD Tuning<br><em><strong>Norwegian Dances</strong></em> - Edvard Grieg, DAD Tuning<br><em><strong>Pavane For A Sleeping Beauty</strong></em> - Maurice Ravel, DAD Tuning<br><em><strong>Piano Sonata</strong></em> - Franz Joseph Haydn, DAD Tuning<br><em><strong>Piano Concerto, K. 537</strong></em> - Wolfgang Amadeus Mozart, DAD Tuning<br><em><strong>Rigoletto</strong></em> (From "La Donna E Mobile") - Giuseppe Verdi, DAD Tuning<br><em><strong>Silvery Waves</strong></em> - Addison P. Wyman, DAD Tuning<br><em><strong>Swan Lake </strong>(Theme) </em>- Pyotr Ilyich Tchaikovsky, DAD Tuning<br><em><strong>Symphony #1 Theme</strong></em> (Fourth Movement) - Johannes Brahms, DAD Tuning<br><em><strong>Symphony #6 Theme</strong></em> (First Movement, Pathetique) - Pyotr Ilyich Tchaikovsky, DAD Tuning<br><em><strong>Symphony # 41 Theme</strong></em> (Jupiter) - Wolfgang Amadeus Mozart, DAD Tuning<br><em><strong>Tales Of Hoffman</strong></em> (Bacarolle) - Jacques Offenbach, DAD Tuning<br><em><strong>Toy Symphony</strong></em> (3rd movement) - Leopold Mozart, DAD Tuning<br><em><strong>Wiegenleid</strong></em> - Franz Schubert, DAD Tuning<br><em><strong>Woodland Sketches #1</strong></em> - Edward MacDowell, DAD Tuning</span></p></div>
       </div>
     </article>
@@ -146,5 +168,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

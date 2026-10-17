@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Baritone Dulcimer Jam Book by Tom McConnell – Fingers Of Steel®</title>
-  <meta name="description" content="Do you have a baritone mountain dulcimer, and love its tone quality for solo play, but wish you could use it when you play with a group? This amazing book…">
+  <meta name="description" content="Love your baritone mountain dulcimer for solo playing but want to use it in a group? Tom McConnell's Baritone Dulcimer Jam Book gives you tips and tricks…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/tom-mcconnell-baritone-dulcimer-jam-book/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,8 +156,10 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/baritone-dulcimer-jam-book-1310201"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/tom-mcconnell-baritone-dulcimer-jam-book-1"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-87-1</p>
-        <div class="book-desc"><p>Do you have a baritone mountain dulcimer, and love its tone quality for solo play, but wish you could use it when you play with a group? This amazing book will give you tips and tricks for playing your AEA-tuned baritone dulcimer with a DAD-tuned standard dulcimer. There are plenty of songs (popular jam tunes) to get you started, plus all the know-how you'll need to make your own arrangements. You'll really appreciate the thought and creativity that went into this book once you start working through it, and applying your new skills to playing the baritone mountain dulcimer!<br><br><strong> Songs included:</strong></p>
+        <p class="book-isbn">ISBN 978-1-964725-87-1 &middot; <a href="/one-sheets/tom-mcconnell-baritone-dulcimer-jam-book.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p>Love your baritone mountain dulcimer for solo playing but want to use it in a group? Tom McConnell's <em>Baritone Dulcimer Jam Book</em> gives you tips and tricks for playing an AEA-tuned baritone dulcimer alongside DAD-tuned standard dulcimers.</p>
+<p>Plenty of popular jam tunes get you started, along with the know-how to create your own arrangements.</p>
+<p><strong> Songs included:</strong></p>
 <p><em><strong>Amazing Grace</strong></em><br><em><strong>Angelina Baker</strong></em><br><em><strong>Aunt Rhodie</strong></em><br><em><strong>Barlow Knife</strong></em><br><em><strong>Bile Them Cabbage Down</strong></em><br><em><strong>Black Mountain Rag</strong></em><br><em><strong>Cherokee Shuffle</strong></em><br><em><strong>Columbus Stockade Blues</strong></em><br><em><strong>Cripple Creek</strong></em><br><em><strong>Cucharin's Cross</strong></em><br><em><strong>Fly Around My Pretty Little Miss</strong></em><br><em><strong>Goin' To Boston</strong></em><br><em><strong>Hangman's Reel</strong></em><br><em><strong>Johnson Boys</strong></em><br><em><strong>June Apple</strong></em><br><em><strong>Liza Jane</strong></em><br><em><strong>May The Circle Be Unbroken</strong></em><br><em><strong>Mississippi Sawyer</strong></em><br><em><strong>Oh, Susannah</strong></em><br><em><strong>Old Joe Clark</strong></em><br><em><strong>Over The Waterfall</strong></em><br><em><strong>Red Wing</strong></em><br><em><strong>Reuben's Train</strong></em><br><em><strong>Rock The Cradle Joe</strong></em><br><em><strong>Rosin The Beau</strong></em><br><em><strong>Sandy River Belle</strong></em><br><em><strong>Shady Grove</strong></em><br><em><strong>Silly Bill</strong></em><br><em><strong>Soldier's Joy</strong></em><br><em><strong>Southwind</strong></em><br><em><strong>Spotted Pony</strong></em><br><em><strong>Sugar Hill</strong></em><br><em><strong>Waterbound</strong></em><br><em><strong>Whiskey Before Breakfast</strong></em><br><em><strong>Wildwood Flower</strong></em></p></div>
       </div>
     </article>
@@ -143,5 +167,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

@@ -41,14 +41,16 @@ const fileUrl = src => src.startsWith('/') ? pathToFileURL(join(ROOT, decodeURIC
 const cover = fileUrl(decode(pick(/<a href="([^"]+)"><img class="book-cover"/) || ''));
 const descHtml = pick(/<div class="book-desc">([\s\S]*?)<\/div>\s*<\/div>\s*<\/article>/) || '';
 const pages = pick(/(\d+)\s+pages/i);
-const hasAudio = /audio/i.test(descHtml);
+const hasAudio = /audio|mp3/i.test(descHtml);
 
-// Description: the paragraphs before the tune list, minus the store's boilerplate lines.
+// Description: the paragraphs before the tune list, minus boilerplate and download links (the "Free demo
+// audio" tag covers those), and only as much as fits beside the cover (~600 characters).
 const paras = [];
 for (const [, p] of descHtml.matchAll(/<p>([\s\S]*?)<\/p>/g)) {
   if (/songs included|tunes included/i.test(p)) break;
   const t = text(p).replace(/\s*\b\d+ pages\.?\s*$/i, '');
-  if (!t || /published by|free downloadable audio|free audio downloads|link to the page/i.test(t)) continue;
+  if (!t || /published by|free downloadable audio|free audio downloads|link to the page|free-downloads/i.test(t + p)) continue;
+  if (paras.length && paras.join(' ').length + t.length > 600) break;
   paras.push(t);
 }
 const shortDesc = paras.join(' ').length < 300;
@@ -57,11 +59,29 @@ const shortDesc = paras.join(' ').length < 300;
 const thumbs = page.match(/<div class="book-thumbs">([\s\S]*?)<\/div>/)?.[1] || '';
 const samples = [...thumbs.matchAll(/<a href="([^"]+)"/g)].map(m => fileUrl(decode(m[1]))).slice(0, 3);
 
-// Tunes: store descriptions list them as "<em><strong>Name</strong></em> - Tuning".
-const tunes = [...descHtml.matchAll(/<strong>([^<]+)<\/strong>\s*<\/em>\s*-\s*([^<]+?)\s*(?=<br|<\/p>)/g)]
-  .map(m => ({ name: decode(m[1]).trim(), tuning: decode(m[2]).replace(/\s*Tuning$/i, '').trim() }))
-  .filter(t => !/songs included/i.test(t.name));
+// Tunes: everything after the "Songs included" heading, one tune per line. Lines look like
+// "Name - DAD Tuning", "Name - Composed by: ...", "Name (Capo 4)" or plain "Name"; the name is the part
+// before " - ". Key headings ("D Tunes") are skipped, and "D tunes: A, B, C" lines are split.
+const listAt = descHtml.search(/(Songs|Tunes) included/i);
+const tunes = [];
+if (listAt >= 0) {
+  const lines = descHtml.slice(listAt).split(/<br\s*\/?>|<\/p>|<\/li>/i)
+    .map(l => decode(l.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim())
+    .filter(l => l && !/(songs|tunes) included/i.test(l) && !/^(?:[A-G](?: minor)?|two-key) tunes:?$/i.test(l));
+  for (const line of lines) {
+    const group = line.match(/^(?:[A-G](?: minor)?|two-key) tunes:\s*(.+)$/i);
+    for (const entry of group ? group[1].split(/,\s*/) : [line]) {
+      const [name, ...rest] = entry.split(/\s+[-–]\s+/);
+      const tuning = rest.join(' ').match(/\b([A-G][A-Ga-g#]{2,3})\s+Tuning\b/)?.[1] || '';
+      if (name.trim()) tunes.push({ name: name.trim(), tuning });
+    }
+  }
+}
+// "All in DAD tuning" only when every tune names the same tuning.
 const tunings = [...new Set(tunes.map(t => t.tuning))];
+const oneTuning = tunings.length === 1 && tunings[0] ? tunings[0] : null;
+// Count melody/harmony parts or easy/hard versions of one tune once.
+const tuneCount = new Set(tunes.map(t => t.name.replace(/\s*\([^)]*\)\s*$/g, '').toLowerCase())).size;
 const MAX_TUNES = 60;
 const shown = tunes.slice(0, MAX_TUNES);
 
@@ -105,22 +125,22 @@ const many = shown.length > 40;
 const facts = [
   isbn && ['ISBN', isbn],
   pages && ['Pages', pages],
-  tunes.length && ['Tunes', `${tunes.length}${tunings.length === 1 ? `, all in ${tunings[0]} tuning` : ''}`],
+  tunes.length && ['Tunes', `${tuneCount}${oneTuning ? `, all in ${oneTuning} tuning` : ''}`],
   hasAudio && ['Audio', 'Free demonstration tracks to download'],
   ['Publisher', 'Fingers Of Steel®'],
 ].filter(Boolean);
 const factsDl = `<dl class="facts">${facts.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
 const chips = [
-  tunes.length && `${tunes.length} tunes`,
-  tunings.length === 1 && `${tunings[0]} tuning`,
+  tunes.length && `${tuneCount} tunes`,
+  oneTuning && `${oneTuning} tuning`,
   pages && `${pages} pages`,
   hasAudio && 'Free demo audio',
 ].filter(Boolean);
 const coverImg = cover ? `<img class="cover" src="${esc(cover)}" alt="Cover">` : '';
 const descBlock = `<div class="desc">${paras.map(p => `<p>${esc(p)}</p>`).join('')}</div>`;
 const tuneList = shown.length ? `
-    <h2>Tunes in this book <span>(${tunes.length})</span></h2>
-    <ol>${shown.map(t => `<li>${esc(t.name)}${tunings.length > 1 ? ` <span class="tuning">(${esc(t.tuning)})</span>` : ''}</li>`).join('')}</ol>
+    <h2>Tunes in this book <span>(${tuneCount})</span></h2>
+    <ol>${shown.map(t => `<li>${esc(t.name)}${!oneTuning && t.tuning ? ` <span class="tuning">(${esc(t.tuning)})</span>` : ''}</li>`).join('')}</ol>
     ${tunes.length > shown.length ? `<p class="more">…and ${tunes.length - shown.length} more.</p>` : ''}` : '';
 const where = [
   printUrl && ['Printed book', 'folkcraft.com'],
@@ -154,7 +174,7 @@ const designs = {
   classic: () => ({
     css: `
       body { padding: 0.5in; }
-      .head { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 3px solid #3b6b2a; }
+      .head { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 3px solid #1f4e79; }
       .head img { height: 0.85in; }
       .head .imprint { font-size: 17pt; letter-spacing: 0.02em; }
       .head .sub { font-size: 9.5pt; color: #666; }
@@ -169,8 +189,8 @@ const designs = {
       .tunes h2 { font-size: 12pt; margin-bottom: 6px; }
       .tunes h2 span { font-weight: normal; color: #666; font-size: 10pt; }
       .tunes ol { columns: ${many ? 4 : 3}; column-gap: 0.25in; padding-left: 1.6em; font-size: ${many ? 8.5 : 10.5}pt; line-height: ${many ? 1.35 : 1.55}; }
-      .foot { position: absolute; bottom: 0.5in; left: 0.5in; right: 0.5in; border-top: 3px solid #3b6b2a; padding-top: 8px; font-size: 9pt; display: flex; justify-content: space-between; gap: 16px; }
-      .foot strong { display: block; color: #3b6b2a; }`,
+      .foot { position: absolute; bottom: 0.5in; left: 0.5in; right: 0.5in; border-top: 3px solid #1f4e79; padding-top: 8px; font-size: 9pt; display: flex; justify-content: space-between; gap: 16px; }
+      .foot strong { display: block; color: #1f4e79; }`,
     body: `
       <header class="head">
         <img src="${logo}" alt="Fingers Of Steel logo">
@@ -191,7 +211,7 @@ const designs = {
   // B. Full-width green banner, big cover, tinted tune panel and a bottom strip for ISBN and ordering.
   banner: () => ({
     css: `
-      .band { background: #2f5622; color: #fff; padding: 0.4in 0.5in 0.35in; display: flex; align-items: center; gap: 0.3in; }
+      .band { background: #1f4e79; color: #fff; padding: 0.4in 0.5in 0.35in; display: flex; align-items: center; gap: 0.3in; }
       .band img { height: 1.15in; border: 4px solid #fff; background: #fff; }
       .band .imprint { font-family: "Segoe UI", Arial, sans-serif; font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.85; }
       .band h1 { font-size: 30pt; font-weight: normal; line-height: 1.1; margin-top: 4px; }
@@ -201,20 +221,23 @@ const designs = {
       .desc { font-size: ${shortDesc ? 14 : 12.5}pt; line-height: 1.5; }
       .desc p { margin-bottom: 10px; }
       .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-      .chips span { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #2f5622; border: 1.5px solid #2f5622; border-radius: 999px; padding: 4px 12px; }
-      .tunes, .inside { margin: 0.25in 0.5in 0; background: #f3f1ea; border-radius: 8px; padding: 14px 18px; }
-      .tunes h2, .inside h2 { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; letter-spacing: 0.15em; text-transform: uppercase; color: #2f5622; margin-bottom: 8px; }
+      .chips span { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #1f4e79; border: 1.5px solid #1f4e79; border-radius: 999px; padding: 4px 12px; }
+      /* The page is a column: banner, cover and description, then the tunes or sample pages take whatever
+         height is left above the bottom strip (the fit script below shrinks a long tune list to match). */
+      body { display: flex; flex-direction: column; }
+      .tunes, .inside { margin: 0.25in 0.5in 0.2in; background: #f3f1ea; border-radius: 8px; padding: 14px 18px; flex: 0 1 auto; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+      .tunes h2, .inside h2 { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; letter-spacing: 0.15em; text-transform: uppercase; color: #1f4e79; margin-bottom: 8px; }
       .tunes h2 span { color: #777; letter-spacing: 0; }
-      .inside .pages { display: flex; justify-content: center; gap: 0.25in; }
-      .inside img { height: ${title.length > 32 ? 2.6 : 3}in; max-width: ${samples.length > 2 ? 2.3 : 3.4}in; object-fit: contain; background: #fff; border: 1px solid #ccc; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
-      .tunes ol { columns: ${many ? 4 : 3}; column-gap: 0.25in; padding-left: 1.7em; font-size: ${many ? 8.5 : 10}pt; line-height: ${many ? 1.3 : 1.45}; }
-      .strip { position: absolute; bottom: 0; left: 0; right: 0; background: #f3f1ea; border-top: 4px solid #2f5622; padding: 0.2in 0.5in 0.3in; display: flex; align-items: center; justify-content: space-between; gap: 0.3in; }
+      .inside .pages { display: flex; justify-content: center; gap: 0.25in; flex: 1 1 auto; min-height: 0; }
+      .inside img { height: 100%; max-height: 3in; max-width: ${samples.length > 2 ? 2.3 : 3.4}in; object-fit: contain; background: #fff; border: 1px solid #ccc; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+      .tunes ol { flex: 0 0 auto; columns: ${many ? 4 : 3}; column-gap: 0.25in; padding-left: 1.7em; font-size: ${many ? 8.5 : 10}pt; line-height: ${many ? 1.3 : 1.45}; }
+      .strip { margin-top: auto; flex: 0 0 auto; background: #f3f1ea; border-top: 4px solid #1f4e79; padding: 0.2in 0.5in 0.3in; display: flex; align-items: center; justify-content: space-between; gap: 0.3in; }
       .strip .isbn { display: flex; align-items: center; gap: 14px; font-size: 9.5pt; flex: 0 0 auto; }
       .strip .isbn strong { white-space: nowrap; }
       .strip .barcode { width: 1.6in; background: #fff; padding: 4px; }
       .strip .buy { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; font-size: 9pt; }
       .strip .buy strong { white-space: nowrap; }
-      .strip .buy strong { color: #2f5622; }`,
+      .strip .buy strong { color: #1f4e79; }`,
     body: `
       <header class="band">
         <img src="${logo}" alt="Fingers Of Steel logo">
@@ -240,24 +263,24 @@ const designs = {
   trade: () => ({
     css: `
       body { display: grid; grid-template-columns: 2.85in 1fr; }
-      .side { background: #f3f1ea; padding: 0.45in 0.3in 0.4in; display: flex; flex-direction: column; gap: 14px; border-right: 4px solid #3b6b2a; }
+      .side { background: #f3f1ea; padding: 0.45in 0.3in 0.4in; display: flex; flex-direction: column; gap: 14px; border-right: 4px solid #1f4e79; }
       .brand { display: flex; align-items: center; gap: 10px; font-size: 10pt; line-height: 1.25; }
       .brand img { height: 0.7in; }
       .cover { width: 100%; border: 1px solid #ccc; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
-      .side h3 { font-family: "Segoe UI", Arial, sans-serif; font-size: 8.5pt; letter-spacing: 0.15em; text-transform: uppercase; color: #3b6b2a; margin: 0 0 4px; }
+      .side h3 { font-family: "Segoe UI", Arial, sans-serif; font-size: 8.5pt; letter-spacing: 0.15em; text-transform: uppercase; color: #1f4e79; margin: 0 0 4px; }
       .facts { font-size: 9.5pt; gap: 2px 10px; }
       .barcode { width: 1.7in; background: #fff; padding: 5px; }
       .order { font-size: 9.5pt; line-height: 1.45; margin-top: auto; }
       .order div { margin-bottom: 4px; }
       .order strong { display: block; }
       .content { padding: 0.5in 0.5in 0.4in 0.4in; display: flex; flex-direction: column; }
-      .kicker { font-family: "Segoe UI", Arial, sans-serif; font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; color: #3b6b2a; }
+      .kicker { font-family: "Segoe UI", Arial, sans-serif; font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; color: #1f4e79; }
       h1 { font-size: 24pt; font-weight: normal; line-height: 1.12; margin-top: 6px; }
-      .author { font-size: 14pt; color: #555; margin-top: 6px; padding-bottom: 14px; border-bottom: 2px solid #3b6b2a; }
+      .author { font-size: 14pt; color: #555; margin-top: 6px; padding-bottom: 14px; border-bottom: 2px solid #1f4e79; }
       .order span { font-size: 8.5pt; }
       .desc { font-size: 11.5pt; line-height: 1.5; margin-top: 14px; }
       .desc p { margin-bottom: 8px; }
-      .chips { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 6px 0 0; font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #3b6b2a; }
+      .chips { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 6px 0 0; font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #1f4e79; }
       .chips span::before { content: "\\25B8\\00a0"; }
       .tunes { margin-top: 18px; }
       .tunes h2 { font-size: 13pt; margin-bottom: 6px; }
@@ -292,6 +315,27 @@ const html = `<!doctype html>
 <style>${base}${css}</style>
 </head>
 <body>${body}
+<script>
+  // Fit the tune list into the space it has: shrink the text down to a readable minimum, then drop
+  // tunes from the end and say how many more there are. Runs after images load, since the cover's
+  // height decides how much room is left.
+  window.addEventListener('load', function () {
+    const box = document.querySelector('.tunes');
+    if (!box) return;
+    const ol = box.querySelector('ol');
+    const fits = () => box.scrollHeight <= box.clientHeight + 1 && box.scrollWidth <= box.clientWidth + 1;
+    let size = parseFloat(getComputedStyle(ol).fontSize);
+    while (!fits() && size > 10) { size -= 0.25; ol.style.fontSize = size + 'px'; ol.style.lineHeight = '1.3'; }
+    let more = box.querySelector('.more');
+    let hidden = ${tunes.length - shown.length};
+    while (!fits() && ol.children.length > 1) {
+      ol.lastElementChild.remove();
+      hidden++;
+      if (!more) { more = document.createElement('p'); more.className = 'more'; box.appendChild(more); }
+      more.textContent = '\\u2026and ' + hidden + ' more.';
+    }
+  });
+</script>
 </body>
 </html>`;
 

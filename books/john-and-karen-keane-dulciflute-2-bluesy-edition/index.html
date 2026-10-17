@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DulciFlute 2 (Bluesy Edition) by John And Karen Keane – Fingers Of Steel®</title>
-  <meta name="description" content="Here's the long-awaited follow-up book to John and Karen's DulciFlute (1) book. With duets for Native American flute and Mountain Dulcimer, all from the…">
+  <meta name="description" content="DulciFlute 2 (Bluesy Edition) is the follow-up to John and Karen Keane's DulciFlute, with more of their original duets pairing mountain dulcimer and…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/john-and-karen-keane-dulciflute-2-bluesy-edition/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,12 +156,11 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/john-and-karen-keane-dulciflute-2"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/john-keane-and-karen-keane-dulciflute-2"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-53-6</p>
-        <div class="book-desc"><p>Here's the long-awaited follow-up book to John and Karen's DulciFlute (1) book. With duets for Native American flute and Mountain Dulcimer, all from the creative minds of the Keanes, this is a book you're sure to love!</p>
-<p>All tunes are for DAD mountain dulcimer and D minor flute. A conversion/transposition chart is included for flutes in a variety of other (not D minor) keys.</p>
-<p>A CD is included with this amazing book. The CD includes both demonstrations (with performances by John and Karen) as well as background tracks for your own performance/rehearsal.</p>
-<p>This book is published by Folkcraft® Instruments, under the <a title="fingers of steel" href="/">Fingers Of Steel</a>® imprint.</p>
-<p> <strong>Songs included:</strong></p>
+        <p class="book-isbn">ISBN 978-1-964725-53-6 &middot; <a href="/one-sheets/john-and-karen-keane-dulciflute-2-bluesy-edition.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>DulciFlute 2 (Bluesy Edition)</em> is the follow-up to John and Karen Keane's DulciFlute, with more of their original duets pairing mountain dulcimer and Native American flute.</p>
+<p>The dulcimer parts are in DAD tuning and the flute parts are for a D minor flute, and a conversion/transposition chart helps if your flute is in another key.</p>
+<p>The included CD has demonstration performances by John and Karen plus background tracks for your own practice and performance.</p>
+<p><strong>Songs included:</strong></p>
 <p><strong></strong><em><strong>Plum Wore Out </strong></em>- DAD Tuning<br><em><strong>Not My Canoe</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>Hit The Trail</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>Brown Sugar Shuffle</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>Sour Berry Blues</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>Between Here And There</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>No Time For Fry Bread</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>Campfire Stomp</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>The Cactus Incident</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>Where's The Hornet?</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>Ain't Slackin'</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>Buckskin Boogie</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>Midnight Howler</strong></em><em><strong> </strong></em>- DAD Tuning<br><em><strong>It Depends</strong></em><em><strong> </strong></em>- DAD Tuning</p></div>
       </div>
     </article>
@@ -147,5 +168,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

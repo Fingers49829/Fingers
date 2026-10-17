@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Finger-Pick Style Playing by Dana Gruber – Fingers Of Steel®</title>
-  <meta name="description" content="This method book from Dana Gruber has a variety of songs - they're complete pieces, but the focus on each tune isn't the song itself, but rather using the…">
+  <meta name="description" content="Finger-Pick Style Playing is a fingerpicking method for mountain dulcimer by Dana Gruber. Every piece is a complete song, but each one is chosen to teach…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/dana-gruber-finger-pick-style-playing/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,19 +156,35 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/dana-gruber-finger-pick-style-playing"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/dana-gruber-finger-pick-style-playing"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-43-7</p>
-        <div class="book-desc"><p>This method book from Dana Gruber has a variety of songs - they're complete pieces, but the focus on each tune isn't the song itself, but rather using the song to develop a specific skill. We've listed the skill introduced for each song next to the title, so you can get a feel for the pace of the book's instruction. Be sure to zoom in on the Table Of Contents image for more information.</p>
-<p>All songs are in DAD tuning.</p>
-<p>27 pages.</p>
-<p>This book is published by Folkcraft® Instruments, under the <a href="/" title="fingers of steel">Fingers Of Steel</a>® imprint.</p>
-
-<p><strong>Song list (with skills introduced, by song):</strong></p>
-<p><em><strong>Mary Had A Little Lamb</strong></em> (Playing A Melody)<br><em><strong>Mary Had A Little Lamb</strong></em> (Adding Chords)<br><em><strong>You Are My Sunshine</strong></em> - Jimmie Davis (More Chords And Picking Individual Notes)<br><em><strong>Brahms' Lullaby</strong></em> - Johannes Brahms (Waltz In 3/4 Time)<br><em><strong>All Through The Night</strong></em> - Welsh Lullaby (More Pattern Variation)<br><em><strong>Believe Me, If All Of Those Endearing Charms</strong></em> - Traditional Irish (Strumming Chords)<br><em><strong>Lavender Blue</strong></em> - Traditional English (Some Left Hand Techniques - The "Slide")<br><em><strong>Plaisir D'Amour</strong></em> - Giovanni Martini (Plucking Chords)<br><em><strong>Slumber My Darling</strong></em> - Stephen Foster (More Variation Of Patterns)<br><em><strong>Farewell</strong> </em>- Traditional English (More Techniques And Variations Of Patterns)<br><em><strong>Wilson's Wilde</strong></em> - Variations On A Theme - Traditional English (Putting It All Together)</p></div>
+        <p class="book-isbn">ISBN 978-1-964725-43-7 &middot; <a href="/one-sheets/dana-gruber-finger-pick-style-playing.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Finger-Pick Style Playing</em> is a fingerpicking method for mountain dulcimer by Dana Gruber. Every piece is a complete song, but each one is chosen to teach a specific skill, so the book builds your technique step by step. All songs are in DAD tuning.</p>
+<p><strong>Songs and the skill each one introduces:</strong></p>
+<ul>
+  <li>Mary Had A Little Lamb (playing a melody)</li>
+  <li>Mary Had A Little Lamb (adding chords)</li>
+  <li>You Are My Sunshine, Jimmie Davis (more chords and picking individual notes)</li>
+  <li>Brahms' Lullaby, Johannes Brahms (waltz in 3/4 time)</li>
+  <li>All Through The Night, Welsh lullaby (more pattern variation)</li>
+  <li>Believe Me, If All Of Those Endearing Charms, traditional Irish (strumming chords)</li>
+  <li>Lavender Blue, traditional English (left-hand techniques: the slide)</li>
+  <li>Plaisir D'Amour, Giovanni Martini (plucking chords)</li>
+  <li>Slumber My Darling, Stephen Foster (more variation of patterns)</li>
+  <li>Farewell, traditional English (more techniques and pattern variations)</li>
+  <li>Wilson's Wilde – Variations On A Theme, traditional English (putting it all together)</li>
+</ul>
+<p>27 pages.</p></div>
       </div>
     </article>
     <footer>
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dulcimer-Friendly Worship, Vol. 1: The Season Of Advent by Steve Eulberg – Fingers Of Steel®</title>
-  <meta name="description" content="Volume 1 of Steve Eulberg's &quot;Dulcimer-Friendly Worship&quot; series features Advent hymntunes arranged for the mountain dulcimer. These ensembles are arranged…">
+  <meta name="description" content="Dulcimer-Friendly Worship, Vol. 1: The Season Of Advent arranges Advent hymn tunes for mountain dulcimer ensemble in a variety of tunings, with Steve…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/steve-eulberg-dulcimer-friendly-worship-vol-1-the-season-of-advent/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -133,13 +155,24 @@
         <div class="buy-links">
           <a class="buy buy-print" href="https://folkcraft.com/products/steve-eulberg-dulcimer-friendly-worship-advent-1310120"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-73-4</p>
-        <div class="book-desc">Volume 1 of Steve Eulberg's "Dulcimer-Friendly Worship" series features Advent hymntunes arranged for the mountain dulcimer. These ensembles are arranged in a variety of tunings, with historical research in the backgrounds of the tunes, texts and settings.<br><br>Includes Supplement: Hymns in DAD tuning (all the DAA hymns are arranged for DAD tuning, as well). The Supplement also includes an Outline for an Advent Chorale Worship Service.<br> <br> The goal of Steve Eulberg's "Dulcimer-Friendly Worship" series is to make the hymns and carols of the church available and accessible to dulcimer players. <br> <br> 86 pages.<br><br><strong>Songs included:</strong><br> <br> <em><strong>Prepare The Royal Highway</strong></em> - AAD Tuning - Composed by: Frans Mikael Franzen<br> <em><strong>Prepare The Royal Highway</strong></em> (B) - AAE Tuning - Composed by: Frans Mikael Franzen<br> <em><strong>Rejoice, Rejoice, Believers</strong></em> - AAD Tuning - Composed by: Laurentius Laurentii - Lyrics included <br> <em><strong>Savior Of The Nations, Come</strong></em> - Composed by: St. Ambrose, Johann Walther, and Geistliche Gesangbuchlein - Lyrics included <br> <em><strong>Comfort, Comfort Now My People</strong></em> (A) - AAD Tuning - Composed by: Johann G. Olearious - Lyrics included <br> <em><strong>Comfort, Comfort Now My People</strong></em> (B) - AAD Tuning - Composed by: Johann G. Olearious - Lyrics included <br> <em><strong>Comfort, Comfort Now My People</strong></em> (Trio) - AAD Tuning - Composed by: Johann G. Olearious - Lyrics included <br> <em><strong>Come, Thou Long-Expected Jesus</strong></em> (Jefferson) - CAD Tuning - Composed by: Charles Wesley and William Walker - Lyrics included <br> <em><strong>Come, Thou Long-Expected Jesus</strong></em> (St. Hilary) - AAD Tuning - Composed by: Charles Wesley - Lyrics included <br> <em><strong>Come, Thou Long-Expected Jesus</strong></em> (Hyfrydol) - AAD Tuning - Composed by: Charles Wesley and Rowland H. Prichard - Lyrics included <br> <em><strong>Come, Thou Long-Expected Jesus</strong></em> (Stuttgart) - AAD Tuning - Composed by: Charles Wesley and Christian F. Witt - Lyrics included <br> <em><strong>On Jordan's Bank The Baptist's Cry</strong></em> (Puer Nobis) - AAD Tuning - Composed by: Charles Coffin<br> <em><strong>On Jordan's Banks The Baptist's Cry</strong></em> (Winchester, New) - AAD Tuning - Composed by: Charles Coffin<br> <em><strong>Fling Wide The Door</strong></em> - AAD Tuning - Composed by: Georg Weissel and Johann Anastasius Freylinghausen<br> <em><strong>The King Shall Come</strong> </em>- GAD Tuning - Composed by: John Brownlie and A. Davisson<br> <em><strong>Oh, Come, Oh, Come, Emmanuel</strong></em> - CAD Tuning<br> <em><strong>Hark, The Glad Sound!</strong></em> - AAD Tuning - Composed by: Philip Doddridge<br> <em><strong>O Savior, Rend The Heavens Wide</strong></em> - GAD<br> <em><strong>Stir Up Your Power, O Lord</strong></em> - AAD Tuning - Composed by: Steven B. Eulberg<br> <em><strong>My Lord, What A Morning</strong></em> - AAD Tuning<br> <em><strong>Soon And Very Soon</strong></em> - AAD Tuning - Composed by: Andrae Crouch<br> <em><strong>Mine Eyes Have Seen The Glory</strong></em> - AAD Tuning - Composed by: Julia Ward Howe and William Steffe<br> <em><strong>Who Will Set Us Free?</strong></em> - CAD Tuning - Composed by: Bernardo Maria Perez and Francisco F. Feliciano</div>
+        <p class="book-isbn">ISBN 978-1-964725-73-4 &middot; <a href="/one-sheets/steve-eulberg-dulcimer-friendly-worship-vol-1-the-season-of-advent.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Dulcimer-Friendly Worship, Vol. 1: The Season Of Advent</em> arranges Advent hymn tunes for mountain dulcimer ensemble in a variety of tunings, with Steve Eulberg's historical research into the background of each tune, text and setting.</p>
+<p>A supplement gives DAD versions of every DAA hymn, along with a suggested order for an Advent chorale service of worship.</p>
+<p>Steve's Dulcimer-Friendly Worship series puts the church's hymns and carols within easy reach of dulcimer players.</p>
+<p>86 pages.</p>
+<strong>Songs included:</strong><br> <br> <em><strong>Prepare The Royal Highway</strong></em> - AAD Tuning - Composed by: Frans Mikael Franzen<br> <em><strong>Prepare The Royal Highway</strong></em> (B) - AAE Tuning - Composed by: Frans Mikael Franzen<br> <em><strong>Rejoice, Rejoice, Believers</strong></em> - AAD Tuning - Composed by: Laurentius Laurentii - Lyrics included <br> <em><strong>Savior Of The Nations, Come</strong></em> - Composed by: St. Ambrose, Johann Walther, and Geistliche Gesangbuchlein - Lyrics included <br> <em><strong>Comfort, Comfort Now My People</strong></em> (A) - AAD Tuning - Composed by: Johann G. Olearious - Lyrics included <br> <em><strong>Comfort, Comfort Now My People</strong></em> (B) - AAD Tuning - Composed by: Johann G. Olearious - Lyrics included <br> <em><strong>Comfort, Comfort Now My People</strong></em> (Trio) - AAD Tuning - Composed by: Johann G. Olearious - Lyrics included <br> <em><strong>Come, Thou Long-Expected Jesus</strong></em> (Jefferson) - CAD Tuning - Composed by: Charles Wesley and William Walker - Lyrics included <br> <em><strong>Come, Thou Long-Expected Jesus</strong></em> (St. Hilary) - AAD Tuning - Composed by: Charles Wesley - Lyrics included <br> <em><strong>Come, Thou Long-Expected Jesus</strong></em> (Hyfrydol) - AAD Tuning - Composed by: Charles Wesley and Rowland H. Prichard - Lyrics included <br> <em><strong>Come, Thou Long-Expected Jesus</strong></em> (Stuttgart) - AAD Tuning - Composed by: Charles Wesley and Christian F. Witt - Lyrics included <br> <em><strong>On Jordan's Bank The Baptist's Cry</strong></em> (Puer Nobis) - AAD Tuning - Composed by: Charles Coffin<br> <em><strong>On Jordan's Banks The Baptist's Cry</strong></em> (Winchester, New) - AAD Tuning - Composed by: Charles Coffin<br> <em><strong>Fling Wide The Door</strong></em> - AAD Tuning - Composed by: Georg Weissel and Johann Anastasius Freylinghausen<br> <em><strong>The King Shall Come</strong> </em>- GAD Tuning - Composed by: John Brownlie and A. Davisson<br> <em><strong>Oh, Come, Oh, Come, Emmanuel</strong></em> - CAD Tuning<br> <em><strong>Hark, The Glad Sound!</strong></em> - AAD Tuning - Composed by: Philip Doddridge<br> <em><strong>O Savior, Rend The Heavens Wide</strong></em> - GAD<br> <em><strong>Stir Up Your Power, O Lord</strong></em> - AAD Tuning - Composed by: Steven B. Eulberg<br> <em><strong>My Lord, What A Morning</strong></em> - AAD Tuning<br> <em><strong>Soon And Very Soon</strong></em> - AAD Tuning - Composed by: Andrae Crouch<br> <em><strong>Mine Eyes Have Seen The Glory</strong></em> - AAD Tuning - Composed by: Julia Ward Howe and William Steffe<br> <em><strong>Who Will Set Us Free?</strong></em> - CAD Tuning - Composed by: Bernardo Maria Perez and Francisco F. Feliciano</div>
       </div>
     </article>
     <footer>
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

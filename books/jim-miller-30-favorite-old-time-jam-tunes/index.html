@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>30 Favorite Old Time Jam Tunes by Jim Miller – Fingers Of Steel®</title>
-  <meta name="description" content="Jim Miller's &quot;30 Favorite Old Time Jam Tunes&quot; is a collection of traditional and contemporary jam tunes performed and presented by Jim Miller, a popular…">
+  <meta name="description" content="Performer and educator Jim Miller arranges 30 old-time jam tunes for mountain dulcimer, some traditional and some contemporary, in 30 Favorite Old Time…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/jim-miller-30-favorite-old-time-jam-tunes/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -133,9 +155,10 @@
         <div class="buy-links">
           <a class="buy buy-print" href="https://folkcraft.com/products/jim-miller-30-favorite-old-time-jame-tunes"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-81-9</p>
-        <div class="book-desc"><p>Jim Miller's "30 Favorite Old Time Jam Tunes" is a collection of traditional and contemporary jam tunes performed and presented by Jim Miller, a popular performer and educator. With 30 songs, you are sure to recognize some of the tunes while discovering a few that may be new to you.<br><br>15 pages.</p>
-
+        <p class="book-isbn">ISBN 978-1-964725-81-9 &middot; <a href="/one-sheets/jim-miller-30-favorite-old-time-jam-tunes.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p>Performer and educator Jim Miller arranges 30 old-time jam tunes for mountain dulcimer, some traditional and some contemporary, in <em>30 Favorite Old Time Jam Tunes</em>.</p>
+<p>Expect to recognize plenty of them and to discover a few you haven't played before.</p>
+<p>15 pages.</p>
 <p><strong>Songs included:</strong></p>
 <p><em><strong>Arkansas Traveler</strong></em><br><em><strong>Benton's Dream </strong></em>(Capo 4)<br><em><strong>Coleman's March<br>Cherokee Shuffle</strong></em><br><em><strong>Cousin Sally Brown </strong></em><strong>(Capo 4)</strong><br><em><strong>Fisher's Hornpipe</strong></em><br><em><strong>Forked Deer</strong></em><br><em><strong>Golden Slippers</strong></em> (Capo 3)<br><em><strong>Gray Cat On A Tennessee Farm</strong></em><br><em><strong>John Stenson's #2</strong></em><br><em><strong>Julie Ann Johnson</strong></em><br><em><strong>June Apple </strong></em>(Capo 4)<br><em><strong>LIberty</strong></em><br><em><strong>Lil Liza Jane</strong></em><br><em><strong>Little Billy Wilson </strong></em>(Capo 4)<br><em><strong>Mississippi Sawyer</strong></em><br><em><strong>Nail That Catfish To A Tree </strong></em><strong></strong>(Capo 3)<br><em><strong>Over The Waterfall</strong></em><br><em><strong>Rock The Cradle Joe</strong></em><br><em><strong>Rosin The Bow</strong></em><br><em><strong>Sally Slapped Me With A Flounder</strong></em><br><em><strong>Red Wing </strong></em><strong></strong>(Capo 3)<br><em><strong>Sandy Boys </strong></em>(Capo 4)<br><em><strong>Southwind</strong></em><br><em><strong>Seneca Squaredance </strong></em>(Capo 3)<br><em><strong>Shove The Pig's Foot A Little Closer To The Fire </strong></em>(Capo 3)<br><em><strong>Squirrel Heads And Gravy </strong></em><strong></strong>(Capo 3)<br><em><strong>St. Anne's Reel</strong></em><br><em><strong>Tater Patch </strong></em>(Capo 4)<br><em><strong>Turkey In The Straw </strong></em><strong></strong>(Capo 3)<br><em><strong>Wildwood Flower</strong></em></p></div>
       </div>
@@ -144,5 +167,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Secrets To Successful Flatpicking by Aaron O'Rourke – Fingers Of Steel®</title>
-  <meta name="description" content="&quot;Secrets To Successful Flatpicking&quot; is a mountain dulcimer players’ guide to flatpicking technique, exercises, and playing awesome tunes on the dulcimer.…">
+  <meta name="description" content="Secrets To Successful Flatpicking is Aaron O'Rourke's guide to flatpicking the mountain dulcimer: technique, exercises, and great tunes to play with a…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/aaron-orourke-secrets-to-successful-flatpicking/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,16 +156,24 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/aaron-orourke-secrets-to-successful-flatpicking-1310110"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/aaron-orourke-secrets-to-successful-flatpicking"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-19-2</p>
-        <div class="book-desc"><p>"Secrets To Successful Flatpicking" is a mountain dulcimer players’ guide to flatpicking technique, exercises, and playing awesome tunes on the dulcimer. Master picker Aaron O'Rourke provides exercises and practical applications to help strengthen your flatpicking prowess.</p>
-<p>This amazing flatpicking technique book includes free downloadable audio files that you can use to teach your ear how the tunes and exercises should sound. Here's a <a title="folkraft free downloads" href="https://www.folkcraft.com/pages/free-downloads">link to the page with the audio files</a>.</p>
-<p>This book of flatpicking exercises is published by Folkcraft® Instruments, under the <a title="fingers of steel" href="/">Fingers Of Steel</a>® imprint.</p>
-<p>45 pages.<br><br><strong>Songs included:</strong><br><br><em><strong>Shortnin' Bread</strong></em> - DAD Tuning<br> <em><strong>Liza Jane</strong></em> - DAD Tuning<br> <em><strong>Fly Around My Pretty Little Miss</strong></em> - DAD Tuning<br> <em><strong>Grey Cat On A Tennessee Farm</strong></em> - DAD Tuning<br> <em><strong>Rock The Cradle Joe</strong></em> - DAD Tuning<br> <strong><em>Soldier's Joy</em></strong> - DAD Tuning<br> <em><strong>St. Anne's Reel</strong></em> - DAD Tuning<br> <em><strong>Forked Deer</strong></em> - DAD Tuning<br> <em><strong>Turkey In The Straw</strong></em> - DAD Tuning<br> <em><strong>Oh, Susannah</strong></em> - DAD Tuning<br> <em><strong>Dry And Dusty</strong></em> - DAD Tuning<br> <em><strong>Cripple Creek</strong></em> - DAD Tuning<br> <em><strong>Killavil</strong> </em>- DAD Tuning<br> <em><strong>Midnight On The Water</strong></em> - DAD Tuning<br> <em><strong>Spotted Pony</strong></em> - DAD Tuning<br> <em><strong>Wildwood Flower</strong> </em>- DAD Tuning<br> <em><strong>Arkansas Traveler</strong></em> - DAD Tuning<br> <em><strong>Whiskey Before Breakfast</strong></em> - DAD Tuning<br> <em><strong>Bill Cheatum</strong></em> - DAD Tuning<br> <em><strong>Angelina Baker</strong></em> - DAD Tuning<br> <em><strong>Stoney Steps</strong></em> - DAD Tuning</p></div>
+        <p class="book-isbn">ISBN 978-1-964725-19-2 &middot; <a href="/one-sheets/aaron-orourke-secrets-to-successful-flatpicking.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Secrets To Successful Flatpicking</em> is Aaron O'Rourke's guide to flatpicking the mountain dulcimer: technique, exercises, and great tunes to play with a pick.</p>
+<p>Aaron pairs each exercise with practical applications, so the skills you build carry straight into real music and strengthen your flatpicking.</p>
+<p>Free downloadable audio lets you hear how the tunes and exercises should sound. <a href="https://www.folkcraft.com/pages/free-downloads">Get the audio files from Folkcraft</a>.</p>
+<p>45 pages.</p>
+<p><strong>Songs included:</strong><br><br><em><strong>Shortnin' Bread</strong></em> - DAD Tuning<br> <em><strong>Liza Jane</strong></em> - DAD Tuning<br> <em><strong>Fly Around My Pretty Little Miss</strong></em> - DAD Tuning<br> <em><strong>Grey Cat On A Tennessee Farm</strong></em> - DAD Tuning<br> <em><strong>Rock The Cradle Joe</strong></em> - DAD Tuning<br> <strong><em>Soldier's Joy</em></strong> - DAD Tuning<br> <em><strong>St. Anne's Reel</strong></em> - DAD Tuning<br> <em><strong>Forked Deer</strong></em> - DAD Tuning<br> <em><strong>Turkey In The Straw</strong></em> - DAD Tuning<br> <em><strong>Oh, Susannah</strong></em> - DAD Tuning<br> <em><strong>Dry And Dusty</strong></em> - DAD Tuning<br> <em><strong>Cripple Creek</strong></em> - DAD Tuning<br> <em><strong>Killavil</strong> </em>- DAD Tuning<br> <em><strong>Midnight On The Water</strong></em> - DAD Tuning<br> <em><strong>Spotted Pony</strong></em> - DAD Tuning<br> <em><strong>Wildwood Flower</strong> </em>- DAD Tuning<br> <em><strong>Arkansas Traveler</strong></em> - DAD Tuning<br> <em><strong>Whiskey Before Breakfast</strong></em> - DAD Tuning<br> <em><strong>Bill Cheatum</strong></em> - DAD Tuning<br> <em><strong>Angelina Baker</strong></em> - DAD Tuning<br> <em><strong>Stoney Steps</strong></em> - DAD Tuning</p></div>
       </div>
     </article>
     <footer>
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

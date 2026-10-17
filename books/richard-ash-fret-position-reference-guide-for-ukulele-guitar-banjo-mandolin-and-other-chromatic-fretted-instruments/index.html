@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Fret Position Reference Guide For Ukulele, Guitar, Banjo, Mandolin, And Other Chromatic Fretted Instruments by Richard Ash – Fingers Of Steel®</title>
-  <meta name="description" content="Figuring out “where the frets go” is one of the trickiest things about building a guitar or ukulele. This reference guide has detailed charts that show…">
+  <meta name="description" content="Richard Ash's Fret Position Reference Guide For Ukulele, Guitar, Banjo, Mandolin, And Other Chromatic Fretted Instruments solves one of the trickiest…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/richard-ash-fret-position-reference-guide-for-ukulele-guitar-banjo-mandolin-and-other-chromatic-fretted-instruments/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,12 +156,10 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/richard-ash-guitar-ukulele-fret-reference-guide-1390018"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/richard-ash-fret-position-guide-for-ukulele-guitar-banjo-mandolin-and-other-chromatic-fretted-instruments"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-04-8</p>
-        <div class="book-desc"><p>Figuring out “where the frets go” is one of the trickiest things about building a guitar or ukulele. This reference guide has detailed charts that show fret placement for every scale length from eight inches to thirty-two inches, in eighth-inch increments.</p>
-<p>With this fret guide book you’ll be able to build the “perfect” fingerboard for your next project, and have a string instrument that sounds great.</p>
-<p>This is not a book you’ll read from cover to cover - but it IS a book that you’ll keep in your shop, and use on a regular basis!</p>
-<p>This fret guide book for building string instruments is published by Folkcraft® Instruments, under the <a href="/" title="fingers of steel">Fingers Of Steel</a>® imprint.<br></p>
-<p> The author/compiler of this reference book is Folkcraft owner/luthier Richard Ash.</p>
+        <p class="book-isbn">ISBN 978-1-964725-04-8 &middot; <a href="/one-sheets/richard-ash-fret-position-reference-guide-for-ukulele-guitar-banjo-mandolin-and-other-chromatic-fretted-instruments.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p>Richard Ash's <em>Fret Position Reference Guide For Ukulele, Guitar, Banjo, Mandolin, And Other Chromatic Fretted Instruments</em> solves one of the trickiest parts of building a fretted instrument: where the frets go.</p>
+<p>Detailed fret placement charts cover every scale length from 8 to 32 inches, in eighth-inch steps, so you can lay out an accurate fingerboard for your next guitar, ukulele or other string instrument.</p>
+<p>It's not a book to read cover to cover, but one to keep in the shop and use again and again. The compiler, Richard Ash, is the owner and a luthier at Folkcraft Instruments.</p>
 <p>208 pages.</p></div>
       </div>
     </article>
@@ -147,5 +167,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

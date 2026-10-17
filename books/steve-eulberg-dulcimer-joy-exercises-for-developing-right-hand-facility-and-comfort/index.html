@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dulcimer Joy: Exercises For Developing Right Hand Facility And Comfort by Steve Eulberg – Fingers Of Steel®</title>
-  <meta name="description" content="Build a reliable, relaxed right hand with Steve Eulberg's Dulcimer Joy. Using Beethoven's Ode to Joy as the melody throughout, these 30 exercises work…">
+  <meta name="description" content="Steve Eulberg's Dulcimer Joy is a mountain dulcimer exercise book for your picking hand. All 30 exercises are built on one familiar melody, Beethoven's…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/steve-eulberg-dulcimer-joy-exercises-for-developing-right-hand-facility-and-comfort/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,16 +156,27 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/steve-eulberg-dulcimer-joy-exercises-for-developing-right-hand-facility-and-comfort"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/steve-eulberg-dulcimer-joy-exercises-for-developing-right-hand-facility-and-comfort"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        
-        <div class="book-desc"><p>Build a reliable, relaxed right hand with Steve Eulberg's Dulcimer Joy. Using Beethoven's <em>Ode to Joy</em> as the melody throughout, these 30 exercises work across three octaves with a variety of meters, picking patterns and chord substitutions, and they're written to sound like music rather than drills. Steve's "home position" approach builds fingerstyle accuracy and confidence, and the exercises work just as well if you play with a flatpick. Recordings of every exercise are included, so you can hear how each one should sound.<br><br>47 pages. CD included.</p>
-
-<p><strong>Contents:</strong></p>
-<p><em><strong>Ode To Joy</strong></em> - Ludwig Van Beethoven - 30 exercises, DAD Tuning</p></div>
+        <p class="book-isbn"><a href="/one-sheets/steve-eulberg-dulcimer-joy-exercises-for-developing-right-hand-facility-and-comfort.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p>Steve Eulberg's <em>Dulcimer Joy</em> is a mountain dulcimer exercise book for your picking hand. All 30 exercises are built on one familiar melody, Beethoven's "Ode To Joy," in DAD tuning, and they aim to make your right hand comfortable and dependable.</p>
+<ul>
+  <li>The melody travels across three octaves</li>
+  <li>Exercises change meter, picking pattern and chord substitutions as you go</li>
+  <li>Each one is musical enough to enjoy playing, not just a drill</li>
+</ul>
+<p>Steve teaches from a "home position" that develops accurate, confident fingerpicking, and flatpickers can use every exercise too. A recording of each exercise lets you check how it should sound.</p>
+<p>47 pages, CD included.</p></div>
       </div>
     </article>
     <footer>
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

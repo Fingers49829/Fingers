@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Method For Beginning Mountain Dulcimer by Bing Futch – Fingers Of Steel®</title>
-  <meta name="description" content="Bing Futch’s “Method For Beginning Mountain Dulcimer” is the most comprehensive how-to-learn-the-dulcimer book available. You’ll learn the basics, sure,…">
+  <meta name="description" content="Method For Beginning Mountain Dulcimer by Bing Futch is one of the most comprehensive books available for learning the mountain dulcimer. You start…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/bing-futch-method-for-beginning-mountain-dulcimer/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,17 +156,24 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/bing-futch-method-beginning-mountain-dulcimer-1310139"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/bing-futch-method-for-beginning-mountain-dulcimer"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-02-4</p>
-        <div class="book-desc"><p>Bing Futch’s “Method For Beginning Mountain Dulcimer” is the most comprehensive how-to-learn-the-dulcimer book available. You’ll learn the basics, sure, and start playing songs right away. Even better, though, is the depth of content that Bing provides for beginner mountain dulcimer players. This one incomparable volume offers it all - technique, repertoire, theory, history, and FUN!</p>
-<p>This book DOES include songs and exercises in a variety of tunings. DAD, of course, but also tunings that were more common 70 or 120 years ago - DAA, DGD, etc. This is not the "first" dulcimer book you should get - it's the "second". Not because of the quality of the content, but because the alternate tunings intimidate some folks. Order this along with the "First Lessons" book and you'll be good to go!</p>
-<p>Once you’ve worked your way through this <a href="/books/bing-futch-method-for-bass-mountain-dulcimer/">mountain dulcimer book</a>, you’ll be a competent dulcimer player that can enjoy playing with any group. You’ll have a great time honing your skills with Bing, and you’ll end up with a wealth of technical skills, music fundamentals, and dulcimer repertoire!</p>
-<p>This amazing book includes free downloadable audio files that you can use to teach your ear how the tunes and exercises should sound. Here's a <a href="https://www.folkcraft.com/pages/free-downloads" title="folkraft free downloads">link to the page with the audio files</a>.</p>
-<p>This beginner dulcimer book is published by Folkcraft® Instruments, under the <a href="/" title="fingers of steel">Fingers Of Steel</a>® imprint.<br><br>133 pages.</p></div>
+        <p class="book-isbn">ISBN 978-1-964725-02-4 &middot; <a href="/one-sheets/bing-futch-method-for-beginning-mountain-dulcimer.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Method For Beginning Mountain Dulcimer</em> by Bing Futch is one of the most comprehensive books available for learning the mountain dulcimer. You start playing songs right away, and the book goes much further than the basics, covering technique, repertoire, theory and history.</p>
+<p>Besides DAD, the songs and exercises use older tunings such as DAA and DGD, which players used more widely 70 to 120 years ago. Because those alternate tunings can intimidate newcomers, this works best as your second dulcimer book. Pair it with a "First Lessons" book and you'll be set.</p>
+<p>By the end, you'll be a capable player ready to enjoy playing with any group, with a solid base of technique, music fundamentals and repertoire.</p>
+<p>Free downloadable audio demonstrates the songs and exercises. <a href="https://www.folkcraft.com/pages/free-downloads">Get the audio files from Folkcraft</a>.</p>
+<p>133 pages.</p></div>
       </div>
     </article>
     <footer>
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

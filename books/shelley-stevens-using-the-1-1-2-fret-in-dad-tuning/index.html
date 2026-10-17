@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Using The 1 1/2 Fret In DAD Tuning by Shelley Stevens – Fingers Of Steel®</title>
-  <meta name="description" content="Unlock the mystery of what to do with your 1 ½ (also written 1.5 and 1*) fret. With this book, you'll learn chords, scales and tunes that use the fret.…">
+  <meta name="description" content="Not sure what to do with the 1 1/2 fret (also written 1.5 or 1*) on your dulcimer? Shelley Stevens' Using The 1 1/2 Fret In DAD Tuning teaches the chords,…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/shelley-stevens-using-the-1-1-2-fret-in-dad-tuning/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,11 +156,12 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/shelley-stevens-using-the-1-1-2-fret-in-dad-tuning"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/shelley-stevens-using-the-1-1-2-fret-in-dad-tuning"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-10-9</p>
-        <div class="book-desc"><p align="center">Unlock the mystery of  what to do with your 1 <span size="4">½ (also written 1.5 and 1*) </span>fret. With this book, you'll learn chords, scales and tunes that use the fret. Shelley has included lots of songs that use the 1.5 fret, and will help you get comfortable with its use, and use the extra fret to the fullest potential. You'll learn to play easily in the keys of  <span color="#000000">G,  C and D Minor.</span></p>
-<p align="center">The downloadable audio files include 30 MP3 tracks, demonstrating most of the tunes in this book. You can download the zipped folder of audio files <a href="https://folkcraft.com/pages/free-downloads" title="shelley stevens 1.5 fret downloadable audio files">from this page</a>.</p>
-<p>This book is published by Folkcraft® Instruments, under the <a href="/" title="fingers of steel">Fingers Of Steel</a>® imprint.</p>
-<p align="center">46 pages.<br><br><strong>Songs included:</strong></p>
+        <p class="book-isbn">ISBN 978-1-964725-10-9 &middot; <a href="/one-sheets/shelley-stevens-using-the-1-1-2-fret-in-dad-tuning.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p>Not sure what to do with the 1 1/2 fret (also written 1.5 or 1*) on your dulcimer? Shelley Stevens' <em>Using The 1 1/2 Fret In DAD Tuning</em> teaches the chords, scales and tunes that use it.</p>
+<p>Lots of songs help you get comfortable with the extra fret and make the most of it, and it opens up the keys of G, C and D minor so you can play in them without strain.</p>
+<p>Most of the tunes are demonstrated on 30 free MP3 tracks. <a href="https://www.folkcraft.com/pages/free-downloads">Get the audio files from Folkcraft</a>.</p>
+<p>46 pages.</p>
+<p><strong>Songs included:</strong></p>
 <p><em><strong>Abide With Me</strong></em> - DAD Tuning, Key Of C (No Capo)<br><em><strong>Amazing Grace </strong></em>- DAD Tuning, Key Of G (No Capo) <br><em><strong>Another Jig Will Do</strong></em> - DAD Tuning<br><em><strong>The Ashgrove</strong></em> - DAD Tuning, Key Of G (No Capo)<br><em><strong>Beautiful Brown Eyes</strong></em> - DAD Tuning, Key Of C (No Capo)<br><em><strong>Bendemeer's Stream</strong></em> - DAD Tuning<br><em><strong>Bile Them Cabbage</strong></em> - DAD Tuning, Key Of G (No Capo)<br><em><strong>Bile Them Cabbage Down</strong></em> - DAD Tuning, Key Of C (No Capo)<br><strong>Black Mountain Rag</strong> - DAD Tuning<br><em><strong>Blest Be The Tie</strong></em> - DAD Tuning, Key Of G (No Capo) - Composed By John Fawcett And Hans Nageli<br><em><strong>Blest Be The Tie</strong></em> - DAD Tuning, Key Of C (No Capo) - Composed By John Fawcett And Hans Nageli<br><em><strong>Bye Bye Blackbird</strong></em> - DAD Tuning, Key Of G (No Capo) - Composed By R. Henderson And T. Dixon<br><em><strong>Chicken Reel</strong></em> - DAD Tuning<br><em><strong>Do Lord</strong></em> - DAD Tuning, Key Of G (No Capo)<br><em><strong>Gonna Keep My Skillet Greasy</strong></em> - DAD Tuning<br><em><strong>Happy Land</strong></em> - DAD Tuning, Key Of C (No Capo)<br><em><strong>Harrison Town</strong></em> - DAD Tuning<br><em><strong>Hills Of Montrose</strong></em> - DAD Tuning<br><em><strong>How Dee Doo</strong></em> - DAD Tuning<br><em><strong>Ida Red</strong></em> - DAD Tuning, Key Of G (No Capo)<br><em><strong>Joe Turner</strong></em> - DAD Tuning<br><em><strong>Mississippi Sawyer</strong></em> - DAD Tuning, Key Of C (No Capo)<br><em><strong>My Bonny Lies Over The Ocean</strong></em> - DAD Tuning, Key Of G (No Capo)<br><em><strong>Oh, Susanna</strong></em> - DAD Tuning, Key Of C (No Capo) - Composed By Stephen Foster<br><em><strong>Old Joe Clark</strong></em> - DAD Tuning<br><em><strong>Over The Waterfall</strong></em> - DAD Tuning<br><em><strong>Simple Gifts</strong></em> - DAD Tuning, Key Of G (No Capo)<br><em><strong>Standing On The Promises</strong></em> - DAD Tuning, Key Of G (No Capo)<br><em><strong>Shady Grove</strong></em> - DAD Tuning, Song Is In D Minor (No Capo)<br><em><strong>Leatherwing Bat</strong></em> - DAD Tuning, Song Is In D Minor (No Capo)<br><em><strong>Star Of The County Down</strong></em> - DAD Tuning, Song Is In D Minor (No Capo)<br><em><strong>Nine Hundred Miles</strong></em> - DAD Tuning, Song Is In D Minor (No Capo)<br><em><strong>Road To Lisdoonvarna</strong></em> - DAD Tuning, Song Is In D Minor (No Capo)</p></div>
       </div>
     </article>
@@ -146,5 +169,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

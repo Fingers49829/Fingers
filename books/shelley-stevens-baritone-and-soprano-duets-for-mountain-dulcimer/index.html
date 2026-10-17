@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Baritone And Soprano Duets For Mountain Dulcimer by Shelley Stevens – Fingers Of Steel®</title>
-  <meta name="description" content="Become a master of the mountain dulcimer with Shelley Stevens' &quot;Baritone And Soprano Duets For Mountain Dulcimer&quot;. Benefit from Shelley's vast expertise…">
+  <meta name="description" content="Baritone And Soprano Duets For Mountain Dulcimer by Shelley Stevens has 26 duets for a DAD-tuned standard dulcimer and a baritone dulcimer tuned either…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/shelley-stevens-baritone-and-soprano-duets-for-mountain-dulcimer/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,12 +156,10 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/shelley-stevens-baritone-and-soprano-duets-for-mountain-dulcimer"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/shelley-stevens-baritone-and-soprano-dulcimer-duets"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-12-3</p>
-        <div class="book-desc"><p align="center"><span size="4">Become a master of the mountain dulcimer with Shelley Stevens' "Baritone And Soprano Duets For Mountain Dulcimer". Benefit from Shelley's vast expertise as a teacher, instructor, and performer while exploring the unique sounds of both ADA and AEA baritone tunings. Enhance your skills and repertoire with this amazing resource.</span></p>
-<p align="center"><span size="4">This songbook includes 26 duets arranged for DAD standard dulcimer, and either ADA or AEA tuned baritone dulcimer. The book includes both standard notation and dulcimer tablature.</span></p>
-<p align="center">This book is published by Folkcraft® Instruments, under the <a title="fingers of steel" href="/">Fingers Of Steel</a>® imprint.<br></p>
-<p align="center">42 pages.<br></p>
-
+        <p class="book-isbn">ISBN 978-1-964725-12-3 &middot; <a href="/one-sheets/shelley-stevens-baritone-and-soprano-duets-for-mountain-dulcimer.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Baritone And Soprano Duets For Mountain Dulcimer</em> by Shelley Stevens has 26 duets for a DAD-tuned standard dulcimer and a baritone dulcimer tuned either ADA or AEA.</p>
+<p>Drawing on Shelley's long experience as a teacher and performer, the book explores the sound of both baritone tunings. Standard notation and dulcimer tablature are included.</p>
+<p>42 pages.</p>
 <p><strong>Songs included:</strong></p>
 <p><em><strong>Annie Laurie</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>The Sunny South</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>Yellow Rose</strong></em> (Baritone dulcimer is tuned ADA)<em><strong><br>The Girl I Left Behind Me</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>Love Somebody</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>The Southwind</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>Cock Of The North</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>Oh Music</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>Love Is Little</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>Kaiser Waltz</strong></em> (Baritone dulcimer is tuned ADA) - Composed By Johann Strauss<strong></strong><em><strong><br>There's A Land That Is Fairer Than Day (In The Sweet By And By)</strong></em> (Baritone dulcimer is tuned ADA) - Composed By Sanford Bennet And Joseph Webster<em><strong><br>John Ryan’s Polka</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>I Feel Like Traveling On</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>God Be With You</strong></em> (Baritone dulcimer is tuned ADA) - Composed By J. Rankin And W. Tomer<em><strong><br>Butcher Boy</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>All Through The Night</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>Knoxville Girl</strong></em> (Baritone dulcimer is tuned ADA)<strong></strong><em><strong><br>Merry Widow Waltz</strong></em> (Baritone dulcimer is tuned AEA)<strong></strong><em><strong><br>Morning Has Broken</strong> </em>(Baritone dulcimer is tuned AEA) - Traditional Tune With Lyrics By Eleanor Farjean<em><strong><br>My Bonny Lies Over The Ocean</strong></em> (Baritone dulcimer is tuned AEA)<strong></strong><em><strong><br>Planxty Fanny Power</strong></em> (Baritone dulcimer is tuned AEA) - Composed By Turlough O'Carolan<strong></strong><em><strong><br>Amazing Grace</strong></em> (Baritone dulcimer is tuned AEA) - Composed By John Newton And William Walker<em><strong><br>Abide With Me</strong></em> (Baritone dulcimer is tuned AEA) - Composed By H.R. Lytle And W.H. Monk<strong></strong><em><strong><br>Banks Of The Ohio</strong></em> (Baritone dulcimer is tuned AEA)<strong></strong><em><strong><br>Shenandoah</strong></em> (Baritone dulcimer is tuned AEA)<strong></strong><em><strong><br>Sweet And Low</strong></em> (Baritone dulcimer is tuned AEA)</p></div>
       </div>
@@ -148,5 +168,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dulcimer-Friendly Worship, Vol. 3: Christmas In A Mellow Mode by Steve Eulberg – Fingers Of Steel®</title>
-  <meta name="description" content="&quot;Dulcimer-Friendly Worship, Vol. 3: Christmas in a Mellow Mode&quot; is a collection of minor-mode tunes with standard musical notation, mountain dulcimer…">
+  <meta name="description" content="Steve Eulberg's third Dulcimer-Friendly Worship book, Christmas In A Mellow Mode , collects 32 minor-key tunes from around the world. Each has mountain…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/steve-eulberg-dulcimer-friendly-worship-vol-3-christmas-in-a-mellow-mode/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -133,13 +155,23 @@
         <div class="buy-links">
           <a class="buy buy-print" href="https://folkcraft.com/products/eulberg-dulcimer-friendly-worship-christmas-mellow-mode-1310122"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
         </div>
-        <p class="book-isbn">ISBN 978-1-964725-75-8</p>
-        <div class="book-desc"><p>"Dulcimer-Friendly Worship, Vol. 3: Christmas in a Mellow Mode" is a collection of minor-mode tunes with standard musical notation, mountain dulcimer tablature and portable hammered dulcimer chord shapes for 32 tunes from around the world. <br><br>The goal of Steve Eulberg's "Dulcimer-Friendly Worship" series is to make the hymns and carols of the church available and accessible to dulcimer players. This collection of minor mode tunes originates from multi-cultural Christmas traditions, but is fitting for all phases of the winter moon and spans genres from jazz waltz, shape-note tunes, English, French and German dances, to African-American spirituals and blues. <br> <br> 76 pages.<br><br><strong>Songs included:</strong><br> <br> <em><strong>Ven A Cantarle A Jesus</strong></em> - DAD Tuning<br> <em><strong>I Wonder, As I Wander</strong></em> - DAC Tuning<br> <em><strong>Hush My Babe</strong></em> - DAC Tuning<br> <em><strong>Children Of The Heavenly King</strong></em> - DAC Tuning<br> <em><strong>The Blessings Of Mary</strong></em> - DAC Tuning<br> <em><strong>Me &amp; The Baby</strong></em> - DAC Tuning<br> <em><strong>Blessed Be That Maid Marie</strong></em> - DAC Tuning<br> <em><strong>Coventry Carol</strong></em> - DAC Tuning<br> <em><strong>Celebrons La Naissance</strong></em> - DAC Tuning<br> <em><strong>Masters In This Hall</strong></em> - DAC Tuning<br> <em><strong>Poor Little Jesus</strong></em> - DAC Tuning<br> <em><strong>El Cant Dels Ocells</strong></em> - DAC Tuning<br> <em><strong>'Twas In The Moon Of Wintertime</strong></em> - DAC Tuning<br> <em><strong>Rejoice My Friends</strong></em> - DAC / DAG Tuning<br> <em><strong>Star In The East</strong></em> - DAC Tuning<br> <strong>Lovely Star</strong> - DAC Tuning<br> <em><strong>Le Sommeil De L'Enfant Jesus</strong></em> - DAC Tuning<br> <em><strong>Pat-a-Pan</strong></em> - DAC Tuning<br> <em><strong>Fum, Fum, Fum</strong></em> - DAC Tuning<br> <em><strong>God Rest Ye Merry, Gentlemen</strong></em> - DAC Tuning<br> <em><strong>Shepherd, Shepherd</strong></em> - DAG Tuning<br> <em><strong>Ballad De Jesus-Christ</strong></em> - DAC Tuning<br> <em><strong>Exultation</strong> </em>- DAC Tuning<br> <em><strong>What Child Is This?</strong></em> - DAA Tuning<br> <em><strong>A La Nanita Nana</strong> </em>- DAC Tuning<br> <em><strong>Babe Of Bethlehem</strong></em> - DAC Tuning<br> <em><strong>Maria Durch Ein' Dornwald Ging</strong></em> - DAC Tuning<br> <em><strong>We Three Kings</strong></em> - DAC Tuning<br> <em><strong>Noel Nouvelet</strong></em> - DAD Tuning<br> <em><strong>Sister Mary</strong></em> - DAC Tuning<br> <em><strong>Soy Un Pobre Pastorcito</strong></em> - DAC Tuning<br> <em><strong>On The Night Of Christmas</strong></em> - DAA Tuning</p></div>
+        <p class="book-isbn">ISBN 978-1-964725-75-8 &middot; <a href="/one-sheets/steve-eulberg-dulcimer-friendly-worship-vol-3-christmas-in-a-mellow-mode.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p>Steve Eulberg's third Dulcimer-Friendly Worship book, <em>Christmas In A Mellow Mode</em>, collects 32 minor-key tunes from around the world. Each has mountain dulcimer tab, standard notation, and chord shapes for portable hammered dulcimer.</p>
+<p>The tunes come from Christmas traditions in many cultures, but they suit the whole winter season. Styles range from jazz waltzes and shape-note hymns to European dances, African-American spirituals and blues.</p>
+<p>76 pages.</p>
+<p><strong>Songs included:</strong><br> <br> <em><strong>Ven A Cantarle A Jesus</strong></em> - DAD Tuning<br> <em><strong>I Wonder, As I Wander</strong></em> - DAC Tuning<br> <em><strong>Hush My Babe</strong></em> - DAC Tuning<br> <em><strong>Children Of The Heavenly King</strong></em> - DAC Tuning<br> <em><strong>The Blessings Of Mary</strong></em> - DAC Tuning<br> <em><strong>Me &amp; The Baby</strong></em> - DAC Tuning<br> <em><strong>Blessed Be That Maid Marie</strong></em> - DAC Tuning<br> <em><strong>Coventry Carol</strong></em> - DAC Tuning<br> <em><strong>Celebrons La Naissance</strong></em> - DAC Tuning<br> <em><strong>Masters In This Hall</strong></em> - DAC Tuning<br> <em><strong>Poor Little Jesus</strong></em> - DAC Tuning<br> <em><strong>El Cant Dels Ocells</strong></em> - DAC Tuning<br> <em><strong>'Twas In The Moon Of Wintertime</strong></em> - DAC Tuning<br> <em><strong>Rejoice My Friends</strong></em> - DAC / DAG Tuning<br> <em><strong>Star In The East</strong></em> - DAC Tuning<br> <strong>Lovely Star</strong> - DAC Tuning<br> <em><strong>Le Sommeil De L'Enfant Jesus</strong></em> - DAC Tuning<br> <em><strong>Pat-a-Pan</strong></em> - DAC Tuning<br> <em><strong>Fum, Fum, Fum</strong></em> - DAC Tuning<br> <em><strong>God Rest Ye Merry, Gentlemen</strong></em> - DAC Tuning<br> <em><strong>Shepherd, Shepherd</strong></em> - DAG Tuning<br> <em><strong>Ballad De Jesus-Christ</strong></em> - DAC Tuning<br> <em><strong>Exultation</strong> </em>- DAC Tuning<br> <em><strong>What Child Is This?</strong></em> - DAA Tuning<br> <em><strong>A La Nanita Nana</strong> </em>- DAC Tuning<br> <em><strong>Babe Of Bethlehem</strong></em> - DAC Tuning<br> <em><strong>Maria Durch Ein' Dornwald Ging</strong></em> - DAC Tuning<br> <em><strong>We Three Kings</strong></em> - DAC Tuning<br> <em><strong>Noel Nouvelet</strong></em> - DAD Tuning<br> <em><strong>Sister Mary</strong></em> - DAC Tuning<br> <em><strong>Soy Un Pobre Pastorcito</strong></em> - DAC Tuning<br> <em><strong>On The Night Of Christmas</strong></em> - DAA Tuning</p></div>
       </div>
     </article>
     <footer>
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>

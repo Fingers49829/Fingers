@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Standard And Bass Dulcimer Arrangements by Larry Conger And Elaine Conger – Fingers Of Steel®</title>
-  <meta name="description" content="The price includes two books, one for each player. 20 duets, featuring parts for standard and bass dulcimer. Intermediate level. Some arrangements are…">
+  <meta name="description" content="Standard And Bass Dulcimer Arrangements by Larry and Elaine Conger has 20 duets with parts for standard dulcimer and bass dulcimer, all in DAD tuning. The…">
   <link rel="icon" type="image/png" href="/images/fingers-of-steel-logo.png">
   <link rel="canonical" href="https://fingersofsteel.com/books/larry-conger-and-elaine-conger-standard-and-bass-dulcimer-arrangements/">
   <style>
@@ -13,6 +13,9 @@
       --muted: #666;
       --line: #e3e0d8;
       --bg: #fff;
+      --accent: #1f4e79;
+      --accent-dark: #173b5c;
+      --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; }
@@ -34,19 +37,36 @@
       font-weight: normal;
       letter-spacing: 0.01em;
     }
-    a { color: #3b6b2a; }
+    a { color: var(--accent); }
+
+    /* Book page header: parchment bar with the logo, name and tagline, and links back to the catalog */
+    .masthead { background: var(--parchment); border-bottom: 4px solid var(--accent); }
+    .masthead-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .masthead .brand { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .masthead .brand img { height: 64px; width: auto; }
+    .masthead .name { display: block; margin: 0; font-size: 1.45rem; font-weight: normal; letter-spacing: normal; line-height: 1.15; }
+    .masthead .tag { display: block; color: var(--accent); font-size: 0.95rem; margin-top: 2px; }
+    .masthead nav { display: flex; gap: 8px; font-family: "Segoe UI", Arial, sans-serif; font-size: 0.88rem; font-weight: 600; }
+    .masthead nav a { color: var(--accent); text-decoration: none; padding: 8px 14px; border: 1.5px solid var(--accent); border-radius: 6px; white-space: nowrap; }
+    .masthead nav a.primary { background: var(--accent); color: #fff; }
+    .masthead nav a:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+    @media (max-width: 640px) {
+      .masthead-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .masthead .brand img { height: 52px; }
+      .masthead .name { font-size: 1.2rem; }
+      .masthead .tag { font-size: 0.85rem; }
+      .masthead nav a { flex: 1; text-align: center; }
+    }
 
     /* Book pages */
-    .site-name { margin: 0 0 20px; }
-    .site-name a {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 1.25rem;
-    }
-    .crumbs { margin: 0 0 24px; font-size: 0.95rem; }
     .book {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -92,9 +112,9 @@
       border-radius: 6px;
       text-decoration: none;
       color: #fff;
-      background: #3b6b2a;
+      background: var(--accent);
     }
-    .buy:hover { background: #2f5622; }
+    .buy:hover { background: var(--accent-dark); }
     .buy-pdf { background: #2b2b2b; }
     .buy-pdf:hover { background: #000; }
     .buy strong { font-size: 1.05rem; }
@@ -117,10 +137,12 @@
   </style>
 </head>
 <body>
+  <header class="masthead"><div class="masthead-inner">
+    <a class="brand" href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="44" height="64"><span><span class="name">Fingers Of Steel® Publications</span><span class="tag">Publisher of Appalachian mountain dulcimer sheet music</span></span></a>
+    <nav><a class="primary" href="/">All books</a><a href="/#fos-tab-author">By author</a></nav>
+  </div></header>
   <div class="page">
-    <p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>
 
-    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
     <article class="book">
       
       <div class="book-gallery">
@@ -134,9 +156,11 @@
           <a class="buy buy-print" href="https://folkcraft.com/products/larry-conger-and-elaine-conger-standard-and-bass-dulcimer-arrangements"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>
           <a class="buy buy-pdf" href="https://dulcimerdownloads.com/products/larry-conger-standard-and-bass-dulcimer-duets"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>
         </div>
-        
-        <div class="book-desc"><p>The price includes two books, one for each player. 20 duets, featuring parts for standard and bass dulcimer. Intermediate level. Some arrangements are more challenging than others. All songs in DAD Tuning.</p>
-<p>46 pages, each book (92 pages, total).<br><br><strong>Songs included:</strong></p>
+        <p class="book-isbn"><a href="/one-sheets/larry-conger-and-elaine-conger-standard-and-bass-dulcimer-arrangements.pdf">Download one-sheet (PDF)</a></p>
+        <div class="book-desc"><p><em>Standard And Bass Dulcimer Arrangements</em> by Larry and Elaine Conger has 20 duets with parts for standard dulcimer and bass dulcimer, all in DAD tuning.</p>
+<p>The duets are at intermediate level, and some arrangements are more challenging than others. You get two books, one for each player.</p>
+<p>46 pages each (92 pages total).</p>
+<p><strong>Songs included:</strong></p>
 <p><em><strong>Aura Lee</strong></em><br><em><strong>Beautiful Star Of Bethlehem</strong></em><br><em><strong>CC Rider</strong></em><br><em><strong>Greensleeves</strong></em><br><em><strong>Greensleeves Jig</strong></em><br><em><strong>I Am A Pilgrim</strong></em><br><em><strong>I'll Be All Smiles Tonight</strong></em><br><em><strong>Just A Closer Walk With Thee</strong></em><br><em><strong>Kelly's Fancy</strong></em><br><em><strong>King Of The Fairies</strong></em><br><em><strong>Midnight Special</strong></em><br><em><strong>Pig Ankle Rag</strong></em><br><em><strong>Rock-A My Whole World</strong></em> (3 part)<br><em><strong>Rockin' Robin </strong></em>(3 part)<br><em><strong>Saint James' Infirmary</strong></em><br><em><strong>September On The Mississippi</strong></em> (3 part)<br><em><strong>Single Footin' Horse</strong></em><br><em><strong>Swingin' The Blues</strong></em><br><em><strong>Wade In The Water-Motherless Child</strong></em><br><em><strong>We'll Understand It Better By And By</strong></em></p></div>
       </div>
     </article>
@@ -144,5 +168,12 @@
       Copyright &copy; 2026 Fingers Of Steel
     </footer>
   </div>
+  <script>
+    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
+    if (location.hash === '#fos-tab-author') {
+      const tab = document.getElementById('fos-tab-author');
+      if (tab) tab.checked = true;
+    }
+  </script>
 </body>
 </html>
