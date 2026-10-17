@@ -27,7 +27,8 @@ const page = await readFile(join(ROOT, 'books', slug, 'index.html'), 'utf8');
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const decode = s => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-const text = html => decode(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+// Inline tags (italics, bold, links) vanish without leaving a gap; other tags become spaces.
+const text = html => decode(html.replace(/<\/?(?:em|i|strong|b|a|span)\b[^>]*>/gi, '').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
 const pick = re => (page.match(re) || [])[1];
 
 // ---- What the book page tells us -------------------------------------------------------------
@@ -37,7 +38,7 @@ const author = decode(pick(/class="book-author">by ([^<]*)</) || '');
 const isbn = pick(/class="book-isbn">ISBN ([\d-]+)/);
 // Site images are local files (/images/...); the sheet is rendered from disk, so point at them directly.
 // The cover uses the 1200px copy the cover image links to.
-const fileUrl = src => src.startsWith('/') ? pathToFileURL(join(ROOT, decodeURIComponent(src))).href : src;
+const fileUrl = src => src.startsWith('/') ? pathToFileURL(join(ROOT, decodeURIComponent(src.split('?')[0]))).href : src;
 const cover = fileUrl(decode(pick(/<a href="([^"]+)"><img class="book-cover"/) || ''));
 const descHtml = pick(/<div class="book-desc">([\s\S]*?)<\/div>\s*<\/div>\s*<\/article>/) || '';
 const pages = pick(/(\d+)\s+pages/i);
@@ -45,14 +46,21 @@ const hasAudio = /audio|mp3/i.test(descHtml);
 
 // Description: the paragraphs before the tune list, minus boilerplate and download links (the "Free demo
 // audio" tag covers those), and only as much as fits beside the cover (~600 characters).
+// Bullet lists are folded into running text: onto the end of a paragraph that introduces them with a colon
+// ("Each tune is arranged four ways: Rhythmic variation; Melodic variation; ..."), or as their own paragraph.
 const paras = [];
-for (const [, p] of descHtml.matchAll(/<p>([\s\S]*?)<\/p>/g)) {
+for (const [, tag, p] of descHtml.matchAll(/<(p|ul)\b[^>]*>([\s\S]*?)<\/\1>/g)) {
   if (/songs included|tunes included/i.test(p)) break;
-  const t = text(p).replace(/\s*\b\d+ pages\.?\s*$/i, '');
-  if (!t || /published by|free downloadable audio|free audio downloads|link to the page|free-downloads/i.test(t + p)) continue;
+  const t = tag === 'ul'
+    ? [...p.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/g)].map(m => text(m[1])).filter(Boolean).join('; ') + '.'
+    : text(p).replace(/\s*\b\d+ pages\.?\s*$/i, '');
+  if (!t || t === '.' || /published by|free downloadable audio|free audio downloads|link to the page|free-downloads/i.test(t + p)) continue;
   if (paras.length && paras.join(' ').length + t.length > 600) break;
-  paras.push(t);
+  if (tag === 'ul' && paras.length && paras[paras.length - 1].endsWith(':')) paras[paras.length - 1] += ' ' + t;
+  else paras.push(t);
 }
+// A paragraph left ending in a colon (its list didn't fit) reads as cut off, so drop it.
+if (paras.length > 1 && paras[paras.length - 1].endsWith(':')) paras.pop();
 const shortDesc = paras.join(' ').length < 300;
 
 // Sample pages: the book page's extra images after the cover.

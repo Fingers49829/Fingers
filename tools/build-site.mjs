@@ -52,6 +52,7 @@ function sized(src, width) {
 const IMAGES = join(ROOT, 'images', 'books');
 await mkdir(IMAGES, { recursive: true });
 const VERSIONS = join(ROOT, 'images', 'image-versions.json');
+const FRAME_VERSION = 'b1';
 const versions = JSON.parse(await readFile(VERSIONS, 'utf8').catch(() => '{}'));
 const usedImages = new Set();
 const downloads = new Map();
@@ -86,7 +87,9 @@ async function localImage(src, width) {
   }
   await downloads.get(file);
   if (!existsSync(dest)) { usedImages.delete(file); return sized(u.toString(), width); }
-  return `/images/books/${file}`;
+  // The ?v= tag changes whenever the store's image or our frame treatment changes, so browsers never show a
+  // stale cached copy. (Bump FRAME_VERSION if reframe-images.ps1 changes how images look.)
+  return `/images/books/${file}?v=${versions[file] || '0'}-${FRAME_VERSION}`;
 }
 
 // Swaps every store-hosted <img> in a chunk of HTML for a local copy.
