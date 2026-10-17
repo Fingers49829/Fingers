@@ -1,0 +1,229 @@
+// Builds the site from Folkcraft.com and DulcimerDownloads.com:
+//   index.html             - the Fingers Of Steel page from Folkcraft, with covers linking to book pages here
+//   books/<slug>/index.html - one page per book, with links to buy it at Folkcraft (print) and DulcimerDownloads (PDF)
+// Run from the repo root:  node tools/build-site.mjs
+
+import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const FOLKCRAFT = 'https://folkcraft.com';
+const DD = 'https://dulcimerdownloads.com';
+const SITE = 'https://fingersofsteel.com';
+
+async function getText(url) {
+  for (let attempt = 1; ; attempt++) {
+    const res = await fetch(url);
+    if (res.ok) return res.text();
+    if (attempt >= 5 || (res.status !== 429 && res.status < 500)) throw new Error(`${res.status} fetching ${url}`);
+    const wait = Number(res.headers.get('retry-after')) * 1000 || 5000 * attempt;
+    await new Promise(r => setTimeout(r, wait));
+  }
+}
+const getJson = async url => JSON.parse(await getText(url));
+
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const decode = s => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;|&#x27;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+const norm = s => decode(s).toLowerCase().replace(/[^a-z0-9]+/g, '');
+const slugify = s => decode(s).toLowerCase().replace(/['’]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const plain = html => decode(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+
+// Store titles look like "Author - Book Title".
+function splitTitle(full) {
+  const i = full.indexOf(' - ');
+  return i < 0 ? { author: '', title: full } : { author: full.slice(0, i).trim(), title: full.slice(i + 3).trim() };
+}
+
+// Shopify image URL at a given width.
+function sized(src, width) {
+  const u = new URL(src.startsWith('//') ? 'https:' + src : src);
+  u.searchParams.set('width', width);
+  return u.toString();
+}
+
+// Keeps the store description's content but drops markup that doesn't belong on a static page.
+function cleanDescription(html) {
+  return (html || '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<(script|style|form|button|input|select)[\s\S]*?<\/\1>/gi, '')
+    .replace(/<(meta|link|input)[^>]*>/gi, '')
+    .replace(/\s(style|class|id|data-[\w-]+)="[^"]*"/gi, '')
+    .replace(/<span>([\s\S]*?)<\/span>/gi, '$1')
+    .replace(/href="\//g, `href="${FOLKCRAFT}/`)
+    // Links to Fingers Of Steel pages on Folkcraft stay on this site instead.
+    .replace(/href="https?:\/\/(?:www\.)?folkcraft\.com\/pages\/fingers-of-steel\/?"/g, 'href="/"')
+    .replace(/href="https?:\/\/(?:www\.)?folkcraft\.com\/(?:collections\/[^/"]+\/)?products\/([^"#?/]+)[^"]*"/g,
+      (m, handle) => slugByUrl.has(`${FOLKCRAFT}/products/${handle}`) ? `href="/books/${slugByUrl.get(`${FOLKCRAFT}/products/${handle}`)}/"` : m)
+    .replace(/(<br\s*\/?>\s*){3,}/gi, '<br><br>')
+    .trim();
+}
+
+// ---- 1. The Folkcraft page body --------------------------------------------------------------
+
+const pageHtml = await getText(`${FOLKCRAFT}/pages/fingers-of-steel`);
+const sectionAt = pageHtml.indexOf('__main" class="shopify-section');
+const start = pageHtml.indexOf('<div class="rte">', sectionAt);
+if (sectionAt < 0 || start < 0) throw new Error("Couldn't find the page content on Folkcraft");
+let depth = 0, end = -1;
+for (const m of pageHtml.slice(start).matchAll(/<(\/?)div\b/g)) {
+  depth += m[1] ? -1 : 1;
+  if (depth === 0) { end = pageHtml.indexOf('>', start + m.index) + 1; break; }
+}
+let body = pageHtml.slice(start, end)
+  .replace(/href="\//g, `href="${FOLKCRAFT}/`)
+  .replace(/src="[^"]*FingersOfSteel_K_WhiteBorder[^"]*"/g, 'src="/images/fingers-of-steel-logo.png"');
+
+// ISBNs from the page's ISBN table, keyed by normalized "author title".
+const isbnByKey = new Map();
+for (const m of body.matchAll(/<tr>\s*<td>([^<]*)<\/td>\s*<td>([^<]*)<\/td>\s*<td>([\d-]{10,})<\/td>\s*<\/tr>/g)) {
+  isbnByKey.set(norm(m[1] + m[2]), m[3]);
+}
+
+// ---- 2. Product data from both stores ----------------------------------------------------------
+
+const folkcraftHandles = [...new Set([...body.matchAll(/href="https:\/\/folkcraft\.com\/products\/([^"#?]+)"/g)].map(m => m[1]))];
+const ddOnlyHandles = [...new Set([...body.matchAll(/href="https:\/\/dulcimerdownloads\.com\/products\/([^"#?]+)"/g)].map(m => m[1]))];
+
+// A store's whole catalog, 250 products per request.
+async function catalog(store) {
+  const all = [];
+  for (let page = 1; page < 100; page++) {
+    const { products } = await getJson(`${store}/products.json?limit=250&page=${page}`);
+    if (!products.length) break;
+    all.push(...products);
+  }
+  return all;
+}
+
+const ddProducts = await catalog(DD);
+const ddBySku = new Map(), ddByTitle = new Map(), ddByHandle = new Map();
+for (const p of ddProducts) {
+  ddByHandle.set(p.handle, p);
+  ddByTitle.set(norm(p.title), p);
+  for (const v of p.variants) if (v.sku) ddBySku.set(String(v.sku).trim(), p);
+}
+
+// The homepage cards carry the short display title and author, e.g. "Baker's Dozen #9: My First Dulcimer Book".
+const cardByUrl = new Map();
+for (const m of body.matchAll(/<a class="fos-card" href="([^"]+)">[\s\S]*?<span class="fos-t">([^<]*)<\/span><span class="fos-a">([^<]*)<\/span>/g)) {
+  cardByUrl.set(m[1], { title: decode(m[2]).trim(), author: decode(m[3]).trim() });
+}
+
+// Finds the DulcimerDownloads PDF for a book: same SKU, same full title, or a DD title containing the book's title and author.
+function findPdf(sku, fullTitle, { title, author }) {
+  if (sku && ddBySku.has(sku)) return ddBySku.get(sku);
+  if (ddByTitle.has(norm(fullTitle))) return ddByTitle.get(norm(fullTitle));
+  const t = norm(title), a = norm(author.split(/ and /i)[0]);
+  const hits = ddProducts.filter(p => norm(p.title).includes(t) && (!a || norm(p.title + p.vendor + p.tags.join()).includes(a)));
+  return hits.length === 1 ? hits[0] : null;
+}
+
+const folkcraftByHandle = new Map((await catalog(FOLKCRAFT)).map(p => [p.handle, p]));
+
+const books = [];
+for (const h of folkcraftHandles) {
+  const p = folkcraftByHandle.get(h);
+  if (!p) { console.warn(`! Folkcraft product not found: ${h}`); continue; }
+  const sku = String(p.variants?.[0]?.sku || '').trim();
+  const card = cardByUrl.get(`${FOLKCRAFT}/products/${p.handle}`) || splitTitle(p.title);
+  const dd = findPdf(sku, p.title, card);
+  books.push({
+    full: p.title,
+    ...card,
+    description: p.body_html,
+    images: p.images.map(i => i.src),
+    folkcraftUrl: `${FOLKCRAFT}/products/${p.handle}`,
+    ddUrl: dd ? `${DD}/products/${dd.handle}` : null,
+  });
+}
+for (const h of ddOnlyHandles) {
+  const p = ddByHandle.get(h);
+  if (!p) { console.warn(`! DulcimerDownloads product not found: ${h}`); continue; }
+  books.push({
+    full: p.title,
+    ...(cardByUrl.get(`${DD}/products/${h}`) || splitTitle(p.title)),
+    description: p.body_html,
+    images: p.images.map(i => i.src),
+    folkcraftUrl: null,
+    ddUrl: `${DD}/products/${p.handle}`,
+  });
+}
+
+const usedSlugs = new Set();
+for (const b of books) {
+  b.title = b.title.replace(/\s*\(PDF Download\)\s*$/i, '');
+  let slug = slugify(`${b.author} ${b.title}`);
+  for (let n = 2; usedSlugs.has(slug); n++) slug = `${slugify(`${b.author} ${b.title}`)}-${n}`;
+  usedSlugs.add(slug);
+  b.slug = slug;
+  b.isbn = isbnByKey.get(norm(b.author + b.title)) || null;
+}
+const slugByUrl = new Map(books.flatMap(b => [b.folkcraftUrl, b.ddUrl].filter(Boolean).map(u => [u, b.slug])));
+
+// ---- 3. Book pages ---------------------------------------------------------------------------
+
+const template = await readFile(join(ROOT, 'tools', 'page-template.html'), 'utf8');
+
+function bookPage(b) {
+  const title = `${b.title}${b.author ? ` by ${b.author}` : ''}`;
+  const summary = plain(b.description).slice(0, 155).replace(/\s+\S*$/, '') + '…';
+  const [main, ...more] = b.images;
+  const gallery = main ? `
+      <div class="book-gallery">
+        <a href="${esc(sized(main, 1600))}"><img class="book-cover" src="${esc(sized(main, 700))}" alt="${esc(b.title)} cover" width="700"></a>
+        ${more.length ? `<div class="book-thumbs">${more.map((src, i) =>
+          `<a href="${esc(sized(src, 1600))}"><img src="${esc(sized(src, 200))}" alt="${esc(b.title)}, image ${i + 2}" loading="lazy" width="200"></a>`).join('')}</div>` : ''}
+      </div>` : '';
+  const buy = [
+    b.folkcraftUrl && `<a class="buy buy-print" href="${esc(b.folkcraftUrl)}"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>`,
+    b.ddUrl && `<a class="buy buy-pdf" href="${esc(b.ddUrl)}"><strong>PDF download</strong><span>Buy at DulcimerDownloads.com</span></a>`,
+  ].filter(Boolean).join('\n          ');
+
+  const content = `
+    <p class="crumbs"><a href="/">&larr; All Fingers Of Steel books</a></p>
+    <article class="book">
+      ${gallery}
+      <div class="book-info">
+        <h2 class="book-title">${esc(b.title)}</h2>
+        ${b.author ? `<p class="book-author">by ${esc(b.author)}</p>` : ''}
+        <div class="buy-links">
+          ${buy}
+        </div>
+        ${b.isbn ? `<p class="book-isbn">ISBN ${esc(b.isbn)}</p>` : ''}
+        <div class="book-desc">${cleanDescription(b.description)}</div>
+      </div>
+    </article>`;
+
+  return template
+    .replace('<title>Fingers Of Steel® Publications</title>', `<title>${esc(title)} – Fingers Of Steel®</title>`)
+    .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(summary)}">`)
+    .replace('<link rel="canonical" href="https://fingersofsteel.com/">', `<link rel="canonical" href="${SITE}/books/${b.slug}/">`)
+    .replace('<h1>Fingers Of Steel® Publications</h1>', '<p class="site-name"><a href="/"><img src="/images/fingers-of-steel-logo.png" alt="" width="40" height="58">Fingers Of Steel® Publications</a></p>')
+    .replace('<!--FOS-BODY-->', content);
+}
+
+for (const b of books) {
+  const dir = join(ROOT, 'books', b.slug);
+  await mkdir(dir, { recursive: true });
+  await writeFile(join(dir, 'index.html'), bookPage(b));
+}
+// Remove pages for books no longer on the Folkcraft page. (Pages are overwritten in place, not wiped
+// and rewritten, because Dropbox briefly locks folders it is syncing.)
+for (const name of await readdir(join(ROOT, 'books'))) {
+  if (!usedSlugs.has(name)) await rm(join(ROOT, 'books', name), { recursive: true, force: true, maxRetries: 5 });
+}
+
+// ---- 4. Homepage: covers and author links point to the book pages --------------------------
+
+body = body.replace(/href="(https:\/\/(?:folkcraft|dulcimerdownloads)\.com\/products\/[^"#?]+)"/g,
+  (m, url) => slugByUrl.has(url) ? `href="/books/${slugByUrl.get(url)}/"` : m);
+await writeFile(join(ROOT, 'index.html'), template.replace('<!--FOS-BODY-->', body));
+
+// ---- Report ----------------------------------------------------------------------------------
+
+const noPdf = books.filter(b => !b.ddUrl), noPrint = books.filter(b => !b.folkcraftUrl), noIsbn = books.filter(b => !b.isbn);
+console.log(`Built ${books.length} book pages and index.html`);
+console.log(`  no PDF match on DulcimerDownloads (${noPdf.length}): ${noPdf.map(b => b.full).join('; ') || 'none'}`);
+console.log(`  PDF only, no Folkcraft page (${noPrint.length}): ${noPrint.map(b => b.full).join('; ') || 'none'}`);
+console.log(`  no ISBN found (${noIsbn.length}): ${noIsbn.map(b => b.full).join('; ') || 'none'}`);
