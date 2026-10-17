@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fingers Of Steel</title>
+  <meta name="description" content="Fingers Of Steel Publications: mountain dulcimer books and music.">
+  <link rel="icon" type="image/png" href="images/fingers-of-steel-logo.png">
+  <style>
+    :root {
+      --ink: #111;
+      --muted: #555;
+      --line: #ddd;
+      --bg: #fff;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 16px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      text-align: center;
+    }
+    .logo {
+      width: min(280px, 70vw);
+      height: auto;
+    }
+    h1 {
+      /* The logo carries the name visually; keep the heading for screen readers and search engines. */
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+    .tagline {
+      margin: 32px 0 8px;
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+    }
+    .note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    a { color: var(--ink); }
+    footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Fingers Of Steel</h1>
+    <img class="logo" src="images/fingers-of-steel-logo.png" width="407" height="592"
+         alt="Fingers Of Steel logo: a dulcimer fretboard strung with barbed wire">
+    <p class="tagline">Mountain dulcimer books and music</p>
+    <p class="note">Our new website is on its way. In the meantime, browse
+      <a href="https://folkcraft.com/pages/fingers-of-steel">Fingers Of Steel publications at Folkcraft</a>.</p>
+  </main>
+  <footer>Fingers Of Steel&reg; is a registered trademark.</footer>
+</body>
+</html>
