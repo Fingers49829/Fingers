@@ -43,6 +43,49 @@ function sized(src, width) {
   return u.toString();
 }
 
+// Product images are served from this site, not the stores' CDN. Each store image is downloaded once per
+// width into images/books/ (named after the store's file, so a replaced image gets a new file) and reused
+// on later builds.
+const IMAGES = join(ROOT, 'images', 'books');
+await mkdir(IMAGES, { recursive: true });
+const usedImages = new Set();
+const downloads = new Map();
+let active = 0;
+const waiting = [];
+async function localImage(src, width) {
+  const u = new URL(decode(src).startsWith('//') ? 'https:' + decode(src) : decode(src));
+  const file = decodeURIComponent(u.pathname.split('/').pop()).replace(/(\.\w+)$/, `-${width}$1`);
+  usedImages.add(file);
+  const dest = join(IMAGES, file);
+  if (!existsSync(dest) && !downloads.has(file)) {
+    downloads.set(file, (async () => {
+      if (active >= 8) await new Promise(r => waiting.push(r));
+      active++;
+      try {
+        const res = await fetch(sized(u.toString(), width));
+        if (!res.ok) throw new Error(`${res.status} downloading ${u}`);
+        await writeFile(dest, Buffer.from(await res.arrayBuffer()));
+      } catch (e) {
+        console.warn(`! Image not downloaded, left on the store's CDN: ${e.message}`);
+      } finally {
+        active--;
+        waiting.shift()?.();
+      }
+    })());
+  }
+  await downloads.get(file);
+  if (!existsSync(dest)) { usedImages.delete(file); return sized(u.toString(), width); }
+  return `/images/books/${file}`;
+}
+
+// Swaps every store-hosted <img> in a chunk of HTML for a local copy.
+async function localizeImgs(html, defaultWidth) {
+  const found = [...new Set([...html.matchAll(/src="((?:https?:)?\/\/cdn\.shopify\.com\/[^"]+)"/g)].map(m => m[1]))];
+  const local = await Promise.all(found.map(src => localImage(src, Number(new URL(decode(src).replace(/^\/\//, 'https://')).searchParams.get('width')) || defaultWidth)));
+  found.forEach((src, i) => { html = html.split(`src="${src}"`).join(`src="${local[i]}"`); });
+  return html;
+}
+
 // Keeps the store description's content but drops markup that doesn't belong on a static page.
 function cleanDescription(html) {
   return (html || '')
@@ -57,6 +100,9 @@ function cleanDescription(html) {
     .replace(/href="https?:\/\/(?:www\.)?folkcraft\.com\/(?:collections\/[^/"]+\/)?products\/([^"#?/]+)[^"]*"/g,
       (m, handle) => slugByUrl.has(`${FOLKCRAFT}/products/${handle}`) ? `href="/books/${slugByUrl.get(`${FOLKCRAFT}/products/${handle}`)}/"` : m)
     .replace(/(<br\s*\/?>\s*){3,}/gi, '<br><br>')
+    // "46 pages. Songs included:" often runs together, or has only a single line break between them;
+    // leave a blank line before the song list.
+    .replace(/(?<=[^>\s]|<br\s*\/?>)(?:\s|&nbsp;|<br\s*\/?>)*(?=<(?:strong|b)>\s*(?:Songs|Tunes) included)/gi, '<br><br>')
     .trim();
 }
 
@@ -171,15 +217,16 @@ const slugByUrl = new Map(books.flatMap(b => [b.folkcraftUrl, b.ddUrl].filter(Bo
 
 const template = await readFile(join(ROOT, 'tools', 'page-template.html'), 'utf8');
 
-function bookPage(b) {
+async function bookPage(b) {
   const title = `${b.title}${b.author ? ` by ${b.author}` : ''}`;
   const summary = plain(b.description).slice(0, 155).replace(/\s+\S*$/, '') + '…';
   const [main, ...more] = b.images;
+  // Cover shown at 700px and thumbnails at 200px; both open a 1200px copy.
   const gallery = main ? `
       <div class="book-gallery">
-        <a href="${esc(sized(main, 1600))}"><img class="book-cover" src="${esc(sized(main, 700))}" alt="${esc(b.title)} cover" width="700"></a>
-        ${more.length ? `<div class="book-thumbs">${more.map((src, i) =>
-          `<a href="${esc(sized(src, 1600))}"><img src="${esc(sized(src, 200))}" alt="${esc(b.title)}, image ${i + 2}" loading="lazy" width="200"></a>`).join('')}</div>` : ''}
+        <a href="${esc(await localImage(main, 1200))}"><img class="book-cover" src="${esc(await localImage(main, 700))}" alt="${esc(b.title)} cover" width="700"></a>
+        ${more.length ? `<div class="book-thumbs">${(await Promise.all(more.map(async (src, i) =>
+          `<a href="${esc(await localImage(src, 1200))}"><img src="${esc(await localImage(src, 200))}" alt="${esc(b.title)}, image ${i + 2}" loading="lazy" width="200"></a>`))).join('')}</div>` : ''}
       </div>` : '';
   const buy = [
     b.folkcraftUrl && `<a class="buy buy-print" href="${esc(b.folkcraftUrl)}"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>`,
@@ -200,7 +247,7 @@ function bookPage(b) {
           b.isbn && `ISBN ${esc(b.isbn)}`,
           b.oneSheet && `<a href="/one-sheets/${b.slug}.pdf">Download one-sheet (PDF)</a>`,
         ].filter(Boolean).join(' &middot; ')}</p>` : ''}
-        <div class="book-desc">${cleanDescription(b.description)}</div>
+        <div class="book-desc">${await localizeImgs(cleanDescription(b.description), 900)}</div>
       </div>
     </article>`;
 
@@ -212,11 +259,11 @@ function bookPage(b) {
     .replace('<!--FOS-BODY-->', content);
 }
 
-for (const b of books) {
+await Promise.all(books.map(async b => {
   const dir = join(ROOT, 'books', b.slug);
   await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, 'index.html'), bookPage(b));
-}
+  await writeFile(join(dir, 'index.html'), await bookPage(b));
+}));
 // Remove pages for books no longer on the Folkcraft page. (Pages are overwritten in place, not wiped
 // and rewritten, because Dropbox briefly locks folders it is syncing.)
 for (const name of await readdir(join(ROOT, 'books'))) {
@@ -227,7 +274,20 @@ for (const name of await readdir(join(ROOT, 'books'))) {
 
 body = body.replace(/href="(https:\/\/(?:folkcraft|dulcimerdownloads)\.com\/products\/[^"#?]+)"/g,
   (m, url) => slugByUrl.has(url) ? `href="/books/${slugByUrl.get(url)}/"` : m);
+// Card covers come from each book's own listing (the Folkcraft page's image links can go stale).
+const bookBySlug = new Map(books.map(b => [b.slug, b]));
+const cards = [...body.matchAll(/<a class="fos-card" href="\/books\/([^"/]+)\/"><img src="([^"]+)"/g)];
+for (const [whole, slug, src] of cards) {
+  const cover = bookBySlug.get(slug)?.images[0];
+  if (cover) body = body.replace(whole, whole.replace(`src="${src}"`, `src="${await localImage(cover, 300)}"`));
+}
+body = await localizeImgs(body, 300);
 await writeFile(join(ROOT, 'index.html'), template.replace('<!--FOS-BODY-->', body));
+
+// Remove downloaded images no page uses any more.
+for (const name of await readdir(IMAGES)) {
+  if (!usedImages.has(name)) await rm(join(IMAGES, name), { force: true, maxRetries: 5 });
+}
 
 // ---- Report ----------------------------------------------------------------------------------
 
