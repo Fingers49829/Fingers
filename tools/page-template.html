@@ -18,6 +18,8 @@
       --parchment: #f3f1ea;
     }
     * { box-sizing: border-box; }
+    /* Images carry width/height attributes so their space is reserved while loading; CSS sets the display size. */
+    img { height: auto; }
     html, body { margin: 0; }
     body {
       background: var(--bg);

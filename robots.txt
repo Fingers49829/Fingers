@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /descriptions/
+Disallow: /tools/
+
+Sitemap: https://fingersofsteel.com/sitemap.xml

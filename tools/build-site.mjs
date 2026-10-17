@@ -4,7 +4,7 @@
 // Run from the repo root:  node tools/build-site.mjs
 
 import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync, renameSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
@@ -57,26 +57,58 @@ const versions = JSON.parse(await readFile(VERSIONS, 'utf8').catch(() => '{}'));
 const usedImages = new Set();
 const downloads = new Map();
 const downloaded = [];
+const toJpeg = new Set();
+const nameOwner = new Map();
 let active = 0;
 const waiting = [];
+
+// Local file name for a store image at a width: the store's file name without the random suffix Shopify adds
+// to re-uploads ("_4076a7fa", "_e7c37737-aff2-4788-9e3f-dbfac01c4cad"), with hyphens for underscores. PNGs
+// are kept as JPEG (they're photos and page scans, at a fraction of the size). If two store files would get
+// the same name, the second keeps its suffix.
+function localName(storeFile, width) {
+  const ext = /\.png$/i.test(storeFile) ? '.jpg' : storeFile.match(/\.\w+$/)[0].toLowerCase();
+  const base = storeFile.replace(/\.\w+$/, '');
+  const clean = base
+    .replace(/_[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$|_[0-9a-f]{8}$/i, '')
+    .replace(/-1-12-Fret/g, '-1-1-2-Fret')
+    .replace(/_/g, '-').replace(/-{2,}/g, '-');
+  for (const name of [`${clean}-${width}${ext}`, `${base.replace(/_/g, '-')}-${width}${ext}`]) {
+    if (!nameOwner.has(name) || nameOwner.get(name) === storeFile) { nameOwner.set(name, storeFile); return name; }
+  }
+  return `${base}-${width}${ext}`;
+}
+
 async function localImage(src, width) {
   const u = new URL(decode(src).startsWith('//') ? 'https:' + decode(src) : decode(src));
-  const file = decodeURIComponent(u.pathname.split('/').pop()).replace(/(\.\w+)$/, `-${width}$1`);
+  const storeFile = decodeURIComponent(u.pathname.split('/').pop());
+  const file = localName(storeFile, width);
   usedImages.add(file);
   const dest = join(IMAGES, file);
+  // A PNG from the store is downloaded as .png and converted to dest (.jpg) at the end of the build.
+  const work = /\.png$/i.test(storeFile) ? dest.replace(/\.jpg$/, '.png') : dest;
+  // Files saved under the old naming scheme (the store's exact name) are moved rather than downloaded again.
+  const legacy = storeFile.replace(/(\.\w+)$/, `-${width}$1`);
+  if (!existsSync(dest) && !existsSync(work) && existsSync(join(IMAGES, legacy)) && !downloads.has(file)) {
+    renameSync(join(IMAGES, legacy), work);
+    versions[file] ??= versions[legacy];
+  }
+  if (work !== dest && existsSync(work)) toJpeg.add(work);
+  const have = existsSync(dest) || existsSync(work);
   const version = u.searchParams.get('v') || '';
-  const stale = existsSync(dest) && versions[file] && version && versions[file] !== version;
-  if (!existsSync(dest) || !versions[file]) versions[file] = version;
-  if ((!existsSync(dest) || stale) && !downloads.has(file)) {
+  const stale = have && versions[file] && version && versions[file] !== version;
+  if (!have || !versions[file]) versions[file] = version;
+  if ((!have || stale) && !downloads.has(file)) {
     downloads.set(file, (async () => {
       if (active >= 8) await new Promise(r => waiting.push(r));
       active++;
       try {
         const res = await fetch(sized(u.toString(), width));
         if (!res.ok) throw new Error(`${res.status} downloading ${u}`);
-        await writeFile(dest, Buffer.from(await res.arrayBuffer()));
+        await writeFile(work, Buffer.from(await res.arrayBuffer()));
         versions[file] = version;
-        downloaded.push(dest);
+        downloaded.push(work);
+        if (work !== dest) toJpeg.add(work);
       } catch (e) {
         console.warn(`! Image not downloaded, left on the store's CDN: ${e.message}`);
       } finally {
@@ -86,7 +118,7 @@ async function localImage(src, width) {
     })());
   }
   await downloads.get(file);
-  if (!existsSync(dest)) { usedImages.delete(file); return sized(u.toString(), width); }
+  if (!existsSync(dest) && !existsSync(work)) { usedImages.delete(file); return sized(u.toString(), width); }
   // The ?v= tag changes whenever the store's image or our frame treatment changes, so browsers never show a
   // stale cached copy. (Bump FRAME_VERSION if reframe-images.ps1 changes how images look.)
   return `/images/books/${file}?v=${versions[file] || '0'}-${FRAME_VERSION}`;
@@ -98,6 +130,40 @@ async function localizeImgs(html, defaultWidth) {
   const local = await Promise.all(found.map(src => localImage(src, Number(new URL(decode(src).replace(/^\/\//, 'https://')).searchParams.get('width')) || defaultWidth)));
   found.forEach((src, i) => { html = html.split(`src="${src}"`).join(`src="${local[i]}"`); });
   return html;
+}
+
+// Pixel size of a local image (/images/...), read from the file header; null for remote or unreadable files.
+// A PNG still waiting to become JPEG is read from its .png copy (same size).
+function imageSize(url) {
+  if (!url.startsWith('/images/')) return null;
+  const path = join(ROOT, decodeURIComponent(url.split(/[?#]/)[0]));
+  const file = existsSync(path) ? path : path.replace(/\.jpg$/, '.png');
+  if (!existsSync(file)) return null;
+  const b = readFileSync(file);
+  if (b.readUInt32BE(0) === 0x89504e47) return [b.readUInt32BE(16), b.readUInt32BE(20)];
+  if (b[0] === 0xff && b[1] === 0xd8) {
+    for (let i = 2; i < b.length - 8;) {
+      if (b[i] !== 0xff) { i++; continue; }
+      const m = b[i + 1];
+      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) return [b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)];
+      i += 2 + b.readUInt16BE(i + 2);
+    }
+  }
+  return null;
+}
+
+// Gives every local <img> a width and height, so the browser reserves its space before it loads (no layout
+// shift). A width already set is kept as the display width, with the height to match.
+function addImageSizes(html) {
+  return html.replace(/<img\b[^>]*>/gi, tag => {
+    const src = (tag.match(/\ssrc="([^"]+)"/) || [])[1];
+    if (!src || /\sheight=/.test(tag) || /\swidth="(?!\d+")/.test(tag)) return tag;
+    const size = imageSize(decode(src));
+    if (!size) return tag;
+    const width = Number((tag.match(/\swidth="(\d+)"/) || [])[1]) || size[0];
+    const height = Math.round(width * size[1] / size[0]);
+    return tag.replace(/\swidth="\d+"/, '').replace(/^<img/, `<img width="${width}" height="${height}"`);
+  });
 }
 
 // Keeps the store description's content but drops markup that doesn't belong on a static page.
@@ -219,6 +285,9 @@ function findPdf(sku, fullTitle, { title, author }) {
   return hits.length === 1 ? hits[0] : null;
 }
 
+// Price and stock of a store product's first variant, for the book page's structured data (both stores sell in USD).
+const offerOf = p => ({ price: p.variants?.[0]?.price, available: p.variants?.some(v => v.available) });
+
 const folkcraftByHandle = new Map((await catalog(FOLKCRAFT)).map(p => [p.handle, p]));
 
 const books = [];
@@ -235,6 +304,8 @@ for (const h of folkcraftHandles) {
     images: p.images.map(i => i.src),
     folkcraftUrl: `${FOLKCRAFT}/products/${p.handle}`,
     ddUrl: dd ? `${DD}/products/${dd.handle}` : null,
+    print: offerOf(p),
+    pdf: dd ? offerOf(dd) : null,
   });
 }
 for (const h of ddOnlyHandles) {
@@ -247,6 +318,8 @@ for (const h of ddOnlyHandles) {
     images: p.images.map(i => i.src),
     folkcraftUrl: null,
     ddUrl: `${DD}/products/${p.handle}`,
+    print: null,
+    pdf: offerOf(p),
   });
 }
 
@@ -275,6 +348,23 @@ const slugByUrl = new Map(books.flatMap(b => [b.folkcraftUrl, b.ddUrl].filter(Bo
 
 const template = await readFile(join(ROOT, 'tools', 'page-template.html'), 'utf8');
 
+const abs = u => (u.startsWith('/') ? SITE + u : u);
+const PUBLISHER = { '@type': 'Organization', name: 'Fingers Of Steel', url: `${SITE}/`, logo: `${SITE}/images/fingers-of-steel-logo.png` };
+
+// Open Graph and Twitter tags, so links shared on social sites and in messages show the page's image.
+function socialTags({ type, title, description, url, image, alt, card = 'summary_large_image' }) {
+  const size = image ? imageSize(image) : null;
+  return [
+    ['og:site_name', 'Fingers Of Steel® Publications'], ['og:type', type], ['og:title', title],
+    ['og:description', description], ['og:url', url],
+    ...(image ? [['og:image', abs(image)], ...(size ? [['og:image:width', size[0]], ['og:image:height', size[1]]] : []), ['og:image:alt', alt]] : []),
+  ].map(([k, v]) => `\n  <meta property="${k}" content="${esc(v)}">`).join('') +
+    `\n  <meta name="twitter:card" content="${image ? card : 'summary'}">`;
+}
+
+// Structured data for search engines.
+const jsonLd = data => `\n  <script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+
 // Header bar shared by every page. On the homepage the site name is the page's <h1>.
 const masthead = nameTag => `
   <header class="masthead"><div class="masthead-inner">
@@ -294,11 +384,12 @@ async function bookPage(b) {
   const summary = plain(b.description).slice(0, 155).replace(/\s+\S*$/, '') + '…';
   const [main, ...more] = b.images;
   // Cover shown at 700px and thumbnails at 200px; both open a 1200px copy.
+  b.large = await Promise.all(b.images.map(src => localImage(src, 1200)));
   const gallery = main ? `
       <div class="book-gallery">
-        <a href="${esc(await localImage(main, 1200))}"><img class="book-cover" src="${esc(await localImage(main, 700))}" alt="${esc(b.title)} cover" width="700"></a>
+        <a href="${esc(b.large[0])}"><img class="book-cover" src="${esc(await localImage(main, 700))}" alt="${esc(b.title)} cover" width="700"></a>
         ${more.length ? `<div class="book-thumbs">${(await Promise.all(more.map(async (src, i) =>
-          `<a href="${esc(await localImage(src, 1200))}"><img src="${esc(await localImage(src, 200))}" alt="${esc(b.title)}, image ${i + 2}" loading="lazy" width="200"></a>`))).join('')}</div>` : ''}
+          `<a href="${esc(b.large[i + 1])}"><img src="${esc(await localImage(src, 200))}" alt="${esc(b.title)}, image ${i + 2}" loading="lazy" width="200"></a>`))).join('')}</div>` : ''}
       </div>` : '';
   const buy = [
     b.folkcraftUrl && `<a class="buy buy-print" href="${esc(b.folkcraftUrl)}"><strong>Printed book</strong><span>Buy at Folkcraft.com</span></a>`,
@@ -322,13 +413,40 @@ async function bookPage(b) {
       </div>
     </article>`;
 
-  return template
-    .replace('<title>Fingers Of Steel® Publications</title>', `<title>${esc(pageTitle(b.title, title))}</title>`)
+  const url = `${SITE}/books/${b.slug}/`;
+  const images = b.large.map(abs);
+  const offer = (o, link, name, seller) => o && o.price && {
+    '@type': 'Offer', name, url: link, price: o.price, priceCurrency: 'USD',
+    availability: `https://schema.org/${o.available ? 'InStock' : 'OutOfStock'}`,
+    seller: { '@type': 'Organization', name: seller },
+  };
+  const book = {
+    '@context': 'https://schema.org',
+    '@type': 'Book',
+    name: b.title,
+    ...(b.author && { author: { '@type': 'Person', name: b.author } }),
+    url,
+    ...(images.length && { image: images }),
+    description: summary,
+    ...(b.isbn && { isbn: b.isbn }),
+    inLanguage: 'en',
+    publisher: PUBLISHER,
+    offers: [
+      offer(b.print, b.folkcraftUrl, 'Printed book', 'Folkcraft Instruments'),
+      offer(b.pdf, b.ddUrl, 'PDF download', 'DulcimerDownloads.com'),
+    ].filter(Boolean),
+  };
+  const pageTitleText = pageTitle(b.title, title);
+
+  return addImageSizes(template
+    .replace('<title>Fingers Of Steel® Publications</title>', `<title>${esc(pageTitleText)}</title>`)
     .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${esc(summary)}">`)
-    .replace('<link rel="canonical" href="https://fingersofsteel.com/">', `<link rel="canonical" href="${SITE}/books/${b.slug}/">`)
+    .replace('<link rel="canonical" href="https://fingersofsteel.com/">', `<link rel="canonical" href="${url}">` +
+      socialTags({ type: 'book', title: pageTitleText, description: summary, url, image: b.large[0], alt: `${b.title} cover` }) +
+      jsonLd(book))
     .replace(/\s*<h1>Fingers Of Steel® Publications<\/h1>/, '')
     .replace('<body>', `<body>${MASTHEAD}`)
-    .replace('<!--FOS-BODY-->', content);
+    .replace('<!--FOS-BODY-->', content));
 }
 
 await Promise.all(books.map(async b => {
@@ -361,16 +479,48 @@ if (body.includes('<div class="fos-start">') || !body.includes('Browse by genre'
 
 // The header carries the logo, so the intro's own copy of it goes.
 body = body.replace(/<img src="\/images\/fingers-of-steel-logo\.png"[^>]*>/, '');
-await writeFile(join(ROOT, 'index.html'), template
+const homeDescription = decode(template.match(/<meta name="description" content="([^"]*)">/)[1]);
+await writeFile(join(ROOT, 'index.html'), addImageSizes(template
+  .replace('<link rel="canonical" href="https://fingersofsteel.com/">', m => m +
+    socialTags({ type: 'website', title: 'Fingers Of Steel® Publications', description: homeDescription, url: `${SITE}/`,
+      image: '/images/fingers-of-steel-logo.png', alt: 'Fingers Of Steel logo', card: 'summary' }) +
+    jsonLd({ '@context': 'https://schema.org', ...PUBLISHER, description: homeDescription }))
   .replace(/\s*<h1>Fingers Of Steel® Publications<\/h1>/, '')
   .replace('<body>', `<body>${masthead('h1')}`)
-  .replace('<!--FOS-BODY-->', body));
+  .replace('<!--FOS-BODY-->', body)));
+
+// Sitemap with every page and its book images, and robots.txt pointing to it. The descriptions/ and tools/
+// folders are build inputs, not pages, so search engines are asked to skip them.
+const xml = s => esc(s).replace(/'/g, '&apos;');
+await writeFile(join(ROOT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>${SITE}/</loc></url>
+${books.map(b => `  <url>
+    <loc>${SITE}/books/${b.slug}/</loc>
+${(b.large || []).map(u => `    <image:image><image:loc>${xml(abs(u))}</image:loc></image:image>`).join('\n')}
+  </url>`).join('\n')}
+</urlset>
+`.replace(/\n\n/g, '\n'));
+await writeFile(join(ROOT, 'robots.txt'), `User-agent: *
+Disallow: /descriptions/
+Disallow: /tools/
+
+Sitemap: ${SITE}/sitemap.xml
+`);
 
 // Newly downloaded images get the site's blue frame in place of the store's green (or red) one.
 if (downloaded.length) {
   const list = join(tmpdir(), `fos-reframe-${process.pid}.txt`);
   await writeFile(list, downloaded.join('\n'));
   execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', join(ROOT, 'tools', 'reframe-images.ps1'), '-ListFile', list], { stdio: 'inherit' });
+  await rm(list, { force: true });
+}
+
+// Store PNGs become JPEGs (after reframing, so the new frame is in the JPEG).
+if (toJpeg.size) {
+  const list = join(tmpdir(), `fos-jpeg-${process.pid}.txt`);
+  await writeFile(list, [...toJpeg].join('\n'));
+  execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', join(ROOT, 'tools', 'png-to-jpeg.ps1'), '-ListFile', list], { stdio: 'inherit' });
   await rm(list, { force: true });
 }
 
