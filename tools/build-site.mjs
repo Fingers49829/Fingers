@@ -119,7 +119,11 @@ for (const m of pageHtml.slice(start).matchAll(/<(\/?)div\b/g)) {
 }
 let body = pageHtml.slice(start, end)
   .replace(/href="\//g, `href="${FOLKCRAFT}/`)
-  .replace(/src="[^"]*FingersOfSteel_K_WhiteBorder[^"]*"/g, 'src="/images/fingers-of-steel-logo.png"');
+  .replace(/src="[^"]*FingersOfSteel_K_WhiteBorder[^"]*"/g, 'src="/images/fingers-of-steel-logo.png"')
+  // This site's own intro line in place of Folkcraft's "publishing imprint" sentence.
+  .replace(/<p><strong>Fingers Of Steel®<\/strong>[^<]*publishing imprint[^<]*<\/p>/,
+    "<p><strong>Fingers Of Steel®</strong> is the world's leading publisher of music books for the Appalachian mountain dulcimer.</p>");
+if (!body.includes("world's leading publisher")) console.warn('! Homepage intro sentence not found on Folkcraft; left unchanged');
 
 // ISBNs from the page's ISBN table, keyed by normalized "author title".
 const isbnByKey = new Map();
