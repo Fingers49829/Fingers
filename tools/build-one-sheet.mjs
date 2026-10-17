@@ -1,7 +1,8 @@
 // Makes a printable one-sheet PDF for a book: cover, ISBN with barcode, description, tune list and logo.
 // Reads the book's page on this site, so run tools/build-site.mjs first.
-//   node tools/build-one-sheet.mjs <book-slug>
-// Writes one-sheets/<book-slug>.pdf. Rerun tools/build-site.mjs afterwards so the book page links to it.
+//   node tools/build-one-sheet.mjs <book-slug> [--design classic|banner|trade] [--out dir]
+// Writes one-sheets/<book-slug>.pdf (or <dir>/<book-slug>-<design>.pdf and .png with --out).
+// Rerun tools/build-site.mjs afterwards so the book page links to the one-sheet.
 
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -16,8 +17,12 @@ const EDGE = [
   'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
 ].find(existsSync);
 
-const slug = process.argv[2];
-if (!slug) throw new Error('Usage: node tools/build-one-sheet.mjs <book-slug>');
+const args = process.argv.slice(2);
+const opt = name => { const i = args.indexOf(`--${name}`); return i >= 0 ? args.splice(i, 2)[1] : undefined; };
+const design = opt('design') || 'banner';
+const outDir = opt('out');
+const slug = args[0];
+if (!slug) throw new Error('Usage: node tools/build-one-sheet.mjs <book-slug> [--design classic|banner|trade] [--out dir]');
 const page = await readFile(join(ROOT, 'books', slug, 'index.html'), 'utf8');
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -30,7 +35,10 @@ const pick = re => (page.match(re) || [])[1];
 const title = decode(pick(/class="book-title">([^<]*)</) || '');
 const author = decode(pick(/class="book-author">by ([^<]*)</) || '');
 const isbn = pick(/class="book-isbn">ISBN ([\d-]+)/);
-const cover = decode(pick(/<img class="book-cover" src="([^"]+)"/) || '').replace(/width=\d+/, 'width=1000');
+// Site images are local files (/images/...); the sheet is rendered from disk, so point at them directly.
+// The cover uses the 1200px copy the cover image links to.
+const fileUrl = src => src.startsWith('/') ? pathToFileURL(join(ROOT, decodeURIComponent(src))).href : src;
+const cover = fileUrl(decode(pick(/<a href="([^"]+)"><img class="book-cover"/) || ''));
 const descHtml = pick(/<div class="book-desc">([\s\S]*?)<\/div>\s*<\/div>\s*<\/article>/) || '';
 const pages = pick(/(\d+)\s+pages/i);
 const hasAudio = /audio/i.test(descHtml);
@@ -39,10 +47,15 @@ const hasAudio = /audio/i.test(descHtml);
 const paras = [];
 for (const [, p] of descHtml.matchAll(/<p>([\s\S]*?)<\/p>/g)) {
   if (/songs included|tunes included/i.test(p)) break;
-  const t = text(p);
-  if (!t || /^\d+ pages\.?$/i.test(t) || /published by|free downloadable audio|free audio downloads|link to the page/i.test(t)) continue;
+  const t = text(p).replace(/\s*\b\d+ pages\.?\s*$/i, '');
+  if (!t || /published by|free downloadable audio|free audio downloads|link to the page/i.test(t)) continue;
   paras.push(t);
 }
+const shortDesc = paras.join(' ').length < 300;
+
+// Sample pages: the book page's extra images after the cover.
+const thumbs = page.match(/<div class="book-thumbs">([\s\S]*?)<\/div>/)?.[1] || '';
+const samples = [...thumbs.matchAll(/<a href="([^"]+)"/g)].map(m => fileUrl(decode(m[1]))).slice(0, 3);
 
 // Tunes: store descriptions list them as "<em><strong>Name</strong></em> - Tuning".
 const tunes = [...descHtml.matchAll(/<strong>([^<]+)<\/strong>\s*<\/em>\s*-\s*([^<]+?)\s*(?=<br|<\/p>)/g)]
@@ -81,99 +94,223 @@ function ean13Svg(isbn13) {
   </svg>`;
 }
 
-// ---- The sheet -------------------------------------------------------------------------------
+// ---- Shared pieces ---------------------------------------------------------------------------
 
 const logo = pathToFileURL(join(ROOT, 'images', 'fingers-of-steel-logo.png')).href;
 const bookUrl = `fingersofsteel.com/books/${slug}/`;
 const printUrl = pick(/class="buy buy-print" href="([^"]+)"/);
 const pdfUrl = pick(/class="buy buy-pdf" href="([^"]+)"/);
-const tuneCols = shown.length > 40 ? 4 : shown.length > 12 ? 3 : 2;
+const many = shown.length > 40;
 
+const facts = [
+  isbn && ['ISBN', isbn],
+  pages && ['Pages', pages],
+  tunes.length && ['Tunes', `${tunes.length}${tunings.length === 1 ? `, all in ${tunings[0]} tuning` : ''}`],
+  hasAudio && ['Audio', 'Free demonstration tracks to download'],
+  ['Publisher', 'Fingers Of Steel®'],
+].filter(Boolean);
+const factsDl = `<dl class="facts">${facts.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`;
+const chips = [
+  tunes.length && `${tunes.length} tunes`,
+  tunings.length === 1 && `${tunings[0]} tuning`,
+  pages && `${pages} pages`,
+  hasAudio && 'Free demo audio',
+].filter(Boolean);
+const coverImg = cover ? `<img class="cover" src="${esc(cover)}" alt="Cover">` : '';
+const descBlock = `<div class="desc">${paras.map(p => `<p>${esc(p)}</p>`).join('')}</div>`;
+const tuneList = shown.length ? `
+    <h2>Tunes in this book <span>(${tunes.length})</span></h2>
+    <ol>${shown.map(t => `<li>${esc(t.name)}${tunings.length > 1 ? ` <span class="tuning">(${esc(t.tuning)})</span>` : ''}</li>`).join('')}</ol>
+    ${tunes.length > shown.length ? `<p class="more">…and ${tunes.length - shown.length} more.</p>` : ''}` : '';
+const where = [
+  printUrl && ['Printed book', 'folkcraft.com'],
+  pdfUrl && ['PDF download', 'dulcimerdownloads.com'],
+  ['More about this book', bookUrl],
+].filter(Boolean);
+const barcode = isbn ? ean13Svg(isbn) : '';
+// Long web addresses may wrap, but only after a slash.
+const url = s => esc(s).replace(/\//g, '/<wbr>');
+
+// Every design is a letter-size page laid out with its own padding (no printer margins),
+// so the PNG preview and the PDF match.
+const base = `
+  @page { size: letter; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { width: 8.5in; height: 11in; position: relative; overflow: hidden; color: #222;
+         font-family: Georgia, "Times New Roman", serif; font-size: 10.5pt; line-height: 1.4;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1, h2, p { margin: 0; }
+  .facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0; }
+  .facts dt { color: #666; }
+  .facts dd { margin: 0; }
+  ol { margin: 0; }
+  li { break-inside: avoid; }
+  .tuning, .more { color: #666; }
+`;
+
+const designs = {
+  // A. Clean white page with green rules.
+  classic: () => ({
+    css: `
+      body { padding: 0.5in; }
+      .head { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 3px solid #3b6b2a; }
+      .head img { height: 0.85in; }
+      .head .imprint { font-size: 17pt; letter-spacing: 0.02em; }
+      .head .sub { font-size: 9.5pt; color: #666; }
+      .main { display: grid; grid-template-columns: 2.7in 1fr; gap: 0.3in; margin-top: 0.25in; }
+      .cover { width: 100%; border: 1px solid #ccc; }
+      h1 { font-size: 22pt; font-weight: normal; line-height: 1.15; }
+      .author { font-size: 13pt; color: #555; margin: 4px 0 12px; }
+      .desc p { margin-bottom: 8px; }
+      .facts { margin: 12px 0; font-size: 10pt; }
+      .barcode { width: 1.75in; display: block; margin-top: 6px; }
+      .tunes { margin-top: 0.25in; border-top: 1px solid #ddd; padding-top: 10px; }
+      .tunes h2 { font-size: 12pt; margin-bottom: 6px; }
+      .tunes h2 span { font-weight: normal; color: #666; font-size: 10pt; }
+      .tunes ol { columns: ${many ? 4 : 3}; column-gap: 0.25in; padding-left: 1.6em; font-size: ${many ? 8.5 : 10.5}pt; line-height: ${many ? 1.35 : 1.55}; }
+      .foot { position: absolute; bottom: 0.5in; left: 0.5in; right: 0.5in; border-top: 3px solid #3b6b2a; padding-top: 8px; font-size: 9pt; display: flex; justify-content: space-between; gap: 16px; }
+      .foot strong { display: block; color: #3b6b2a; }`,
+    body: `
+      <header class="head">
+        <img src="${logo}" alt="Fingers Of Steel logo">
+        <div><div class="imprint">Fingers Of Steel® Publications</div><div class="sub">Mountain dulcimer books from Folkcraft® Instruments</div></div>
+      </header>
+      <section class="main">
+        <div>${coverImg}</div>
+        <div>
+          <h1>${esc(title)}</h1>
+          ${author ? `<p class="author">by ${esc(author)}</p>` : ''}
+          ${descBlock}${factsDl}${barcode}
+        </div>
+      </section>
+      ${tuneList ? `<section class="tunes">${tuneList}</section>` : ''}
+      <footer class="foot">${where.map(([k, v]) => `<div><strong>${esc(k)}</strong>${url(v)}</div>`).join('')}</footer>`,
+  }),
+
+  // B. Full-width green banner, big cover, tinted tune panel and a bottom strip for ISBN and ordering.
+  banner: () => ({
+    css: `
+      .band { background: #2f5622; color: #fff; padding: 0.4in 0.5in 0.35in; display: flex; align-items: center; gap: 0.3in; }
+      .band img { height: 1.15in; border: 4px solid #fff; background: #fff; }
+      .band .imprint { font-family: "Segoe UI", Arial, sans-serif; font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.85; }
+      .band h1 { font-size: 30pt; font-weight: normal; line-height: 1.1; margin-top: 4px; }
+      .band .author { font-size: 14pt; opacity: 0.9; margin-top: 4px; }
+      .main { display: grid; grid-template-columns: ${shown.length || samples.length ? 2.5 : 3.4}in 1fr; gap: 0.35in; padding: 0.3in 0.5in 0; }
+      .cover { width: 100%; box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+      .desc { font-size: ${shortDesc ? 14 : 12.5}pt; line-height: 1.5; }
+      .desc p { margin-bottom: 10px; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+      .chips span { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #2f5622; border: 1.5px solid #2f5622; border-radius: 999px; padding: 4px 12px; }
+      .tunes, .inside { margin: 0.25in 0.5in 0; background: #f3f1ea; border-radius: 8px; padding: 14px 18px; }
+      .tunes h2, .inside h2 { font-family: "Segoe UI", Arial, sans-serif; font-size: 10pt; letter-spacing: 0.15em; text-transform: uppercase; color: #2f5622; margin-bottom: 8px; }
+      .tunes h2 span { color: #777; letter-spacing: 0; }
+      .inside .pages { display: flex; justify-content: center; gap: 0.25in; }
+      .inside img { height: ${title.length > 32 ? 2.6 : 3}in; max-width: ${samples.length > 2 ? 2.3 : 3.4}in; object-fit: contain; background: #fff; border: 1px solid #ccc; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+      .tunes ol { columns: ${many ? 4 : 3}; column-gap: 0.25in; padding-left: 1.7em; font-size: ${many ? 8.5 : 10}pt; line-height: ${many ? 1.3 : 1.45}; }
+      .strip { position: absolute; bottom: 0; left: 0; right: 0; background: #f3f1ea; border-top: 4px solid #2f5622; padding: 0.2in 0.5in 0.3in; display: flex; align-items: center; justify-content: space-between; gap: 0.3in; }
+      .strip .isbn { display: flex; align-items: center; gap: 14px; font-size: 9.5pt; flex: 0 0 auto; }
+      .strip .isbn strong { white-space: nowrap; }
+      .strip .barcode { width: 1.6in; background: #fff; padding: 4px; }
+      .strip .buy { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; font-size: 9pt; }
+      .strip .buy strong { white-space: nowrap; }
+      .strip .buy strong { color: #2f5622; }`,
+    body: `
+      <header class="band">
+        <img src="${logo}" alt="Fingers Of Steel logo">
+        <div>
+          <div class="imprint">Fingers Of Steel® Publications</div>
+          <h1>${esc(title)}</h1>
+          ${author ? `<p class="author">by ${esc(author)}</p>` : ''}
+        </div>
+      </header>
+      <section class="main">
+        <div>${coverImg}</div>
+        <div>${descBlock}<div class="chips">${chips.map(c => `<span>${esc(c)}</span>`).join('')}</div></div>
+      </section>
+      ${tuneList ? `<section class="tunes">${tuneList}</section>`
+        : samples.length ? `<section class="inside"><h2>Inside the book</h2><div class="pages">${samples.map((s, i) => `<img src="${esc(s)}" alt="Sample page ${i + 1}">`).join('')}</div></section>` : ''}
+      <footer class="strip">
+        <div class="isbn">${barcode}<div>${isbn ? `<strong>ISBN ${esc(isbn)}</strong><br>` : ''}Published by<br>Fingers Of Steel®</div></div>
+        <div class="buy">${where.map(([k, v]) => `<strong>${esc(k)}</strong><span>${url(v)}</span>`).join('')}</div>
+      </footer>`,
+  }),
+
+  // C. Bookstore sell sheet: tinted sidebar with cover, specs, barcode and ordering; title and tunes on the right.
+  trade: () => ({
+    css: `
+      body { display: grid; grid-template-columns: 2.85in 1fr; }
+      .side { background: #f3f1ea; padding: 0.45in 0.3in 0.4in; display: flex; flex-direction: column; gap: 14px; border-right: 4px solid #3b6b2a; }
+      .brand { display: flex; align-items: center; gap: 10px; font-size: 10pt; line-height: 1.25; }
+      .brand img { height: 0.7in; }
+      .cover { width: 100%; border: 1px solid #ccc; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+      .side h3 { font-family: "Segoe UI", Arial, sans-serif; font-size: 8.5pt; letter-spacing: 0.15em; text-transform: uppercase; color: #3b6b2a; margin: 0 0 4px; }
+      .facts { font-size: 9.5pt; gap: 2px 10px; }
+      .barcode { width: 1.7in; background: #fff; padding: 5px; }
+      .order { font-size: 9.5pt; line-height: 1.45; margin-top: auto; }
+      .order div { margin-bottom: 4px; }
+      .order strong { display: block; }
+      .content { padding: 0.5in 0.5in 0.4in 0.4in; display: flex; flex-direction: column; }
+      .kicker { font-family: "Segoe UI", Arial, sans-serif; font-size: 9pt; letter-spacing: 0.2em; text-transform: uppercase; color: #3b6b2a; }
+      h1 { font-size: 24pt; font-weight: normal; line-height: 1.12; margin-top: 6px; }
+      .author { font-size: 14pt; color: #555; margin-top: 6px; padding-bottom: 14px; border-bottom: 2px solid #3b6b2a; }
+      .order span { font-size: 8.5pt; }
+      .desc { font-size: 11.5pt; line-height: 1.5; margin-top: 14px; }
+      .desc p { margin-bottom: 8px; }
+      .chips { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 6px 0 0; font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; font-weight: 600; color: #3b6b2a; }
+      .chips span::before { content: "\\25B8\\00a0"; }
+      .tunes { margin-top: 18px; }
+      .tunes h2 { font-size: 13pt; margin-bottom: 6px; }
+      .tunes h2 span { font-weight: normal; color: #666; font-size: 10pt; }
+      .tunes ol { columns: ${many ? 3 : 2}; column-gap: 0.3in; padding-left: 1.7em; font-size: ${many ? 8.5 : 11}pt; line-height: ${many ? 1.3 : 1.62}; }`,
+    body: `
+      <aside class="side">
+        <div class="brand"><img src="${logo}" alt="Fingers Of Steel logo"><div>Fingers Of Steel®<br>Publications</div></div>
+        ${coverImg}
+        <div><h3>Details</h3>${factsDl}</div>
+        ${barcode}
+        <div class="order"><h3>Where to buy</h3>${where.map(([k, v]) => `<div><strong>${esc(k)}</strong><span>${url(v)}</span></div>`).join('')}</div>
+      </aside>
+      <main class="content">
+        <div class="kicker">Mountain dulcimer</div>
+        <h1>${esc(title)}</h1>
+        ${author ? `<p class="author">by ${esc(author)}</p>` : ''}
+        ${descBlock}
+        <div class="chips">${chips.map(c => `<span>${esc(c)}</span>`).join('')}</div>
+        ${tuneList ? `<section class="tunes">${tuneList}</section>` : ''}
+      </main>`,
+  }),
+};
+
+if (!designs[design]) throw new Error(`Unknown design "${design}". Choose: ${Object.keys(designs).join(', ')}`);
+const { css, body } = designs[design]();
 const html = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>${esc(title)} – Fingers Of Steel® one-sheet</title>
-<style>
-  @page { size: letter; margin: 0.5in; }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; }
-  body { font-family: Georgia, "Times New Roman", serif; color: #222; font-size: 10.5pt; line-height: 1.4; }
-  .head { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 3px solid #3b6b2a; }
-  .head img { height: 0.85in; }
-  .head .imprint { font-size: 17pt; letter-spacing: 0.02em; }
-  .head .sub { font-size: 9.5pt; color: #666; }
-  .main { display: grid; grid-template-columns: 2.7in 1fr; gap: 0.3in; margin-top: 0.25in; }
-  .cover { width: 100%; border: 1px solid #ccc; }
-  h1 { font-size: 22pt; font-weight: normal; line-height: 1.15; margin: 0; }
-  .author { font-size: 13pt; color: #555; margin: 4px 0 12px; }
-  .desc p { margin: 0 0 8px; }
-  .facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 12px 0; font-size: 10pt; }
-  .facts dt { color: #666; }
-  .facts dd { margin: 0; }
-  .barcode { width: 1.75in; display: block; margin-top: 6px; }
-  .tunes { margin-top: 0.25in; border-top: 1px solid #ddd; padding-top: 10px; }
-  .tunes h2 { font-size: 12pt; margin: 0 0 6px; }
-  .tunes h2 span { font-weight: normal; color: #666; font-size: 10pt; }
-  .tunes ol { columns: ${tuneCols}; column-gap: 0.25in; margin: 0; padding-left: 1.6em; font-size: ${shown.length > 40 ? 8.5 : 10.5}pt; line-height: ${shown.length > 40 ? 1.35 : 1.55}; }
-  .tunes li { break-inside: avoid; }
-  .tunes .more { margin: 6px 0 0; color: #666; font-size: 9pt; }
-  .foot { position: fixed; bottom: 0; left: 0; right: 0; border-top: 3px solid #3b6b2a; padding-top: 8px; font-size: 9pt; display: flex; justify-content: space-between; gap: 16px; }
-  .foot strong { display: block; color: #3b6b2a; }
-</style>
+<style>${base}${css}</style>
 </head>
-<body>
-  <header class="head">
-    <img src="${logo}" alt="Fingers Of Steel logo">
-    <div>
-      <div class="imprint">Fingers Of Steel® Publications</div>
-      <div class="sub">Mountain dulcimer books from Folkcraft® Instruments</div>
-    </div>
-  </header>
-
-  <section class="main">
-    <div>${cover ? `<img class="cover" src="${esc(cover)}" alt="Cover">` : ''}</div>
-    <div>
-      <h1>${esc(title)}</h1>
-      ${author ? `<p class="author">by ${esc(author)}</p>` : ''}
-      <div class="desc">${paras.map(p => `<p>${esc(p)}</p>`).join('')}</div>
-      <dl class="facts">
-        ${isbn ? `<dt>ISBN</dt><dd>${esc(isbn)}</dd>` : ''}
-        ${pages ? `<dt>Pages</dt><dd>${esc(pages)}</dd>` : ''}
-        ${tunes.length ? `<dt>Tunes</dt><dd>${tunes.length}${tunings.length === 1 ? `, all in ${esc(tunings[0])} tuning` : ''}</dd>` : ''}
-        ${hasAudio ? '<dt>Audio</dt><dd>Free demonstration tracks to download</dd>' : ''}
-        <dt>Publisher</dt><dd>Folkcraft® Instruments</dd>
-      </dl>
-      ${isbn ? ean13Svg(isbn) : ''}
-    </div>
-  </section>
-
-  ${shown.length ? `<section class="tunes">
-    <h2>Tunes in this book <span>(${tunes.length})</span></h2>
-    <ol>${shown.map(t => `<li>${esc(t.name)}${tunings.length > 1 ? ` <span style="color:#666">(${esc(t.tuning)})</span>` : ''}</li>`).join('')}</ol>
-    ${tunes.length > shown.length ? `<p class="more">…and ${tunes.length - shown.length} more.</p>` : ''}
-  </section>` : ''}
-
-  <footer class="foot">
-    ${printUrl ? `<div><strong>Printed book</strong>folkcraft.com</div>` : ''}
-    ${pdfUrl ? `<div><strong>PDF download</strong>dulcimerdownloads.com</div>` : ''}
-    <div><strong>More about this book</strong>${esc(bookUrl)}</div>
-  </footer>
+<body>${body}
 </body>
 </html>`;
 
 // ---- Render with Edge ------------------------------------------------------------------------
 
 if (!EDGE) throw new Error('Microsoft Edge not found; it is used to turn the sheet into a PDF.');
-const work = join(tmpdir(), `one-sheet-${slug}`);
+const work = join(tmpdir(), `one-sheet-${slug}-${design}`);
 await mkdir(work, { recursive: true });
 const htmlPath = join(work, 'sheet.html');
 await writeFile(htmlPath, html);
-await mkdir(join(ROOT, 'one-sheets'), { recursive: true });
-const pdfPath = join(ROOT, 'one-sheets', `${slug}.pdf`);
-execFileSync(EDGE, [
-  '--headless', '--disable-gpu', '--no-pdf-header-footer', '--virtual-time-budget=15000',
-  `--user-data-dir=${join(work, 'profile')}`, `--print-to-pdf=${pdfPath}`, pathToFileURL(htmlPath).href,
+const edge = extra => execFileSync(EDGE, [
+  '--headless', '--disable-gpu', '--hide-scrollbars', '--no-pdf-header-footer', '--virtual-time-budget=15000',
+  `--user-data-dir=${join(work, 'profile')}`, ...extra, pathToFileURL(htmlPath).href,
 ], { stdio: 'ignore' });
+
+const dir = outDir || join(ROOT, 'one-sheets');
+await mkdir(dir, { recursive: true });
+const name = outDir ? `${slug}-${design}` : slug;
+edge([`--print-to-pdf=${join(dir, `${name}.pdf`)}`]);
+if (outDir) edge(['--window-size=816,1056', `--screenshot=${join(dir, `${name}.png`)}`]);
 await rm(work, { recursive: true, force: true, maxRetries: 3 }).catch(() => {});
-console.log(`Wrote one-sheets/${slug}.pdf (${tunes.length} tunes, ${shown.length} shown)`);
+console.log(`Wrote ${join(dir, `${name}.pdf`)} (${design}; ${tunes.length} tunes, ${shown.length} shown)`);
