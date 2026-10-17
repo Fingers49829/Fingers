@@ -106,6 +106,20 @@ function cleanDescription(html) {
     .trim();
 }
 
+// The song list from a store description: from the bold "Songs included" heading to the end, without the
+// store's closing boilerplate (publisher line, page count).
+function storeSongList(html) {
+  const at = (html || '').search(/<(strong|b)\b[^>]*>\s*(?:<[^>]+>\s*)*(Songs|Tunes) included/i);
+  if (at < 0) return '';
+  // When the heading sits mid-paragraph ("46 pages. <strong>Songs included"), reopen the paragraph at the heading.
+  const before = html.slice(0, at);
+  const inParagraph = before.lastIndexOf('<p') > before.lastIndexOf('</p>');
+  return ((inParagraph ? '<p>' : '') + html.slice(at))
+    .replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*published by(?:(?!<\/p>)[\s\S])*<\/p>/gi, '')
+    .replace(/<p[^>]*>\s*\d+ pages\.?\s*<\/p>/gi, '')
+    .trim();
+}
+
 // ---- 1. The Folkcraft page body --------------------------------------------------------------
 
 const pageHtml = await getText(`${FOLKCRAFT}/pages/fingers-of-steel`);
@@ -210,8 +224,13 @@ for (const b of books) {
   b.slug = slug;
   b.isbn = isbnByKey.get(norm(b.author + b.title)) || null;
   // A file in descriptions/<slug>.html replaces the store's description with copy written for this site.
-  b.description = await readFile(join(ROOT, 'descriptions', `${slug}.html`), 'utf8')
-    .then(s => s.replace(/\r\n/g, '\n')).catch(() => b.description);
+  // Where it has <!--STORE-SONGS-->, the store's current song list goes in.
+  const custom = await readFile(join(ROOT, 'descriptions', `${slug}.html`), 'utf8').catch(() => null);
+  if (custom) {
+    const songs = storeSongList(b.description);
+    if (custom.includes('<!--STORE-SONGS-->') && !songs) console.warn(`! ${slug}: no song list found in the store description`);
+    b.description = custom.replace(/\r\n/g, '\n').replace('<!--STORE-SONGS-->', songs);
+  }
   // One-sheets are made separately by tools/build-one-sheet.mjs.
   b.oneSheet = existsSync(join(ROOT, 'one-sheets', `${slug}.pdf`));
 }
