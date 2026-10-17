@@ -5,6 +5,8 @@
 
 import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -53,6 +55,7 @@ const VERSIONS = join(ROOT, 'images', 'image-versions.json');
 const versions = JSON.parse(await readFile(VERSIONS, 'utf8').catch(() => '{}'));
 const usedImages = new Set();
 const downloads = new Map();
+const downloaded = [];
 let active = 0;
 const waiting = [];
 async function localImage(src, width) {
@@ -72,6 +75,7 @@ async function localImage(src, width) {
         if (!res.ok) throw new Error(`${res.status} downloading ${u}`);
         await writeFile(dest, Buffer.from(await res.arrayBuffer()));
         versions[file] = version;
+        downloaded.push(dest);
       } catch (e) {
         console.warn(`! Image not downloaded, left on the store's CDN: ${e.message}`);
       } finally {
@@ -351,6 +355,14 @@ await writeFile(join(ROOT, 'index.html'), template
   .replace(/\s*<h1>Fingers Of Steel® Publications<\/h1>/, '')
   .replace('<body>', `<body>${masthead('h1')}`)
   .replace('<!--FOS-BODY-->', body));
+
+// Newly downloaded images get the site's blue frame in place of the store's green (or red) one.
+if (downloaded.length) {
+  const list = join(tmpdir(), `fos-reframe-${process.pid}.txt`);
+  await writeFile(list, downloaded.join('\n'));
+  execFileSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', join(ROOT, 'tools', 'reframe-images.ps1'), '-ListFile', list], { stdio: 'inherit' });
+  await rm(list, { force: true });
+}
 
 // Remove downloaded images no page uses any more, and record the versions of the ones in use.
 for (const name of await readdir(IMAGES)) {
