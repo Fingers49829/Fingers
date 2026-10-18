@@ -12,10 +12,12 @@ import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+// Microsoft Edge renders the sheet; FOS_BROWSER can name another Chromium-based browser instead.
 const EDGE = [
+  process.env.FOS_BROWSER,
   'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
   'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
-].find(existsSync);
+].find(p => p && existsSync(p));
 
 const args = process.argv.slice(2);
 const opt = name => { const i = args.indexOf(`--${name}`); return i >= 0 ? args.splice(i, 2)[1] : undefined; };
@@ -39,7 +41,7 @@ const isbn = pick(/class="book-isbn">ISBN ([\d-]+)/);
 // Site images are local files (/images/...); the sheet is rendered from disk, so point at them directly.
 // The cover uses the 1200px copy the cover image links to.
 const fileUrl = src => src.startsWith('/') ? pathToFileURL(join(ROOT, decodeURIComponent(src.split('?')[0]))).href : src;
-const cover = fileUrl(decode(pick(/<a href="([^"]+)"><img class="book-cover"/) || ''));
+const cover = fileUrl(decode(pick(/<a href="([^"]+)"><img\b[^>]*\bclass="book-cover"/) || ''));
 const descHtml = pick(/<div class="book-desc">([\s\S]*?)<\/div>\s*<\/div>\s*<\/article>/) || '';
 const pages = pick(/(\d+)\s+pages/i);
 const hasAudio = /audio|mp3/i.test(descHtml);

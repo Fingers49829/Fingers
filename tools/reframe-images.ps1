@@ -1,5 +1,6 @@
-# Recolors the thin store frame around product images (Folkcraft green, DulcimerDownloads red) to the
-# Fingers Of Steel blue. Images without one of those frames, or already blue, are left alone.
+# Trims the thin store frame off product images (Folkcraft green, DulcimerDownloads red, or the Fingers Of
+# Steel blue that earlier builds painted in). The site's CSS draws its own thin blue frame around every book
+# image, so a frame inside the image would make it look doubled. Images without a frame are left alone.
 #   powershell -File tools\reframe-images.ps1                     every image in images\books
 #   powershell -File tools\reframe-images.ps1 -ListFile list.txt  just the images listed (one path per line)
 param([string[]]$Paths, [string]$ListFile)
@@ -33,7 +34,13 @@ $jpeg = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Obje
 $quality = New-Object System.Drawing.Imaging.EncoderParameters 1
 $quality.Param[0] = New-Object System.Drawing.Imaging.EncoderParameter ([System.Drawing.Imaging.Encoder]::Quality), 92L
 
-# Average color and spread of one ring of pixels, $d pixels in from the edge (sampled).
+# A ring is 'blue' when nearly all of it is the site's blue, otherwise whatever FrameKind finds.
+function RingKind($ring) {
+  $isBlue = ($ring.Px | Where-Object { [Math]::Abs($_.R - $blue.R) -le 30 -and [Math]::Abs($_.G - $blue.G) -le 30 -and [Math]::Abs($_.B - $blue.B) -le 30 }).Count
+  if ($isBlue -ge 0.8 * $ring.Px.Count) { return 'blue' }
+  return FrameKind $ring
+}
+
 # One ring of pixels $d in from the edge (sampled), each paired with the pixel 5px further in.
 function Ring($b, $d) {
   $w = $b.Width; $h = $b.Height; $e = $d + 5
@@ -57,28 +64,21 @@ foreach ($path in $Paths) {
   $b = New-Object System.Drawing.Bitmap $img
   $img.Dispose(); $ms.Dispose()
 
-  $outer = Ring $b 0
-  $alreadyBlue = ($outer.Px | Where-Object { [Math]::Abs($_.R - $blue.R) -le 30 -and [Math]::Abs($_.G - $blue.G) -le 30 -and [Math]::Abs($_.B - $blue.B) -le 30 }).Count
-  $kind = if ($alreadyBlue -ge 0.8 * $outer.Px.Count) { $null } else { FrameKind $outer }
+  $kind = RingKind (Ring $b 0)
   if (-not $kind) { $b.Dispose(); $skipped++; continue }
 
   # Frame depth: inner rings of the same kind (stopping at 8px so a cover's own edge color is never swallowed).
+  # Blue frames painted by earlier builds can be one pixel deeper on the right and bottom.
   $depth = 1
-  while ($depth -lt 8 -and (FrameKind (Ring $b $depth)) -eq $kind) { $depth++ }
+  while ($depth -lt 8 -and (RingKind (Ring $b $depth)) -eq $kind) { $depth++ }
+  $far = if ($kind -eq 'blue') { $depth + 1 } else { $depth }
 
-  # JPEG stores color in 2x2 pixel blocks, so a 1px colored line turns muddy. Make each side at least 2px and
-  # end on a block boundary so the frame stays a clean blue.
+  # Cut the frame off.
   $w = $b.Width; $h = $b.Height
-  $top = [Math]::Max(2, $depth); if ($top % 2) { $top++ }
-  $left = $top
-  $bottom = [Math]::Max(2, $depth); if (($h - $bottom) % 2) { $bottom++ }
-  $right = [Math]::Max(2, $depth); if (($w - $right) % 2) { $right++ }
-  $g = [System.Drawing.Graphics]::FromImage($b)
-  $pen = New-Object System.Drawing.SolidBrush $blue
-  $g.FillRectangle($pen, 0, 0, $w, $top); $g.FillRectangle($pen, 0, $h - $bottom, $w, $bottom)
-  $g.FillRectangle($pen, 0, 0, $left, $h); $g.FillRectangle($pen, $w - $right, 0, $right, $h)
-  $g.Dispose(); $pen.Dispose()
+  $rect = New-Object System.Drawing.Rectangle $depth, $depth, ($w - $depth - $far), ($h - $depth - $far)
+  $cropped = $b.Clone($rect, $b.PixelFormat)
+  $b.Dispose(); $b = $cropped
   if ($path -match '\.png$') { $b.Save($path, [System.Drawing.Imaging.ImageFormat]::Png) } else { $b.Save($path, $jpeg, $quality) }
   $b.Dispose(); $changed++
 }
-"Reframed $changed image(s); left $skipped unchanged"
+"Trimmed the frame off $changed image(s); left $skipped unchanged"

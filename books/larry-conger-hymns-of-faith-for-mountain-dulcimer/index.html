@@ -12,12 +12,12 @@
   <meta property="og:title" content="Hymns Of Faith For Mountain Dulcimer by Larry Conger – Tab Book">
   <meta property="og:description" content="Hymns Of Faith For Mountain Dulcimer features Larry Conger's mountain dulcimer arrangements of beloved hymns. You'll find famous classics such as &quot;Abide…">
   <meta property="og:url" content="https://fingersofsteel.com/books/larry-conger-hymns-of-faith-for-mountain-dulcimer/">
-  <meta property="og:image" content="https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271474-b1">
+  <meta property="og:image" content="https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271474-b2">
   <meta property="og:image:width" content="687">
   <meta property="og:image:height" content="892">
   <meta property="og:image:alt" content="Hymns Of Faith For Mountain Dulcimer cover">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Hymns Of Faith For Mountain Dulcimer","author":{"@type":"Person","name":"Larry Conger"},"url":"https://fingersofsteel.com/books/larry-conger-hymns-of-faith-for-mountain-dulcimer/","image":["https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271474-b1","https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792270274-b1","https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792270275-b1","https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792270274-b1"],"description":"Hymns Of Faith For Mountain Dulcimer features Larry Conger's mountain dulcimer arrangements of beloved hymns. You'll find famous classics such as \"Abide…","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/larry-conger-hymns-of-faith-for-mountain-dulcimer","price":"35.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/larry-conger-hymns-of-faith-tab-book","price":"20.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Hymns Of Faith For Mountain Dulcimer","author":{"@type":"Person","name":"Larry Conger"},"url":"https://fingersofsteel.com/books/larry-conger-hymns-of-faith-for-mountain-dulcimer/","image":["https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271474-b2","https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792270274-b2","https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792270275-b2","https://fingersofsteel.com/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792270274-b2"],"description":"Hymns Of Faith For Mountain Dulcimer features Larry Conger's mountain dulcimer arrangements of beloved hymns. You'll find famous classics such as \"Abide…","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/larry-conger-hymns-of-faith-for-mountain-dulcimer","price":"35.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/larry-conger-hymns-of-faith-tab-book","price":"20.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
   <style>
     :root {
       --ink: #2b2b2b;
@@ -86,10 +86,12 @@
       gap: 40px;
       align-items: start;
     }
+    /* Book images get a thin square blue frame, like the green frame at Folkcraft and the red one at
+       DulcimerDownloads. */
     .book-cover {
       width: 100%;
       height: auto;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
     .book-thumbs {
       display: grid;
@@ -102,8 +104,11 @@
       height: auto;
       aspect-ratio: 1;
       object-fit: cover;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
+    /* Homepage catalog covers: the same blue frame, drawn around the cover itself (Folkcraft's catalog styles
+       box each cover in a tan, round-cornered frame). */
+    .fos .fos-card img { aspect-ratio: auto; object-fit: fill; background: none; border: 2px solid var(--accent); border-radius: 0; }
     .book-title {
       margin: 0;
       font-size: clamp(1.5rem, 3.5vw, 2.1rem);
@@ -159,8 +164,8 @@
     <article class="book">
       
       <div class="book-gallery">
-        <a href="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271474-b1"><img width="700" height="909" class="book-cover" src="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792271474-b1" alt="Hymns Of Faith For Mountain Dulcimer cover"></a>
-        <div class="book-thumbs"><a href="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792270274-b1"><img width="200" height="261" src="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792270274-b1" alt="Hymns Of Faith For Mountain Dulcimer, image 2" loading="lazy"></a><a href="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792270275-b1"><img width="200" height="268" src="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792270275-b1" alt="Hymns Of Faith For Mountain Dulcimer, image 3" loading="lazy"></a><a href="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792270274-b1"><img width="200" height="264" src="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792270274-b1" alt="Hymns Of Faith For Mountain Dulcimer, image 4" loading="lazy"></a></div>
+        <a href="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271474-b2"><img width="700" height="909" class="book-cover" src="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792271474-b2" alt="Hymns Of Faith For Mountain Dulcimer cover"></a>
+        <div class="book-thumbs"><a href="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792270274-b2"><img width="200" height="261" src="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792270274-b2" alt="Hymns Of Faith For Mountain Dulcimer, image 2" loading="lazy"></a><a href="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792270275-b2"><img width="200" height="268" src="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792270275-b2" alt="Hymns Of Faith For Mountain Dulcimer, image 3" loading="lazy"></a><a href="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792270274-b2"><img width="200" height="264" src="/images/books/Larry-Conger-Hymns-Of-Faith-For-Mountain-Dulcimer-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792270274-b2" alt="Hymns Of Faith For Mountain Dulcimer, image 4" loading="lazy"></a></div>
       </div>
       <div class="book-info">
         <h1 class="book-title">Hymns Of Faith For Mountain Dulcimer</h1>

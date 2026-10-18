@@ -12,12 +12,12 @@
   <meta property="og:title" content="DulciWhistle by John And Karen Keane – Fingers Of Steel®">
   <meta property="og:description" content="DulciWhistle pairs pennywhistle and mountain dulcimer in a set of lively original duets by John and Karen Keane. The book gives full notation for the…">
   <meta property="og:url" content="https://fingersofsteel.com/books/john-and-karen-keane-dulciwhistle/">
-  <meta property="og:image" content="https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792272182-b1">
-  <meta property="og:image:width" content="670">
-  <meta property="og:image:height" content="892">
+  <meta property="og:image" content="https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792272182-b2">
+  <meta property="og:image:width" content="654">
+  <meta property="og:image:height" content="876">
   <meta property="og:image:alt" content="DulciWhistle cover">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"DulciWhistle","author":{"@type":"Person","name":"John And Karen Keane"},"url":"https://fingersofsteel.com/books/john-and-karen-keane-dulciwhistle/","image":["https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792272182-b1","https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271115-b1","https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271115-b1","https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271115-b1"],"description":"DulciWhistle pairs pennywhistle and mountain dulcimer in a set of lively original duets by John and Karen Keane. The book gives full notation for the…","isbn":"978-1-964725-52-9","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/john-and-karen-keane-dulciwhistle","price":"13.05","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/john-keane-and-karen-keane-dulciwhistle","price":"20.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"DulciWhistle","author":{"@type":"Person","name":"John And Karen Keane"},"url":"https://fingersofsteel.com/books/john-and-karen-keane-dulciwhistle/","image":["https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792272182-b2","https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271115-b2","https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271115-b2","https://fingersofsteel.com/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271115-b2"],"description":"DulciWhistle pairs pennywhistle and mountain dulcimer in a set of lively original duets by John and Karen Keane. The book gives full notation for the…","isbn":"978-1-964725-52-9","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/john-and-karen-keane-dulciwhistle","price":"13.05","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/john-keane-and-karen-keane-dulciwhistle","price":"20.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
   <style>
     :root {
       --ink: #2b2b2b;
@@ -86,10 +86,12 @@
       gap: 40px;
       align-items: start;
     }
+    /* Book images get a thin square blue frame, like the green frame at Folkcraft and the red one at
+       DulcimerDownloads. */
     .book-cover {
       width: 100%;
       height: auto;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
     .book-thumbs {
       display: grid;
@@ -102,8 +104,11 @@
       height: auto;
       aspect-ratio: 1;
       object-fit: cover;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
+    /* Homepage catalog covers: the same blue frame, drawn around the cover itself (Folkcraft's catalog styles
+       box each cover in a tan, round-cornered frame). */
+    .fos .fos-card img { aspect-ratio: auto; object-fit: fill; background: none; border: 2px solid var(--accent); border-radius: 0; }
     .book-title {
       margin: 0;
       font-size: clamp(1.5rem, 3.5vw, 2.1rem);
@@ -159,8 +164,8 @@
     <article class="book">
       
       <div class="book-gallery">
-        <a href="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792272182-b1"><img width="700" height="932" class="book-cover" src="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792272182-b1" alt="DulciWhistle cover"></a>
-        <div class="book-thumbs"><a href="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271115-b1"><img width="200" height="258" src="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792271115-b1" alt="DulciWhistle, image 2" loading="lazy"></a><a href="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271115-b1"><img width="200" height="258" src="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792271115-b1" alt="DulciWhistle, image 3" loading="lazy"></a><a href="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271115-b1"><img width="200" height="258" src="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792271115-b1" alt="DulciWhistle, image 4" loading="lazy"></a></div>
+        <a href="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792272182-b2"><img width="700" height="938" class="book-cover" src="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792272182-b2" alt="DulciWhistle cover"></a>
+        <div class="book-thumbs"><a href="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271115-b2"><img width="200" height="258" src="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792271115-b2" alt="DulciWhistle, image 2" loading="lazy"></a><a href="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271115-b2"><img width="200" height="258" src="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792271115-b2" alt="DulciWhistle, image 3" loading="lazy"></a><a href="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271115-b2"><img width="200" height="258" src="/images/books/John-And-Karen-Keane-DulciWhistle-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792271115-b2" alt="DulciWhistle, image 4" loading="lazy"></a></div>
       </div>
       <div class="book-info">
         <h1 class="book-title">DulciWhistle</h1>
