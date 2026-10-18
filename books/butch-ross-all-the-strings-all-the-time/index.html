@@ -12,12 +12,12 @@
   <meta property="og:title" content="All The Strings, All The Time by Butch Ross – Mountain Dulcimer Tab Book">
   <meta property="og:description" content="All The Strings, All The Time is a back-to-the-roots mountain dulcimer songbook from Butch Ross. Instead of intricate picking arrangements, every classic…">
   <meta property="og:url" content="https://fingersofsteel.com/books/butch-ross-all-the-strings-all-the-time/">
-  <meta property="og:image" content="https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271295-b1">
+  <meta property="og:image" content="https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271295-b2">
   <meta property="og:image:width" content="687">
   <meta property="og:image:height" content="892">
   <meta property="og:image:alt" content="All The Strings, All The Time cover">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"All The Strings, All The Time","author":{"@type":"Person","name":"Butch Ross"},"url":"https://fingersofsteel.com/books/butch-ross-all-the-strings-all-the-time/","image":["https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271295-b1","https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271296-b1","https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271295-b1","https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271295-b1"],"description":"All The Strings, All The Time is a back-to-the-roots mountain dulcimer songbook from Butch Ross. Instead of intricate picking arrangements, every classic…","isbn":"978-1-964725-93-2","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/traditional-style-dulcimer-sheet-music-1310099","price":"20.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/butch-ross-all-the-strings-all-the-time","price":"15.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"All The Strings, All The Time","author":{"@type":"Person","name":"Butch Ross"},"url":"https://fingersofsteel.com/books/butch-ross-all-the-strings-all-the-time/","image":["https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271295-b2","https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271296-b2","https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271295-b2","https://fingersofsteel.com/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271295-b2"],"description":"All The Strings, All The Time is a back-to-the-roots mountain dulcimer songbook from Butch Ross. Instead of intricate picking arrangements, every classic…","isbn":"978-1-964725-93-2","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/traditional-style-dulcimer-sheet-music-1310099","price":"20.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/butch-ross-all-the-strings-all-the-time","price":"15.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
   <style>
     :root {
       --ink: #2b2b2b;
@@ -86,10 +86,12 @@
       gap: 40px;
       align-items: start;
     }
+    /* Book images get a thin square blue frame, like the green frame at Folkcraft and the red one at
+       DulcimerDownloads. */
     .book-cover {
       width: 100%;
       height: auto;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
     .book-thumbs {
       display: grid;
@@ -102,8 +104,11 @@
       height: auto;
       aspect-ratio: 1;
       object-fit: cover;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
+    /* Homepage catalog covers: the same blue frame, drawn around the cover itself (Folkcraft's catalog styles
+       box each cover in a tan, round-cornered frame). */
+    .fos .fos-card img { aspect-ratio: auto; object-fit: fill; background: none; border: 2px solid var(--accent); border-radius: 0; }
     .book-title {
       margin: 0;
       font-size: clamp(1.5rem, 3.5vw, 2.1rem);
@@ -159,8 +164,8 @@
     <article class="book">
       
       <div class="book-gallery">
-        <a href="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271295-b1"><img width="700" height="909" class="book-cover" src="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792271295-b1" alt="All The Strings, All The Time cover"></a>
-        <div class="book-thumbs"><a href="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271296-b1"><img width="200" height="260" src="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792271296-b1" alt="All The Strings, All The Time, image 2" loading="lazy"></a><a href="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271295-b1"><img width="200" height="260" src="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792271295-b1" alt="All The Strings, All The Time, image 3" loading="lazy"></a><a href="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271295-b1"><img width="200" height="260" src="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792271295-b1" alt="All The Strings, All The Time, image 4" loading="lazy"></a></div>
+        <a href="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271295-b2"><img width="700" height="909" class="book-cover" src="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792271295-b2" alt="All The Strings, All The Time cover"></a>
+        <div class="book-thumbs"><a href="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271296-b2"><img width="200" height="260" src="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792271296-b2" alt="All The Strings, All The Time, image 2" loading="lazy"></a><a href="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271295-b2"><img width="200" height="260" src="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792271295-b2" alt="All The Strings, All The Time, image 3" loading="lazy"></a><a href="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271295-b2"><img width="200" height="260" src="/images/books/Butch-Ross-All-The-Strings-All-The-Time-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792271295-b2" alt="All The Strings, All The Time, image 4" loading="lazy"></a></div>
       </div>
       <div class="book-info">
         <h1 class="book-title">All The Strings, All The Time</h1>
@@ -173,7 +178,8 @@
         <div class="book-desc"><p><em>All The Strings, All The Time</em> is a back-to-the-roots mountain dulcimer songbook from Butch Ross. Instead of intricate picking arrangements, every classic tune is played the traditional way: melody on one string, drones on the others, strumming all the strings all the time.</p>
 <p>With no complicated right-hand patterns to learn, you get great-sounding, traditional versions of outstanding dulcimer music.</p>
 <p>32 pages.</p>
-<p><strong>Songs included:</strong><br><br><em><strong>Boil Them Cabbage</strong></em> - DAD Tuning<br> <em><strong>Shortnin' Bread</strong></em> - DAD Tuning<br> <em><strong>Old Joe Clark</strong></em> - DAD Tuning<br> <em><strong>Cotton Eyed Joe</strong></em> - DAD Tuning<br> <em><strong>Cripple Creek</strong></em> - DAD Tuning<br> <em><strong>Little Brown Jug</strong></em> - DAD Tuning<br> <em><strong>Grey Cat On A Tennessee Farm</strong></em> - DAD Tuning<br> <em><strong>Go Tell Aunt Rhody</strong></em> - DAD Tuning<br> <em><strong>Camptown Races</strong></em> - DAD Tuning<br> <em><strong>Ode To Joy</strong></em> - DAD Tuning<br> <strong><em>Liza Jane</em></strong> - DAD Tuning<br> <em><strong>Fly Around (My Pretty Little Miss)</strong></em> - DAD Tuning<br> <em><strong>Waterbound</strong> </em>- DAD Tuning<br> <em><strong>Going To Boston</strong></em> - DAD Tuning<br> <em><strong>Rock The Cradle Joe</strong></em> - DAD Tuning<br> <em><strong>Mississippi Sawyer</strong></em> - DAD Tuning<br> <em><strong>Boil Them Cabbage 2</strong></em> - DAD Tuning<br> <em><strong>Cluck Old Hen</strong></em> - DAC Tuning <br> <em><strong>Greasy Coat</strong></em> - DAC Tuning <br> <em><strong>Shady Grove</strong></em> - DAC Tuning <br> <em><strong>Ground Hog</strong></em> - DAA Tuning <br> <em><strong>I'll Fly Away</strong></em> - DAA Tuning</p></div>
+<p><strong>Songs included:</strong></p>
+<p><em><strong>Boil Them Cabbage</strong></em> - DAD Tuning<br> <em><strong>Shortnin' Bread</strong></em> - DAD Tuning<br> <em><strong>Old Joe Clark</strong></em> - DAD Tuning<br> <em><strong>Cotton Eyed Joe</strong></em> - DAD Tuning<br> <em><strong>Cripple Creek</strong></em> - DAD Tuning<br> <em><strong>Little Brown Jug</strong></em> - DAD Tuning<br> <em><strong>Grey Cat On A Tennessee Farm</strong></em> - DAD Tuning<br> <em><strong>Go Tell Aunt Rhody</strong></em> - DAD Tuning<br> <em><strong>Camptown Races</strong></em> - DAD Tuning<br> <em><strong>Ode To Joy</strong></em> - DAD Tuning<br> <strong><em>Liza Jane</em></strong> - DAD Tuning<br> <em><strong>Fly Around (My Pretty Little Miss)</strong></em> - DAD Tuning<br> <em><strong>Waterbound</strong> </em>- DAD Tuning<br> <em><strong>Going To Boston</strong></em> - DAD Tuning<br> <em><strong>Rock The Cradle Joe</strong></em> - DAD Tuning<br> <em><strong>Mississippi Sawyer</strong></em> - DAD Tuning<br> <em><strong>Boil Them Cabbage 2</strong></em> - DAD Tuning<br> <em><strong>Cluck Old Hen</strong></em> - DAC Tuning <br> <em><strong>Greasy Coat</strong></em> - DAC Tuning <br> <em><strong>Shady Grove</strong></em> - DAC Tuning <br> <em><strong>Ground Hog</strong></em> - DAA Tuning <br> <em><strong>I'll Fly Away</strong></em> - DAA Tuning</p></div>
       </div>
     </article>
     <footer>

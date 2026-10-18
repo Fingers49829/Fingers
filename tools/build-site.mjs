@@ -7,6 +7,7 @@ import { readFile, writeFile, mkdir, rm, readdir } from 'node:fs/promises';
 import { existsSync, readFileSync, renameSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -52,7 +53,7 @@ function sized(src, width) {
 const IMAGES = join(ROOT, 'images', 'books');
 await mkdir(IMAGES, { recursive: true });
 const VERSIONS = join(ROOT, 'images', 'image-versions.json');
-const FRAME_VERSION = 'b1';
+const FRAME_VERSION = 'b2';
 const versions = JSON.parse(await readFile(VERSIONS, 'utf8').catch(() => '{}'));
 const usedImages = new Set();
 const downloads = new Map();
@@ -122,6 +123,16 @@ async function localImage(src, width) {
   // The ?v= tag changes whenever the store's image or our frame treatment changes, so browsers never show a
   // stale cached copy. (Bump FRAME_VERSION if reframe-images.ps1 changes how images look.)
   return `/images/books/${file}?v=${versions[file] || '0'}-${FRAME_VERSION}`;
+}
+
+// A cover kept only on this site, in place of the store's: images/covers/<slug>-<width>.jpg at the widths the
+// site shows (1200, 700 and 300). Used where the store listing still has an older cover that should stay there.
+const COVERS = join(ROOT, 'images', 'covers');
+function ownCover(slug, width) {
+  const file = join(COVERS, `${slug}-${width}.jpg`);
+  if (!existsSync(file)) return null;
+  const hash = createHash('md5').update(readFileSync(file)).digest('hex').slice(0, 8);
+  return `/images/covers/${slug}-${width}.jpg?v=${hash}`;
 }
 
 // Swaps every store-hosted <img> in a chunk of HTML for a local copy.
@@ -384,10 +395,11 @@ async function bookPage(b) {
   const summary = plain(b.description).slice(0, 155).replace(/\s+\S*$/, '') + '…';
   const [main, ...more] = b.images;
   // Cover shown at 700px and thumbnails at 200px; both open a 1200px copy.
-  b.large = await Promise.all(b.images.map(src => localImage(src, 1200)));
+  const own = ownCover(b.slug, 1200) && { large: ownCover(b.slug, 1200), shown: ownCover(b.slug, 700) };
+  b.large = await Promise.all(b.images.map((src, i) => (i === 0 && own ? own.large : localImage(src, 1200))));
   const gallery = main ? `
       <div class="book-gallery">
-        <a href="${esc(b.large[0])}"><img class="book-cover" src="${esc(await localImage(main, 700))}" alt="${esc(b.title)} cover" width="700"></a>
+        <a href="${esc(b.large[0])}"><img class="book-cover" src="${esc(own ? own.shown : await localImage(main, 700))}" alt="${esc(b.title)} cover" width="700"></a>
         ${more.length ? `<div class="book-thumbs">${(await Promise.all(more.map(async (src, i) =>
           `<a href="${esc(b.large[i + 1])}"><img src="${esc(await localImage(src, 200))}" alt="${esc(b.title)}, image ${i + 2}" loading="lazy" width="200"></a>`))).join('')}</div>` : ''}
       </div>` : '';
@@ -469,7 +481,8 @@ const bookBySlug = new Map(books.map(b => [b.slug, b]));
 const cards = [...body.matchAll(/<a class="fos-card" href="\/books\/([^"/]+)\/"><img src="([^"]+)"/g)];
 for (const [whole, slug, src] of cards) {
   const cover = bookBySlug.get(slug)?.images[0];
-  if (cover) body = body.replace(whole, whole.replace(`src="${src}"`, `src="${await localImage(cover, 300)}"`));
+  const own = ownCover(slug, 300);
+  if (cover || own) body = body.replace(whole, whole.replace(`src="${src}"`, `src="${own || await localImage(cover, 300)}"`));
 }
 body = await localizeImgs(body, 300);
 // Drop the "New to the dulcimer? Start here" section, and call the category tab "Browse by genre".
@@ -508,7 +521,7 @@ Disallow: /tools/
 Sitemap: ${SITE}/sitemap.xml
 `);
 
-// Newly downloaded images get the site's blue frame in place of the store's green (or red) one.
+// Newly downloaded images lose the store's green (or red) frame; the site's CSS draws a blue one.
 if (downloaded.length) {
   const list = join(tmpdir(), `fos-reframe-${process.pid}.txt`);
   await writeFile(list, downloaded.join('\n'));

@@ -12,12 +12,12 @@
   <meta property="og:title" content="The Crash Bang Dulcimer Christmas Book by Butch Ross – Tab Book">
   <meta property="og:description" content="The Crash Bang Dulcimer Christmas Book by Butch Ross is a set of fun, off-the-wall arrangements of Christmas classics for mountain dulcimer, with 40 pages…">
   <meta property="og:url" content="https://fingersofsteel.com/books/butch-ross-the-crash-bang-dulcimer-christmas-book/">
-  <meta property="og:image" content="https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271660-b1">
+  <meta property="og:image" content="https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271660-b2">
   <meta property="og:image:width" content="694">
   <meta property="og:image:height" content="892">
   <meta property="og:image:alt" content="The Crash Bang Dulcimer Christmas Book cover">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"The Crash Bang Dulcimer Christmas Book","author":{"@type":"Person","name":"Butch Ross"},"url":"https://fingersofsteel.com/books/butch-ross-the-crash-bang-dulcimer-christmas-book/","image":["https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271660-b1","https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271659-b1","https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271660-b1","https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271660-b1"],"description":"The Crash Bang Dulcimer Christmas Book by Butch Ross is a set of fun, off-the-wall arrangements of Christmas classics for mountain dulcimer, with 40 pages…","isbn":"978-1-964725-95-6","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/butch-ross-the-crash-bang-dulcimer-christmas-book","price":"20.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/butch-ross-the-crash-bang-dulcimer-christmas-book","price":"15.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"The Crash Bang Dulcimer Christmas Book","author":{"@type":"Person","name":"Butch Ross"},"url":"https://fingersofsteel.com/books/butch-ross-the-crash-bang-dulcimer-christmas-book/","image":["https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271660-b2","https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271659-b2","https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271660-b2","https://fingersofsteel.com/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271660-b2"],"description":"The Crash Bang Dulcimer Christmas Book by Butch Ross is a set of fun, off-the-wall arrangements of Christmas classics for mountain dulcimer, with 40 pages…","isbn":"978-1-964725-95-6","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/butch-ross-the-crash-bang-dulcimer-christmas-book","price":"20.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/butch-ross-the-crash-bang-dulcimer-christmas-book","price":"15.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
   <style>
     :root {
       --ink: #2b2b2b;
@@ -86,10 +86,12 @@
       gap: 40px;
       align-items: start;
     }
+    /* Book images get a thin square blue frame, like the green frame at Folkcraft and the red one at
+       DulcimerDownloads. */
     .book-cover {
       width: 100%;
       height: auto;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
     .book-thumbs {
       display: grid;
@@ -102,8 +104,11 @@
       height: auto;
       aspect-ratio: 1;
       object-fit: cover;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
+    /* Homepage catalog covers: the same blue frame, drawn around the cover itself (Folkcraft's catalog styles
+       box each cover in a tan, round-cornered frame). */
+    .fos .fos-card img { aspect-ratio: auto; object-fit: fill; background: none; border: 2px solid var(--accent); border-radius: 0; }
     .book-title {
       margin: 0;
       font-size: clamp(1.5rem, 3.5vw, 2.1rem);
@@ -159,8 +164,8 @@
     <article class="book">
       
       <div class="book-gallery">
-        <a href="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271660-b1"><img width="700" height="900" class="book-cover" src="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792271660-b1" alt="The Crash Bang Dulcimer Christmas Book cover"></a>
-        <div class="book-thumbs"><a href="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271659-b1"><img width="200" height="260" src="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792271659-b1" alt="The Crash Bang Dulcimer Christmas Book, image 2" loading="lazy"></a><a href="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271660-b1"><img width="200" height="260" src="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792271660-b1" alt="The Crash Bang Dulcimer Christmas Book, image 3" loading="lazy"></a><a href="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271660-b1"><img width="200" height="260" src="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792271660-b1" alt="The Crash Bang Dulcimer Christmas Book, image 4" loading="lazy"></a></div>
+        <a href="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792271660-b2"><img width="700" height="900" class="book-cover" src="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792271660-b2" alt="The Crash Bang Dulcimer Christmas Book cover"></a>
+        <div class="book-thumbs"><a href="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792271659-b2"><img width="200" height="260" src="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792271659-b2" alt="The Crash Bang Dulcimer Christmas Book, image 2" loading="lazy"></a><a href="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792271660-b2"><img width="200" height="260" src="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792271660-b2" alt="The Crash Bang Dulcimer Christmas Book, image 3" loading="lazy"></a><a href="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792271660-b2"><img width="200" height="260" src="/images/books/Butch-Ross-The-Crash-Bang-Dulcimer-Christmas-Book-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792271660-b2" alt="The Crash Bang Dulcimer Christmas Book, image 4" loading="lazy"></a></div>
       </div>
       <div class="book-info">
         <h1 class="book-title">The Crash Bang Dulcimer Christmas Book</h1>

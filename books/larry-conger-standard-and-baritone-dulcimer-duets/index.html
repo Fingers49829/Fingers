@@ -12,12 +12,12 @@
   <meta property="og:title" content="Standard And Baritone Dulcimer Duets by Larry Conger – Tab Book">
   <meta property="og:description" content="Standard And Baritone Dulcimer Duets by Larry Conger pairs a standard dulcimer in DAD with a baritone dulcimer in AEA. On the standard dulcimer part…">
   <meta property="og:url" content="https://fingersofsteel.com/books/larry-conger-standard-and-baritone-dulcimer-duets/">
-  <meta property="og:image" content="https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792270914-b1">
+  <meta property="og:image" content="https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792270914-b2">
   <meta property="og:image:width" content="663">
   <meta property="og:image:height" content="888">
   <meta property="og:image:alt" content="Standard And Baritone Dulcimer Duets cover">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Standard And Baritone Dulcimer Duets","author":{"@type":"Person","name":"Larry Conger"},"url":"https://fingersofsteel.com/books/larry-conger-standard-and-baritone-dulcimer-duets/","image":["https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792270914-b1","https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792270072-b1","https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792270072-b1","https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792270073-b1"],"description":"Standard And Baritone Dulcimer Duets by Larry Conger pairs a standard dulcimer in DAD with a baritone dulcimer in AEA. On the standard dulcimer part…","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/larry-conger-standard-and-baritone-dulcimer-duets","price":"50.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/larry-conger-standard-and-baritone-dulcimer-duets","price":"25.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Standard And Baritone Dulcimer Duets","author":{"@type":"Person","name":"Larry Conger"},"url":"https://fingersofsteel.com/books/larry-conger-standard-and-baritone-dulcimer-duets/","image":["https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792270914-b2","https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792270072-b2","https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792270072-b2","https://fingersofsteel.com/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792270073-b2"],"description":"Standard And Baritone Dulcimer Duets by Larry Conger pairs a standard dulcimer in DAD with a baritone dulcimer in AEA. On the standard dulcimer part…","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/larry-conger-standard-and-baritone-dulcimer-duets","price":"50.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/larry-conger-standard-and-baritone-dulcimer-duets","price":"25.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
   <style>
     :root {
       --ink: #2b2b2b;
@@ -86,10 +86,12 @@
       gap: 40px;
       align-items: start;
     }
+    /* Book images get a thin square blue frame, like the green frame at Folkcraft and the red one at
+       DulcimerDownloads. */
     .book-cover {
       width: 100%;
       height: auto;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
     .book-thumbs {
       display: grid;
@@ -102,8 +104,11 @@
       height: auto;
       aspect-ratio: 1;
       object-fit: cover;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
+    /* Homepage catalog covers: the same blue frame, drawn around the cover itself (Folkcraft's catalog styles
+       box each cover in a tan, round-cornered frame). */
+    .fos .fos-card img { aspect-ratio: auto; object-fit: fill; background: none; border: 2px solid var(--accent); border-radius: 0; }
     .book-title {
       margin: 0;
       font-size: clamp(1.5rem, 3.5vw, 2.1rem);
@@ -159,8 +164,8 @@
     <article class="book">
       
       <div class="book-gallery">
-        <a href="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792270914-b1"><img width="700" height="938" class="book-cover" src="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792270914-b1" alt="Standard And Baritone Dulcimer Duets cover"></a>
-        <div class="book-thumbs"><a href="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792270072-b1"><img width="200" height="264" src="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792270072-b1" alt="Standard And Baritone Dulcimer Duets, image 2" loading="lazy"></a><a href="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792270072-b1"><img width="200" height="261" src="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792270072-b1" alt="Standard And Baritone Dulcimer Duets, image 3" loading="lazy"></a><a href="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792270073-b1"><img width="200" height="261" src="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792270073-b1" alt="Standard And Baritone Dulcimer Duets, image 4" loading="lazy"></a></div>
+        <a href="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792270914-b2"><img width="700" height="938" class="book-cover" src="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792270914-b2" alt="Standard And Baritone Dulcimer Duets cover"></a>
+        <div class="book-thumbs"><a href="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792270072-b2"><img width="200" height="264" src="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792270072-b2" alt="Standard And Baritone Dulcimer Duets, image 2" loading="lazy"></a><a href="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792270072-b2"><img width="200" height="261" src="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792270072-b2" alt="Standard And Baritone Dulcimer Duets, image 3" loading="lazy"></a><a href="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792270073-b2"><img width="200" height="261" src="/images/books/Larry-Conger-Standard-And-Baritone-Dulcimer-Duets-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792270073-b2" alt="Standard And Baritone Dulcimer Duets, image 4" loading="lazy"></a></div>
       </div>
       <div class="book-info">
         <h1 class="book-title">Standard And Baritone Dulcimer Duets</h1>

@@ -12,12 +12,12 @@
   <meta property="og:title" content="Simply Gospel, Book One by Maureen Sellers – Mountain Dulcimer Tab Book">
   <meta property="og:description" content="Simply Gospel, Book One collects gospel tunes Maureen Sellers has gathered through many years of playing, teaching and performing on the mountain…">
   <meta property="og:url" content="https://fingersofsteel.com/books/maureen-sellers-simply-gospel-book-one/">
-  <meta property="og:image" content="https://fingersofsteel.com/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792270539-b1">
-  <meta property="og:image:width" content="674">
-  <meta property="og:image:height" content="892">
+  <meta property="og:image" content="https://fingersofsteel.com/images/covers/maureen-sellers-simply-gospel-book-one-1200.jpg?v=e6718389">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="1553">
   <meta property="og:image:alt" content="Simply Gospel, Book One cover">
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Simply Gospel, Book One","author":{"@type":"Person","name":"Maureen Sellers"},"url":"https://fingersofsteel.com/books/maureen-sellers-simply-gospel-book-one/","image":["https://fingersofsteel.com/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792270539-b1","https://fingersofsteel.com/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792269877-b1","https://fingersofsteel.com/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792269877-b1","https://fingersofsteel.com/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792269877-b1"],"description":"Simply Gospel, Book One collects gospel tunes Maureen Sellers has gathered through many years of playing, teaching and performing on the mountain…","isbn":"978-1-964725-70-3","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/maureen-sellers-simply-gospel-book-one-1310133","price":"12.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/maureen-sellers-simply-gospel-book-one","price":"12.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Book","name":"Simply Gospel, Book One","author":{"@type":"Person","name":"Maureen Sellers"},"url":"https://fingersofsteel.com/books/maureen-sellers-simply-gospel-book-one/","image":["https://fingersofsteel.com/images/covers/maureen-sellers-simply-gospel-book-one-1200.jpg?v=e6718389","https://fingersofsteel.com/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792352608-b2","https://fingersofsteel.com/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792352608-b2","https://fingersofsteel.com/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792352608-b2","https://fingersofsteel.com/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-5-1200.jpg?v=1792352608-b2"],"description":"Simply Gospel, Book One collects gospel tunes Maureen Sellers has gathered through many years of playing, teaching and performing on the mountain…","isbn":"978-1-964725-70-3","inLanguage":"en","publisher":{"@type":"Organization","name":"Fingers Of Steel","url":"https://fingersofsteel.com/","logo":"https://fingersofsteel.com/images/fingers-of-steel-logo.png"},"offers":[{"@type":"Offer","name":"Printed book","url":"https://folkcraft.com/products/maureen-sellers-simply-gospel-book-one-1310133","price":"12.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"Folkcraft Instruments"}},{"@type":"Offer","name":"PDF download","url":"https://dulcimerdownloads.com/products/maureen-sellers-simply-gospel-book-one","price":"12.00","priceCurrency":"USD","availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"DulcimerDownloads.com"}}]}</script>
   <style>
     :root {
       --ink: #2b2b2b;
@@ -86,10 +86,12 @@
       gap: 40px;
       align-items: start;
     }
+    /* Book images get a thin square blue frame, like the green frame at Folkcraft and the red one at
+       DulcimerDownloads. */
     .book-cover {
       width: 100%;
       height: auto;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
     .book-thumbs {
       display: grid;
@@ -102,8 +104,11 @@
       height: auto;
       aspect-ratio: 1;
       object-fit: cover;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
+    /* Homepage catalog covers: the same blue frame, drawn around the cover itself (Folkcraft's catalog styles
+       box each cover in a tan, round-cornered frame). */
+    .fos .fos-card img { aspect-ratio: auto; object-fit: fill; background: none; border: 2px solid var(--accent); border-radius: 0; }
     .book-title {
       margin: 0;
       font-size: clamp(1.5rem, 3.5vw, 2.1rem);
@@ -159,8 +164,8 @@
     <article class="book">
       
       <div class="book-gallery">
-        <a href="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-1200.jpg?v=1792270539-b1"><img width="700" height="926" class="book-cover" src="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-700.jpg?v=1792270539-b1" alt="Simply Gospel, Book One cover"></a>
-        <div class="book-thumbs"><a href="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792269877-b1"><img width="200" height="262" src="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792269877-b1" alt="Simply Gospel, Book One, image 2" loading="lazy"></a><a href="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792269877-b1"><img width="200" height="262" src="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792269877-b1" alt="Simply Gospel, Book One, image 3" loading="lazy"></a><a href="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792269877-b1"><img width="200" height="265" src="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792269877-b1" alt="Simply Gospel, Book One, image 4" loading="lazy"></a></div>
+        <a href="/images/covers/maureen-sellers-simply-gospel-book-one-1200.jpg?v=e6718389"><img width="700" height="906" class="book-cover" src="/images/covers/maureen-sellers-simply-gospel-book-one-700.jpg?v=57f54c96" alt="Simply Gospel, Book One cover"></a>
+        <div class="book-thumbs"><a href="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-2-1200.jpg?v=1792352608-b2"><img width="200" height="260" src="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-2-200.jpg?v=1792352608-b2" alt="Simply Gospel, Book One, image 2" loading="lazy"></a><a href="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-3-1200.jpg?v=1792352608-b2"><img width="200" height="260" src="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-3-200.jpg?v=1792352608-b2" alt="Simply Gospel, Book One, image 3" loading="lazy"></a><a href="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-4-1200.jpg?v=1792352608-b2"><img width="200" height="260" src="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-4-200.jpg?v=1792352608-b2" alt="Simply Gospel, Book One, image 4" loading="lazy"></a><a href="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-5-1200.jpg?v=1792352608-b2"><img width="200" height="260" src="/images/books/Maureen-Sellers-Simply-Gospel-Book-One-Mountain-Dulcimer-Sheet-Music-Tab-5-200.jpg?v=1792352608-b2" alt="Simply Gospel, Book One, image 5" loading="lazy"></a></div>
       </div>
       <div class="book-info">
         <h1 class="book-title">Simply Gospel, Book One</h1>

@@ -75,10 +75,12 @@
       gap: 40px;
       align-items: start;
     }
+    /* Book images get a thin square blue frame, like the green frame at Folkcraft and the red one at
+       DulcimerDownloads. */
     .book-cover {
       width: 100%;
       height: auto;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
     .book-thumbs {
       display: grid;
@@ -91,8 +93,11 @@
       height: auto;
       aspect-ratio: 1;
       object-fit: cover;
-      border: 1px solid var(--line);
+      border: 2px solid var(--accent);
     }
+    /* Homepage catalog covers: the same blue frame, drawn around the cover itself (Folkcraft's catalog styles
+       box each cover in a tan, round-cornered frame). */
+    .fos .fos-card img { aspect-ratio: auto; object-fit: fill; background: none; border: 2px solid var(--accent); border-radius: 0; }
     .book-title {
       margin: 0;
       font-size: clamp(1.5rem, 3.5vw, 2.1rem);
