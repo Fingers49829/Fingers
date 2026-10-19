@@ -463,10 +463,17 @@ async function bookPage(b) {
     .replace('<!--FOS-BODY-->', content));
 }
 
+// A book whose images change (new image or new ?v= version) gets its one-sheet rebuilt at the end of the
+// build, once the new image files are in place, so the printed sheet never shows an outdated cover.
+const imageRefs = html => [...html.matchAll(/\/images\/(?:books|covers)\/[^"\s]+/g)].map(m => m[0]).sort().join(' ');
+const imagesChanged = [];
 await Promise.all(books.map(async b => {
   const dir = join(ROOT, 'books', b.slug);
   await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, 'index.html'), await bookPage(b));
+  const before = await readFile(join(dir, 'index.html'), 'utf8').catch(() => '');
+  const html = await bookPage(b);
+  if (b.oneSheet && imageRefs(before) !== imageRefs(html)) imagesChanged.push(b.slug);
+  await writeFile(join(dir, 'index.html'), html);
 }));
 // Remove pages for books no longer on the Folkcraft page. (Pages are overwritten in place, not wiped
 // and rewritten, because Dropbox briefly locks folders it is syncing.)
@@ -544,6 +551,15 @@ for (const name of await readdir(IMAGES)) {
   if (!usedImages.has(name)) await rm(join(IMAGES, name), { force: true, maxRetries: 5 });
 }
 await writeFile(VERSIONS, JSON.stringify(Object.fromEntries([...usedImages].sort().map(f => [f, versions[f] || ''])), null, 1) + '\n');
+
+// One-sheets of books whose images changed (see above). --no-one-sheets skips this.
+if (imagesChanged.length && !process.argv.includes('--no-one-sheets')) {
+  console.log(`Rebuilding ${imagesChanged.length} one-sheet(s) for books with new images: ${imagesChanged.sort().join(', ')}`);
+  for (const slug of imagesChanged) {
+    try { execFileSync(process.execPath, [join(ROOT, 'tools', 'build-one-sheet.mjs'), slug], { cwd: ROOT, stdio: 'ignore' }); }
+    catch { console.warn(`! one-sheet failed for ${slug}; run: node tools/build-one-sheet.mjs ${slug}`); }
+  }
+}
 
 // ---- Report ----------------------------------------------------------------------------------
 
