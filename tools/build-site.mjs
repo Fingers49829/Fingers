@@ -312,7 +312,9 @@ for (const h of folkcraftHandles) {
     full: p.title,
     ...card,
     description: p.body_html,
-    images: p.images.map(i => i.src),
+    // A book sold on both stores shows its DulcimerDownloads images: they are kept current with the latest
+    // edition, while Folkcraft keeps the print stock's images until that stock sells out.
+    images: (dd?.images?.length ? dd.images : p.images).map(i => i.src),
     folkcraftUrl: `${FOLKCRAFT}/products/${p.handle}`,
     ddUrl: dd ? `${DD}/products/${dd.handle}` : null,
     print: offerOf(p),
