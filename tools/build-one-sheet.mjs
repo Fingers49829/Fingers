@@ -364,7 +364,22 @@ const edge = extra => execFileSync(EDGE, [
 const dir = outDir || join(ROOT, 'one-sheets');
 await mkdir(dir, { recursive: true });
 const name = outDir ? `${slug}-${design}` : slug;
-edge([`--print-to-pdf=${join(dir, `${name}.pdf`)}`]);
-if (outDir) edge(['--window-size=816,1056', `--screenshot=${join(dir, `${name}.png`)}`]);
+// Edge can return before it has finished writing the file, so wait for a complete, freshly written file
+// (and fail loudly if none appears) before the working folder it renders from is removed.
+const { statSync } = await import('node:fs');
+async function edgeWrite(file, extra) {
+  await rm(file, { force: true });
+  edge(extra);
+  let last = -1;
+  for (let i = 0; i < 120; i++) {
+    await new Promise(r => setTimeout(r, 500));
+    const size = existsSync(file) ? statSync(file).size : -1;
+    if (size > 0 && size === last) return;
+    last = size;
+  }
+  throw new Error(`Edge did not write ${file}`);
+}
+await edgeWrite(join(dir, `${name}.pdf`), [`--print-to-pdf=${join(dir, `${name}.pdf`)}`]);
+if (outDir) await edgeWrite(join(dir, `${name}.png`), ['--window-size=816,1056', `--screenshot=${join(dir, `${name}.png`)}`]);
 await rm(work, { recursive: true, force: true, maxRetries: 3 }).catch(() => {});
 console.log(`Wrote ${join(dir, `${name}.pdf`)} (${design}; ${tunes.length} tunes, ${shown.length} shown)`);
