@@ -72,6 +72,8 @@ const samples = [...thumbs.matchAll(/<a href="([^"]+)"/g)].map(m => fileUrl(deco
 // Tunes: everything after the "Songs included" heading, one tune per line. Lines look like
 // "Name - DAD Tuning", "Name - Composed by: ...", "Name (Capo 4)" or plain "Name"; the name is the part
 // before " - ". Key headings ("D Tunes", "Tunes In A") are skipped, and "D tunes: A, B, C" lines are split.
+// Any other heading ending in a colon (e.g. "Sheet music (standard notation):") ends the list, since what
+// follows it repeats tunes already listed.
 const listAt = descHtml.search(/(Songs|Tunes) included/i);
 const tunes = [];
 if (listAt >= 0) {
@@ -79,6 +81,7 @@ if (listAt >= 0) {
     .map(l => decode(l.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim())
     .filter(l => l && !/(songs|tunes) included/i.test(l) && !/^(?:[A-G](?: minor)?|two-key) tunes:?$/i.test(l) && !/^tunes in (?:the key of )?[A-G](?: minor)?:?$/i.test(l));
   for (const line of lines) {
+    if (/:$/.test(line)) break;
     const group = line.match(/^(?:[A-G](?: minor)?|two-key) tunes:\s*(.+)$/i);
     for (const entry of group ? group[1].split(/,\s*/) : [line]) {
       const [name, ...rest] = entry.split(/\s+[-–]\s+/);
