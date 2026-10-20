@@ -315,6 +315,8 @@ for (const h of folkcraftHandles) {
     // A book sold on both stores shows its DulcimerDownloads images: they are kept current with the latest
     // edition, while Folkcraft keeps the print stock's images until that stock sells out.
     images: (dd?.images?.length ? dd.images : p.images).map(i => i.src),
+    // Folkcraft's own images, to recognise which book an image on the Folkcraft catalog page belongs to.
+    folkcraftImages: p.images.map(i => i.src),
     folkcraftUrl: `${FOLKCRAFT}/products/${p.handle}`,
     ddUrl: dd ? `${DD}/products/${dd.handle}` : null,
     print: offerOf(p),
@@ -492,6 +494,21 @@ for (const [whole, slug, src] of cards) {
   const cover = bookBySlug.get(slug)?.images[0];
   const own = ownCover(slug, 300);
   if (cover || own) body = body.replace(whole, whole.replace(`src="${src}"`, `src="${own || await localImage(cover, 300)}"`));
+}
+// The "By author" tab shows one sample cover per author, linked from the Folkcraft page, where a book keeps
+// its old cover until the print stock sells out. Show that book's current cover instead (the same one its
+// card and page use), so a new edition appears here too.
+const storeFile = src => decodeURIComponent(new URL(decode(src).replace(/^\/\//, 'https://')).pathname.split('/').pop()).toLowerCase();
+for (const [section] of body.matchAll(/<section id="fos-by-[^"]+" class="fos-sec fos-auth">[\s\S]*?<\/section>/g)) {
+  const img = section.match(/<img\b[^>]*\ssrc="((?:https?:)?\/\/cdn\.shopify\.com\/[^"]+)"/);
+  if (!img) continue;
+  const file = storeFile(img[1]);
+  const slugs = [...section.matchAll(/href="\/books\/([^"/]+)\/"/g)].map(m => m[1]);
+  const book = slugs.map(s => bookBySlug.get(s)).find(b => b?.folkcraftImages?.some(s => storeFile(s) === file));
+  if (!book) { console.warn(`! Author sample image not matched to a book: ${file}`); continue; }
+  const own = ownCover(book.slug, 300);
+  const cover = own || (book.images[0] && await localImage(book.images[0], 200));
+  if (cover) body = body.replace(section, section.replace(`src="${img[1]}"`, `src="${cover}"`));
 }
 body = await localizeImgs(body, 300);
 // Drop the "New to the dulcimer? Start here" section, and call the category tab "Browse by genre".
