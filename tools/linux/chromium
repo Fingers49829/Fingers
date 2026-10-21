@@ -1,0 +1,6 @@
+#!/bin/bash
+# Headless Chromium for one-sheets on Linux (set FOS_BROWSER to this file). Uses the Playwright Chromium.
+for c in /opt/pw-browsers/chromium /opt/pw-browsers/chromium-*/chrome-linux/chrome "$(command -v chromium)" "$(command -v chromium-browser)" "$(command -v google-chrome)"; do
+  [ -n "$c" ] && [ -x "$c" ] && exec "$c" --no-sandbox "$@"
+done
+echo "No Chromium found" >&2; exit 1
