@@ -1,0 +1,11 @@
+#!/bin/bash
+# Stand-in for Windows PowerShell when building on Linux (Claude's cloud workspace, scheduled runs).
+# Runs Python ports of tools/reframe-images.ps1 and tools/png-to-jpeg.ps1 with the same rules.
+here="$(cd "$(dirname "$0")" && pwd)"
+file=""; list=""
+while [ $# -gt 0 ]; do case "$1" in -File) file="$2"; shift 2;; -ListFile) list="$2"; shift 2;; *) shift;; esac; done
+case "$file" in
+  *reframe-images.ps1) exec python3 -I "$here/reframe.py" "$list";;
+  *png-to-jpeg.ps1) exec python3 -I "$here/png2jpeg.py" "$list";;
+  *) echo "powershell stand-in: unsupported script $file" >&2; exit 1;;
+esac

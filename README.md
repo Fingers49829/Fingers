@@ -6,3 +6,4 @@ Static HTML pages for the FingersOfSteel.com website
 - `node tools/build-site.mjs` rebuilds every page from Folkcraft and DulcimerDownloads. A book sold on both stores uses its DulcimerDownloads images.
 - Whenever a book's images change, the build also rebuilds that book's one-sheet (`one-sheets/<slug>.pdf`), so one-sheets never show an outdated cover. `--no-one-sheets` skips this.
 - `node tools/build-all-one-sheets.mjs` regenerates every one-sheet (needs Microsoft Edge).
+- On Linux (Claude's cloud workspace and the nightly 1:15 AM update), run `bash tools/linux/build.sh`: it puts a PowerShell stand-in (Python ports of the two image scripts) and a headless Chromium wrapper on the path, then runs `tools/build-site.mjs`.
