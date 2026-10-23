@@ -1,6 +1,7 @@
 #!/bin/bash
 # Headless Chromium for one-sheets on Linux (set FOS_BROWSER to this file). Uses the Playwright Chromium.
-for c in /opt/pw-browsers/chromium /opt/pw-browsers/chromium-*/chrome-linux/chrome "$(command -v chromium)" "$(command -v chromium-browser)" "$(command -v google-chrome)"; do
+# Prefer chrome-headless-shell: the full Chrome build can hang in --headless --print-to-pdf on the cloud image.
+for c in /opt/pw-browsers/chromium_headless_shell-*/chrome-headless-shell-linux64/chrome-headless-shell /opt/pw-browsers/chromium /opt/pw-browsers/chromium-*/chrome-linux*/chrome "$(command -v chromium)" "$(command -v chromium-browser)" "$(command -v google-chrome)"; do
   [ -n "$c" ] && [ -x "$c" ] && exec "$c" --no-sandbox "$@"
 done
 echo "No Chromium found" >&2; exit 1
