@@ -189,11 +189,28 @@
     </footer>
   </div>
   <script>
-    // "By author" links land on /#fos-tab-author; switch the homepage's catalog to that tab.
-    if (location.hash === '#fos-tab-author') {
-      const tab = document.getElementById('fos-tab-author');
-      if (tab) tab.checked = true;
-    }
+    // "By author" links point to /#fos-tab-author; switch the homepage's catalog to that tab and scroll
+    // to it. On the homepage the click only changes the #hash (no reload), so it's handled on click too.
+    (function () {
+      var tab = document.getElementById('fos-tab-author');
+      if (!tab) return;
+      function showAuthors(scroll) {
+        tab.checked = true;
+        var tabs = tab.closest('.fos-tabs') || tab.parentNode;
+        if (scroll && tabs) tabs.scrollIntoView({ block: 'start' });
+      }
+      if (location.hash === '#fos-tab-author') showAuthors(true);
+      window.addEventListener('hashchange', function () {
+        if (location.hash === '#fos-tab-author') showAuthors(true);
+      });
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href$="#fos-tab-author"]');
+        if (!a) return;
+        e.preventDefault();
+        if (location.hash !== '#fos-tab-author') history.pushState(null, '', '#fos-tab-author');
+        showAuthors(true);
+      });
+    })();
   </script>
 </body>
 </html>
